@@ -6,3 +6,4 @@ package.json
 serve.json
 package-lock.json
 node_modules
+server.js

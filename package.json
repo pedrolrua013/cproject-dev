@@ -5,12 +5,9 @@
   "description": "Landing da CProject: estúdio, produtos e hub (site estático).",
   "scripts": {
     "build": "node _tools/build-dist.mjs",
-    "start": "serve dist -l ${PORT:-3000}"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "serve": "^14.2.4"
   }
 }
