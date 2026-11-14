@@ -83,10 +83,10 @@ PASSOS = [("Diagnóstico", "Mapeamento do processo manual que está travando a o
           ("Construção incremental", "Ciclos curtos de desenvolvimento, com você acompanhando cada entrega e código pensado para evoluir sem retrabalho."),
           ("Entrega e suporte direto", "Sistema no ar, com ajustes e evolução conversando direto com quem construiu, sem intermediário.")]
 
-FAQ_HOME = [("O que a CProject faz?", "A CProject reúne três frentes: um estúdio que desenvolve sites, sistemas, dashboards e automações sob medida; produtos próprios, como o CliniqLab e o Embelezando; e um hub de soluções prontas para profissionais, como packs de skills de IA."),
+FAQ_HOME = [("O que a CProject faz?", "A CProject reúne três frentes: um estúdio que desenvolve sites, sistemas, dashboards e automações sob medida; produtos próprios, como o Sorrirmos e o Cortando; e um hub de soluções prontas para profissionais, como packs de skills de IA."),
             ("Quanto tempo leva para ver algo funcionando?", "A primeira versão navegável sai em poucos dias, já com dados reais e fluxo de uso. Depois o projeto evolui em ciclos curtos, com você acompanhando cada entrega."),
             ("Vocês trabalham com template?", "Não. Interface e código são feitos sob medida para cada operação, o que facilita evoluir depois sem retrabalho."),
-            ("Os produtos CliniqLab e Embelezando já estão disponíveis?", "O CliniqLab está em pré-lançamento e o Embelezando em desenvolvimento. Fale com a gente pelo WhatsApp para entrar na lista de espera."),
+            ("Os produtos Sorrirmos e Cortando já estão disponíveis?", "O Sorrirmos está em pré-lançamento e o Cortando em desenvolvimento. Fale com a gente pelo WhatsApp para entrar na lista de espera."),
             ("Como funciona o suporte depois da entrega?", "Ajustes e evolução são conversados direto com quem construiu o projeto, sem intermediário e sem fila de ticket.")]
 
 def head(title, desc, path, schema, extra=""):
@@ -134,7 +134,7 @@ def rodape():
       <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}<span>CPr<i>oject</i></span></a>
         <p>Estúdio full-stack, produtos próprios e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
       <div><h3 class="fh">Estúdio</h3><ul>{sv}</ul></div>
-      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#produtos">CliniqLab</a></li><li><a href="/#produtos">Embelezando</a></li><li><a href="/#hub">Packs de skills</a></li><li><a href="/#case">Case</a></li></ul></div>
+      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#produtos">Sorrirmos</a></li><li><a href="/#produtos">Cortando</a></li><li><a href="/#hub">Packs de skills</a></li><li><a href="/#case">Case</a></li></ul></div>
       <div><h3 class="fh">Contato</h3><ul><li><a href="{wa("Olá! Vim pelo site da CProject.")}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp {WA_FMT}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="{IG}" target="_blank" rel="noopener">@cproject.dev</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
     </div>
     <div class="cp"><span>© {datetime.date.today().year} CProject · Bruno C. Peres</span><span>Feito sob medida, do rascunho ao produto no ar.</span></div>
@@ -202,12 +202,12 @@ def home():
   <div class="in">
     <div class="hd rv"><span class="eb">03 · Produtos</span><h2 id="t-produtos">Produtos próprios para <em class="g">quem atende com hora marcada</em></h2><p>Sistemas da CProject para negócios que vivem de agenda e relacionamento com o cliente.</p></div>
     <div class="pd">
-      <article class="card rv"><div class="top"><div class="mk"><b style="background:#8E80EF">C</b><h3>CliniqLab</h3></div><span class="st">Pré-lançamento</span></div>
+      <article class="card rv"><div class="top"><div class="mk"><b style="background:#8E80EF">S</b><h3>Sorrirmos</h3></div><span class="st">Pré-lançamento</span></div>
         <p>CRM por assinatura para dentistas, nutricionistas e psicólogos: agenda, relacionamento com pacientes e rotina do consultório em um só lugar.</p>
-        <a class="lk" href="{wa("Olá! Quero entrar na lista de espera do CliniqLab.")}" target="_blank" rel="noopener" data-origem="cliniqlab">Entrar na lista de espera {I_SETA}</a></article>
-      <article class="card rv"><div class="top"><div class="mk"><b style="background:#D9468A">E</b><h3>Embelezando</h3></div><span class="st c">Em desenvolvimento</span></div>
+        <a class="lk" href="{wa("Olá! Quero entrar na lista de espera do Sorrirmos.")}" target="_blank" rel="noopener" data-origem="sorrirmos">Entrar na lista de espera {I_SETA}</a></article>
+      <article class="card rv"><div class="top"><div class="mk"><b style="background:#D9468A">C</b><h3>Cortando</h3></div><span class="st c">Em desenvolvimento</span></div>
         <p>Sistema de gestão para salões de beleza e barbearias, pensado para a rotina de agenda, atendimento e equipe.</p>
-        <a class="lk" href="{wa("Olá! Quero saber quando o Embelezando estiver disponível.")}" target="_blank" rel="noopener" data-origem="embelezando">Quero ser avisado {I_SETA}</a></article>
+        <a class="lk" href="{wa("Olá! Quero saber quando o Cortando estiver disponível.")}" target="_blank" rel="noopener" data-origem="cortando">Quero ser avisado {I_SETA}</a></article>
     </div>
   </div>
 </section>
@@ -270,7 +270,7 @@ def home():
     <form class="fm rv" id="fm" novalidate aria-label="Enviar mensagem pelo WhatsApp">
       <div class="fl"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
       <div class="fl"><label for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization"></div>
-      <div class="fl w"><label for="f-int">Interesse</label><select id="f-int" name="interesse" required><option value="">Selecione</option><option>Site ou aplicativo</option><option>Sistema sob medida</option><option>Dashboard ou BI</option><option>Automação de processos</option><option>CliniqLab</option><option>Embelezando</option><option>Packs de skills de IA</option><option>Outro assunto</option></select></div>
+      <div class="fl w"><label for="f-int">Interesse</label><select id="f-int" name="interesse" required><option value="">Selecione</option><option>Site ou aplicativo</option><option>Sistema sob medida</option><option>Dashboard ou BI</option><option>Automação de processos</option><option>Sorrirmos</option><option>Cortando</option><option>Packs de skills de IA</option><option>Outro assunto</option></select></div>
       <div class="fl w"><label for="f-msg">O que você precisa?</label><textarea id="f-msg" name="mensagem" required placeholder="Conte em poucas linhas o processo que hoje dá trabalho."></textarea></div>
       <div class="hp" aria-hidden="true"><label for="f-site">Site</label><input id="f-site" name="site" tabindex="-1" autocomplete="off"></div>
       <button class="btn" type="submit">{I_WA} Enviar pelo WhatsApp</button>
