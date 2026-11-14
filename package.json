@@ -1,0 +1,11 @@
+{
+  "name": "cproject-dev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing da CProject: estúdio, produtos e hub (site estático).",
+  "scripts": {
+    "build": "node _tools/build-dist.mjs",
+    "start": "npx --yes serve dist -l ${PORT:-3000}"
+  },
+  "engines": { "node": ">=18" }
+}

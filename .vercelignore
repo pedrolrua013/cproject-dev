@@ -1,2 +1,5 @@
 _tools
 .gitignore
+dist
+.htaccess
+package.json
