@@ -3,3 +3,6 @@ _tools
 dist
 .htaccess
 package.json
+serve.json
+package-lock.json
+node_modules

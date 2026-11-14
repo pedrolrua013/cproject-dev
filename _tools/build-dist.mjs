@@ -1,6 +1,6 @@
 // Copia os arquivos públicos do site para dist/ (pasta de saída usada pela Hostinger).
 import { cpSync, rmSync, mkdirSync } from 'node:fs';
-const publicos = ['index.html', '404.html', 'robots.txt', 'sitemap.xml', '.htaccess', 'assets',
+const publicos = ['index.html', '404.html', 'robots.txt', 'sitemap.xml', '.htaccess', 'serve.json', 'assets',
   'sites-e-apps', 'sistemas-sob-medida', 'dashboards-e-bi', 'automacao-de-processos', 'politica-de-privacidade'];
 rmSync('dist', { recursive: true, force: true });
 mkdirSync('dist');

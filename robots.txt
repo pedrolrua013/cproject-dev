@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cproject-dev.vercel.app/sitemap.xml
+Sitemap: https://cproject.com.br/sitemap.xml

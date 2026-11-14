@@ -4,7 +4,7 @@ import json, html, os, datetime
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-BASE = "https://cproject-dev.vercel.app"
+BASE = "https://cproject.com.br"
 WA_NUM = "5513974177986"
 WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
