@@ -47,6 +47,39 @@
     vids.forEach(v => vo.observe(v));
   }
 
+  // hero: vídeo carrega depois da página (não pesa no carregamento)
+  const hv = $('#hv');
+  if (hv) {
+    const mob = matchMedia('(max-width:640px)').matches;
+    if (mob) hv.poster = hv.dataset.pm;
+    if (reduz) hv.poster = hv.dataset.still;
+    else {
+      const go = () => { hv.src = mob ? hv.dataset.m : hv.dataset.d; hv.play().catch(() => {}); };
+      const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(go, {timeout: 2500}) : setTimeout(go, 800));
+      document.readyState === 'complete' ? idle() : addEventListener('load', idle, {once: true});
+      new IntersectionObserver(([e]) => { if (!hv.src) return; e.isIntersecting ? hv.play().catch(() => {}) : hv.pause(); }).observe(hv);
+    }
+  }
+
+  // linha do tempo: preenche ao passar pelas etapas (desktop) ou com a rolagem (celular)
+  $$('[data-tl]').forEach(tl => {
+    const st = [...tl.querySelectorAll('.tl-s')], n = st.length;
+    const marcar = k => { tl.style.setProperty('--f', n > 1 ? Math.max(0, k) / (n - 1) : 1); st.forEach((s, i) => { s.classList.toggle('done', i <= k); s.classList.toggle('now', i === k); }); };
+    marcar(-1);
+    const vertical = () => matchMedia('(max-width:820px)').matches;
+    st.forEach((s, i) => { s.addEventListener('pointerenter', () => { if (!vertical()) marcar(i); }); s.addEventListener('focus', () => marcar(i)); });
+    const rolar = () => {
+      if (!vertical()) return;
+      const r = tl.getBoundingClientRect(), alvo = innerHeight * .62;
+      const f = Math.max(0, Math.min(1, (alvo - r.top - 32) / Math.max(1, r.height - 64)));
+      tl.style.setProperty('--f', f);
+      st.forEach((s, i) => { const on = s.getBoundingClientRect().top + 32 < alvo; s.classList.toggle('done', on); });
+      const ult = st.filter(s => s.classList.contains('done')).pop(); st.forEach(s => s.classList.toggle('now', s === ult));
+    };
+    addEventListener('scroll', () => requestAnimationFrame(rolar), {passive: true}); rolar();
+    if (reduz) marcar(n - 1);
+  });
+
   // whatsapp: evento
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href*="wa.me"]');
@@ -129,6 +162,11 @@
   if (tr) {
     const bar = $('#pfbar'), btns = $$('.pfb'), items = [...tr.children];
     const passo = () => (items[0]?.getBoundingClientRect().width || 400) + parseFloat(getComputedStyle(tr).columnGap || 16);
+    const centro = el => el.offsetLeft - (tr.clientWidth - el.offsetWidth) / 2;
+    const marcar = () => { const m = tr.scrollLeft + tr.clientWidth / 2; let best = items[0], d = 1e9; items.forEach(it => { const c = Math.abs(it.offsetLeft + it.offsetWidth / 2 - m); if (c < d) { d = c; best = it; } }); items.forEach(it => it.classList.toggle('cur', it === best)); };
+    if (items[1]) tr.scrollLeft = centro(items[1]);
+    marcar();
+    tr.addEventListener('scroll', () => requestAnimationFrame(marcar), {passive: true});
     const setVh = () => $$('.vp').forEach(v => v.style.setProperty('--vh', v.clientHeight + 'px'));
     const atualizar = () => {
       const max = tr.scrollWidth - tr.clientWidth, x = tr.scrollLeft;
@@ -138,11 +176,11 @@
     const ir = d => tr.scrollBy({left: d * passo(), behavior: reduz ? 'auto' : 'smooth'});
     btns.forEach(b => b.addEventListener('click', () => { ir(+b.dataset.dir); parar(); }));
     tr.addEventListener('scroll', atualizar, {passive: true});
-    addEventListener('resize', () => { setVh(); atualizar(); });
+    addEventListener('resize', () => { setVh(); atualizar(); const c = tr.querySelector('.cur'); if (c) tr.scrollLeft = centro(c); });
     setVh(); atualizar();
     // avanço automático lento, pausa em interação, foco, aba oculta ou fora da tela
     let tm = null, visto = false, pausado = false;
-    const tick = () => { if (pausado || !visto || document.hidden) return; const max = tr.scrollWidth - tr.clientWidth; if (tr.scrollLeft >= max - 2) tr.scrollTo({left: 0, behavior: 'smooth'}); else ir(1); };
+    const tick = () => { if (pausado || !visto || document.hidden) return; const max = tr.scrollWidth - tr.clientWidth; if (tr.scrollLeft >= max - 2) tr.scrollTo({left: centro(items[0]), behavior: 'smooth'}); else ir(1); };
     const iniciar = () => { if (!reduz && !tm) tm = setInterval(tick, 4200); };
     const parar = () => { clearInterval(tm); tm = null; };
     ['pointerenter', 'focusin', 'touchstart'].forEach(ev => tr.addEventListener(ev, () => { pausado = true; }, {passive: true}));

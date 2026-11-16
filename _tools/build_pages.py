@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "6"  # versão dos assets
+V = "7"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -162,6 +162,23 @@ BAND = ["Sistemas Lab", "Sorrirmos", "Cortando", "Landing pages", "Sites institu
 def band_html():
     li = "".join(f"<li>{E(t)}</li>" for t in BAND)
     return f'<div class="band" aria-hidden="true"><ul>{li}{li}</ul></div>'
+
+def quem_html(eb):
+    return f'''<section class="sec alt" id="quem" aria-labelledby="t-quem">
+  <div class="in">
+    <div class="hd rv"><span class="eb">{eb}</span><h2 id="t-quem">Todo mundo tem IA. <em class="g">Nem todo mundo tem especialista.</em></h2><p>Hoje qualquer pessoa gera um site ou um sistema em minutos. O que faz diferença é quem entende o seu negócio, faz as perguntas certas e responde pelo resultado. Na CProject, você conversa com profissionais de desenvolvimento, marketing e dados, que acompanham o projeto do primeiro briefing ao suporte.</p></div>
+    <div class="team">{time_html()}</div>
+    <div class="pills rv"><span>Comunicação direta</span><span>Entrega incremental</span><span>Atendimento por pessoas</span><span>Suporte pós-entrega</span></div>
+  </div>
+</section>'''
+
+def tl_html(passos):
+    li = "".join(f'<li class="tl-s" tabindex="0" data-i="{i}"><span class="tl-dot"><b>0{i+1}</b></span><h3>{E(t)}</h3><p>{E(d)}</p></li>' for i, (t, d) in enumerate(passos))
+    return f'<div class="tl rv" style="--n:{len(passos)}" data-tl><div class="tl-line" aria-hidden="true"><i class="tl-fill"></i></div><ol>{li}</ol></div>'
+
+def perf_html():
+    return f'''<div class="perf rv"><div class="perf-t"><span class="eb">Performance</span><h3 class="big">Com a CProject não é só design. <em class="g">É performance.</em></h3><p>Nota máxima no PageSpeed Insights, a ferramenta do Google que mede velocidade, acessibilidade, boas práticas e SEO. Página rápida carrega antes de o cliente desistir e conta pontos para aparecer no Google.</p></div>
+    <figure class="psf"><div class="bar"><i></i><i></i><i></i><span>pagespeed.web.dev · Computador</span></div><div class="psb"><img src="/assets/pagespeed-cproject.webp" width="1112" height="216" loading="lazy" decoding="async" alt="PageSpeed Insights do site da CProject no computador: 100 em desempenho, 100 em acessibilidade, 100 em práticas recomendadas e 100 em SEO"></div><figcaption>Resultado do site da CProject no PageSpeed Insights, versão para computador.</figcaption></figure></div>'''
 
 def preco_html(p):
     if not p["preco"]:
@@ -316,7 +333,7 @@ def home():
     out = head(title, desc, "/", schema, '<link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>\n') + nav() + f'''
 <main id="conteudo">
 <section class="hero" aria-labelledby="h1">
-  <canvas id="hero-cv" aria-hidden="true"></canvas>
+  <video class="hv" id="hv" muted loop playsinline preload="none" poster="/assets/video/hero-poster.webp" data-d="/assets/video/hero-1600.mp4" data-m="/assets/video/hero-m.mp4" data-pm="/assets/video/hero-poster-m.webp" data-still="/assets/video/hero-still.webp" aria-hidden="true" tabindex="-1"></video>
   <div class="in">
     <span class="eb">CProject · estúdio, Sistemas Lab e soluções prontas</span>
     <h1 id="h1">Sites, sistemas e apps <em class="g">sob medida</em>, do rascunho ao produto no ar.</h1>
@@ -366,18 +383,13 @@ def home():
 
 <section class="sec" id="abordagem" aria-labelledby="t-ab">
   <div class="in">
-    <div class="hd rv"><span class="eb">05 · Abordagem</span><h2 id="t-ab">Como o projeto acontece</h2><p>Nada de tela solta ou protótipo estático: cada etapa já entrega algo que roda de verdade.</p></div>
-    <div class="ps">{ps}</div>
+    <div class="hd rv"><span class="eb">05 · Abordagem</span><h2 id="t-ab">Como o projeto acontece</h2><p>Nada de tela solta ou protótipo estático: cada etapa já entrega algo que roda de verdade. Passe pelas etapas para acompanhar o caminho.</p></div>
+    {tl_html(PASSOS)}
+    {perf_html()}
   </div>
 </section>
 
-<section class="sec alt" id="quem" aria-labelledby="t-quem">
-  <div class="in">
-    <div class="hd rv"><span class="eb">06 · Quem constrói</span><h2 id="t-quem">Todo mundo tem IA. <em class="g">Nem todo mundo tem especialista.</em></h2><p>Hoje qualquer pessoa gera um site ou um sistema em minutos. O que faz diferença é quem entende o seu negócio, faz as perguntas certas e responde pelo resultado. Na CProject, você conversa com profissionais de desenvolvimento, marketing e dados, que acompanham o projeto do primeiro briefing ao suporte.</p></div>
-    <div class="team">{time_html()}</div>
-    <div class="pills rv"><span>Comunicação direta</span><span>Entrega incremental</span><span>Atendimento por pessoas</span><span>Suporte pós-entrega</span></div>
-  </div>
-</section>
+{quem_html("06 · Quem constrói")}
 
 <section class="sec" id="faq" aria-labelledby="t-faq">
   <div class="in">
@@ -437,7 +449,7 @@ def servico(s):
   </div>
 </section>
 <section class="sec" id="como" aria-labelledby="t-como">
-  <div class="in"><div class="hd rv"><span class="eb">Como funciona</span><h2 id="t-como">Do diagnóstico ao sistema no ar</h2></div><div class="ps">{ps}</div></div>
+  <div class="in"><div class="hd rv"><span class="eb">Como funciona</span><h2 id="t-como">Do diagnóstico ao sistema no ar</h2></div>{tl_html(PASSOS)}</div>
 </section>
 <section class="sec alt" aria-labelledby="t-faq">
   <div class="in"><div class="hd rv"><span class="eb">Perguntas frequentes</span><h2 id="t-faq">Dúvidas sobre {s["nome"].lower()}</h2></div><div class="faq rv">{faq_html(s["faq"])}</div>
@@ -537,12 +549,14 @@ def sites_page():
 </section>
 <section class="sec" aria-labelledby="t-como">
   <div class="in"><div class="hd rv"><span class="eb">Como funciona</span><h2 id="t-como">Do briefing à página no ar</h2></div>
-    <div class="ps">{"".join(f'<article class="card rv"><h3>{t}</h3><p>{d}</p></article>' for t, d in passos)}</div></div>
+    {tl_html(passos)}
+    {perf_html()}</div>
 </section>
-<section class="sec alt" aria-labelledby="t-faq">
+{quem_html("Quem constrói")}
+<section class="sec" aria-labelledby="t-faq">
   <div class="in"><div class="hd rv"><span class="eb">Perguntas frequentes</span><h2 id="t-faq">Dúvidas sobre sites e landing pages</h2></div><div class="faq rv">{faq_html(SITES_FAQ)}</div></div>
 </section>
-<section class="sec" aria-labelledby="t-cta">
+<section class="sec alt" aria-labelledby="t-cta">
   <div class="in" style="text-align:center"><div class="rv"><span class="eb">Próximo passo</span><p class="big" id="t-cta">Conte em uma mensagem o que você vende e para quem. A gente indica o plano certo.</p>
     <div class="ctas"><a class="btn" href="{wa(W)}" target="_blank" rel="noopener" data-origem="sites-cta">{I_WA} Conversar no WhatsApp</a><a class="btn o" href="/#contato">Outros contatos</a></div></div></div>
 </section>
