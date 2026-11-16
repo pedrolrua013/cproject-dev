@@ -145,8 +145,6 @@ PLANOS = [
 PORTFOLIO = [
   {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Landing page", "SEO local", "Orçamento pelo WhatsApp"]},
   {"slug": "yamam", "nome": "Grupo Yamam", "seg": "Segurança patrimonial, portaria e limpeza · SP e Baixada Santista", "url": "https://grupo-yamam.vercel.app/", "host": "grupo-yamam.vercel.app", "tags": ["Site institucional", "SEO", "Blog"]},
-  {"slug": "antonelze", "nome": "Antonelze", "seg": "Moda feminina e vestidos de festa · Santos, SP", "url": "https://antonelze.vercel.app/", "host": "antonelze.vercel.app", "tags": ["Vitrine de produtos", "Atendimento pelo WhatsApp"]},
-  {"slug": "dream4team", "nome": "Dream4Team", "seg": "Estúdio independente de jogos", "url": "https://dream4team.vercel.app/", "host": "dream4team.vercel.app", "tags": ["Site institucional", "Portfólio de jogos"]},
   {"slug": "bonomi", "nome": "Bonomi Almeida", "seg": "Advocacia · Estado de São Paulo", "url": "https://bonomi-almeida.vercel.app/", "host": "bonomi-almeida.vercel.app", "tags": ["Site institucional", "Áreas de atuação"]},
 ]
 
@@ -367,9 +365,9 @@ def home():
 
 <section class="sec alt" id="quem" aria-labelledby="t-quem">
   <div class="in">
-    <div class="hd rv"><span class="eb">06 · Quem constrói</span><h2 id="t-quem">A IA acelera. <em class="g">Gente de verdade responde.</em></h2><p>Usamos inteligência artificial em todo o processo para entregar mais rápido. Mas cada projeto tem especialistas com nome e sobrenome, que entendem o seu negócio, decidem com você e respondem pelo resultado do briefing ao suporte.</p></div>
+    <div class="hd rv"><span class="eb">06 · Quem constrói</span><h2 id="t-quem">Todo mundo tem IA. <em class="g">Nem todo mundo tem especialista.</em></h2><p>Hoje qualquer pessoa gera um site ou um sistema em minutos. O que faz diferença é quem entende o seu negócio, faz as perguntas certas e responde pelo resultado. Na CProject, você conversa com profissionais de desenvolvimento, marketing e dados, que acompanham o projeto do primeiro briefing ao suporte.</p></div>
     <div class="team">{time_html()}</div>
-    <div class="pills rv"><span>Comunicação direta</span><span>Entrega incremental</span><span>IA com revisão humana</span><span>Suporte pós-entrega</span></div>
+    <div class="pills rv"><span>Comunicação direta</span><span>Entrega incremental</span><span>Atendimento por pessoas</span><span>Suporte pós-entrega</span></div>
   </div>
 </section>
 
