@@ -73,6 +73,57 @@
     let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { montar(); quadro(); }, 200); });
   }
 
+  // planos: abas
+  const pl = $('.pl');
+  if (pl) {
+    pl.classList.add('js');
+    const tabs = [...pl.querySelectorAll('[role=tab]')], panes = [...pl.querySelectorAll('[role=tabpanel]')];
+    const abrir = (t, foco) => {
+      tabs.forEach(x => { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; });
+      panes.forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
+      if (foco) t.focus();
+      t.scrollIntoView({block: 'nearest', inline: 'nearest', behavior: reduz ? 'auto' : 'smooth'});
+      dataLayer.push({event: 'plan_tab', aba: t.id.replace('tab-', '')});
+    };
+    panes.forEach((p, i) => { p.hidden = i !== 0; });
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => abrir(t));
+      t.addEventListener('keydown', e => {
+        const k = {ArrowRight: 1, ArrowLeft: -1}[e.key];
+        if (k) { e.preventDefault(); abrir(tabs[(i + k + tabs.length) % tabs.length], true); }
+        if (e.key === 'Home') { e.preventDefault(); abrir(tabs[0], true); }
+        if (e.key === 'End') { e.preventDefault(); abrir(tabs[tabs.length - 1], true); }
+      });
+    });
+  }
+
+  // portfólio: carrossel
+  const tr = $('#pft');
+  if (tr) {
+    const bar = $('#pfbar'), btns = $$('.pfb'), items = [...tr.children];
+    const passo = () => (items[0]?.getBoundingClientRect().width || 400) + parseFloat(getComputedStyle(tr).columnGap || 16);
+    const setVh = () => $$('.vp').forEach(v => v.style.setProperty('--vh', v.clientHeight + 'px'));
+    const atualizar = () => {
+      const max = tr.scrollWidth - tr.clientWidth, x = tr.scrollLeft;
+      if (bar) { bar.style.width = Math.max(12, tr.clientWidth / tr.scrollWidth * 100) + '%'; bar.style.transform = `translateX(${max > 0 ? x / max * (tr.scrollWidth / tr.clientWidth - 1) * 100 : 0}%)`; }
+      btns.forEach(b => { b.disabled = +b.dataset.dir < 0 ? x <= 2 : x >= max - 2; });
+    };
+    const ir = d => tr.scrollBy({left: d * passo(), behavior: reduz ? 'auto' : 'smooth'});
+    btns.forEach(b => b.addEventListener('click', () => { ir(+b.dataset.dir); parar(); }));
+    tr.addEventListener('scroll', atualizar, {passive: true});
+    addEventListener('resize', () => { setVh(); atualizar(); });
+    setVh(); atualizar();
+    // avanço automático lento, pausa em interação, foco, aba oculta ou fora da tela
+    let tm = null, visto = false, pausado = false;
+    const tick = () => { if (pausado || !visto || document.hidden) return; const max = tr.scrollWidth - tr.clientWidth; if (tr.scrollLeft >= max - 2) tr.scrollTo({left: 0, behavior: 'smooth'}); else ir(1); };
+    const iniciar = () => { if (!reduz && !tm) tm = setInterval(tick, 4200); };
+    const parar = () => { clearInterval(tm); tm = null; };
+    ['pointerenter', 'focusin', 'touchstart'].forEach(ev => tr.addEventListener(ev, () => { pausado = true; }, {passive: true}));
+    ['pointerleave', 'focusout'].forEach(ev => tr.addEventListener(ev, () => { pausado = false; }));
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visto = e.isIntersecting; visto ? iniciar() : parar(); }, {threshold: .35}).observe(tr);
+    tr.addEventListener('click', e => { const a = e.target.closest('a'); if (a) dataLayer.push({event: 'portfolio_click', site: a.href}); });
+  }
+
   // formulário -> WhatsApp
   const fm = $('#fm');
   if (fm) fm.addEventListener('submit', e => {

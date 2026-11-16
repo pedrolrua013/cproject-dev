@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "4"  # versão dos assets
+V = "5"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -83,11 +83,154 @@ PASSOS = [("Diagnóstico", "Mapeamento do processo manual que está travando a o
           ("Construção incremental", "Ciclos curtos de desenvolvimento, com você acompanhando cada entrega e código pensado para evoluir sem retrabalho."),
           ("Entrega e suporte direto", "Sistema no ar, com ajustes e evolução conversando direto com quem construiu, sem intermediário.")]
 
-FAQ_HOME = [("O que a CProject faz?", "A CProject reúne três frentes: um estúdio que desenvolve sites, sistemas, dashboards e automações sob medida; produtos próprios, como o Sorrirmos e o Cortando; e um hub de soluções prontas para profissionais, como packs de skills de IA."),
-            ("Quanto tempo leva para ver algo funcionando?", "A primeira versão navegável sai em poucos dias, já com dados reais e fluxo de uso. Depois o projeto evolui em ciclos curtos, com você acompanhando cada entrega."),
-            ("Vocês trabalham com template?", "Não. Interface e código são feitos sob medida para cada operação, o que facilita evoluir depois sem retrabalho."),
-            ("Os produtos Sorrirmos e Cortando já estão disponíveis?", "O Sorrirmos está em pré-lançamento e o Cortando em desenvolvimento. Fale com a gente pelo WhatsApp para entrar na lista de espera."),
+FAQ_HOME = [("O que a CProject faz?", "A CProject reúne três frentes: um estúdio que desenvolve sites, sistemas, dashboards e automações sob medida; os Sistemas Lab, como o Sorrirmos e o Cortando; e soluções prontas, como landing pages, BI em template e packs de skills de IA."),
+            ("Quanto custa o Sorrirmos?", "O Sorrirmos tem três planos: Starter por R$ 89,90 por mês, Professional por R$ 199,90 por mês e Max Clinic por R$ 499,90 por mês. Nos contratos mensais há uma taxa única de implantação de R$ 297; no plano anual a implantação é isenta."),
+            ("Qual a diferença entre a landing page Template e a Hospedada?", "A Landing Page Template custa R$ 297 em pagamento único. A Hospedada custa R$ 297 de implantação mais R$ 50 por mês, e a CProject cuida da publicação e da hospedagem da página. Para design e textos totalmente sob medida, a Landing Page Personalizada parte de R$ 997."),
+            ("O BI em template precisa de hospedagem?", "Não é obrigatório. O BI Template custa R$ 100 em pagamento único. Se preferir o painel publicado e mantido pela CProject, a opção BI Template + Hospedagem custa R$ 100 de implantação mais R$ 50 por mês."),
+            ("E se eu precisar de algo fora dos planos?", "Sistemas, sites, automações e BI personalizados entram no CProject Custom, com orçamento feito a partir de uma conversa sobre o seu processo."),
+            ("Vocês trabalham com template?", "Nos projetos sob medida, não: interface e código são feitos para cada operação. Os templates existem como opção mais rápida e econômica, com landing pages e painéis de BI prontos para adaptar à sua marca."),
             ("Como funciona o suporte depois da entrega?", "Ajustes e evolução são conversados direto com quem construiu o projeto, sem intermediário e sem fila de ticket.")]
+
+# ---------- planos (CProject Lab) ----------
+# preço: (inteiro, centavos, sufixo) ou None quando em definição
+PLANOS = [
+  {"id": "sistemas", "aba": "Sistemas Lab", "titulo": "Sistemas Lab por assinatura",
+   "intro": "Sistemas prontos da CProject para negócios que vivem de agenda e relacionamento com o cliente.",
+   "produto": {"nome": "Sorrirmos", "cor": "#8E80EF", "letra": "S", "seg": "Gestão para clínicas odontológicas",
+               "todos": ["Agenda e cadastro de pacientes em um só lugar", "Lembrete automático pelo WhatsApp na véspera da consulta", "Confirmação do paciente com um toque", "WhatsApp oficial, com o custo das mensagens já incluso", "Aceite de LGPD antes de qualquer envio"]},
+   "planos": [
+     {"nome": "Starter", "tag": "Para começar", "para": "Para o consultório que quer tirar a agenda do papel e parar de confirmar horário um a um.", "preco": ("89", "90", "/mês"), "cond": "+ R$ 297 de implantação no plano mensal"},
+     {"nome": "Professional", "tag": "Para crescer", "para": "Para clínicas com agenda cheia, que precisam de lembretes e confirmações rodando todos os dias.", "preco": ("199", "90", "/mês"), "cond": "+ R$ 297 de implantação no plano mensal", "hl": True},
+     {"nome": "Max Clinic", "tag": "Operação completa", "para": "Para clínicas com mais cadeiras e equipe maior, que precisam de tudo no mesmo sistema.", "preco": ("499", "90", "/mês"), "cond": "+ R$ 297 de implantação no plano mensal"},
+   ],
+   "nota": "Plano anual com implantação isenta. Os recursos de cada plano são apresentados na demonstração.",
+   "extra": {"nome": "Cortando", "cor": "#D9468A", "letra": "C", "seg": "Gestão para barbearias e salões de beleza", "status": "Planos em definição",
+             "txt": "Agenda, atendimento e equipe da barbearia em um só sistema.", "cta": "Quero ser avisado", "wa": "Olá! Quero ser avisado quando os planos do Cortando estiverem disponíveis."}},
+  {"id": "landing", "aba": "Landing pages", "titulo": "Landing pages",
+   "intro": "Do modelo pronto ao projeto sob medida, com WhatsApp, formulário e página preparada para o Google.",
+   "planos": [
+     {"nome": "Landing Page Template", "cta": "Quero a Template", "tag": "Mais rápida", "para": "Um modelo pronto da CProject adaptado à sua marca, para colocar a página no ar sem esperar um projeto inteiro.", "preco": ("297", None, ""), "cond": "pagamento único",
+      "itens": ["Página única com as cores, o logo e os textos da sua marca", "Layout responsivo para celular e computador", "Botão de WhatsApp e formulário de contato", "Arquivos entregues para publicar onde preferir"]},
+     {"nome": "Landing Page Hospedada", "cta": "Quero a Hospedada", "tag": "Sem dor de cabeça", "para": "O mesmo modelo, publicado e mantido no ar pela CProject.", "preco": ("297", None, ""), "cond": "de implantação + R$ 50/mês", "hl": True,
+      "itens": ["Tudo da Landing Page Template", "Publicação e hospedagem por conta da CProject", "Certificado SSL e configuração do seu domínio", "Você não precisa cuidar de servidor"]},
+     {"nome": "Landing Page Personalizada", "cta": "Quero a Personalizada", "tag": "Sob medida", "para": "Design, estrutura e textos criados do zero para a sua oferta e o seu público.", "preco": ("997", None, ""), "pre": "a partir de", "cond": "valor final conforme o escopo",
+      "itens": ["Design próprio, sem modelo pronto", "Copy escrita para a sua oferta", "SEO por página e dados estruturados para o Google", "Medição de cliques no WhatsApp e no formulário"]},
+   ]},
+  {"id": "bi", "aba": "BI & dados", "titulo": "BI e inteligência de dados",
+   "intro": "Painéis prontos para transformar planilha em indicador, sem montar relatório na mão toda semana.",
+   "planos": [
+     {"nome": "BI Template", "tag": "Para começar", "para": "Um painel modelo da CProject para organizar os indicadores do seu negócio.", "preco": ("100", None, ""), "cond": "pagamento único",
+      "itens": ["Painel pronto com os indicadores principais", "Ajustado aos dados da sua planilha", "Visual limpo para decidir rápido"]},
+     {"nome": "BI Template + Hospedagem", "cta": "Quero com hospedagem", "tag": "Acesso por link", "para": "O mesmo painel, publicado e mantido pela CProject.", "preco": ("100", None, ""), "cond": "de implantação + R$ 50/mês", "hl": True,
+      "itens": ["Tudo do BI Template", "Painel publicado, acessível de qualquer dispositivo", "Hospedagem por conta da CProject"]},
+   ],
+   "nota": "Precisa de um BI com as suas fontes de dados e regras próprias? Veja o CProject Custom."},
+  {"id": "skills", "aba": "Packs de skills", "titulo": "Packs de skills de IA",
+   "intro": "Skills prontas para delegar à IA tarefas recorrentes, como redação, relatórios e atendimento. Do Mini ao Master, cada nível reúne mais skills.",
+   "packs": [("Mini", "79", "90"), ("Essencial", "149", "90"), ("Avançado", "249", "90"), ("Completo", "349", "90"), ("Master", "499", "90")]},
+  {"id": "eventos", "aba": "Event Coverage", "titulo": "Event Coverage",
+   "intro": "Soluções da CProject para cobertura de eventos, em fase final de definição de preços.",
+   "planos": [
+     {"nome": "Event Coverage Kit", "tag": "Em breve", "para": "Kit para cobertura de eventos.", "preco": None, "cond": "preço em definição"},
+     {"nome": "Event Coverage SaaS", "tag": "Em breve", "para": "Plataforma por assinatura para cobertura de eventos.", "preco": None, "cond": "preço em definição"},
+   ]},
+  {"id": "custom", "aba": "Custom", "titulo": "CProject Custom",
+   "intro": "Quando nenhum plano encaixa, o projeto é feito do zero para o seu processo, com orçamento sob medida.",
+   "custom": [("Sistemas personalizados", "Agenda, cadastros, atendimento e etapas do jeito que a sua equipe trabalha.", "/sistemas-sob-medida/"),
+              ("Sites e plataformas", "Sites institucionais e plataformas web com painel próprio para a equipe.", "/sites-e-apps/"),
+              ("Automações", "Integrações e automações, inclusive pelo WhatsApp, que tiram tarefa repetitiva da equipe.", "/automacao-de-processos/"),
+              ("BI personalizado", "Painéis conectados às suas fontes de dados, com os indicadores que orientam a decisão.", "/dashboards-e-bi/")]},
+]
+
+PORTFOLIO = [
+  {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Landing page", "SEO local", "Orçamento pelo WhatsApp"]},
+  {"slug": "yamam", "nome": "Grupo Yamam", "seg": "Segurança patrimonial, portaria e limpeza · SP e Baixada Santista", "url": "https://grupo-yamam.vercel.app/", "host": "grupo-yamam.vercel.app", "tags": ["Site institucional", "SEO", "Blog"]},
+  {"slug": "antonelze", "nome": "Antonelze", "seg": "Moda feminina e vestidos de festa · Santos, SP", "url": "https://antonelze.vercel.app/", "host": "antonelze.vercel.app", "tags": ["Vitrine de produtos", "Atendimento pelo WhatsApp"]},
+  {"slug": "dream4team", "nome": "Dream4Team", "seg": "Estúdio independente de jogos", "url": "https://dream4team.vercel.app/", "host": "dream4team.vercel.app", "tags": ["Site institucional", "Portfólio de jogos"]},
+  {"slug": "bonomi", "nome": "Bonomi Almeida", "seg": "Advocacia · Estado de São Paulo", "url": "https://bonomi-almeida.vercel.app/", "host": "bonomi-almeida.vercel.app", "tags": ["Site institucional", "Áreas de atuação"]},
+]
+
+TIME = [
+  ("BP", "Bruno C. Peres", "Desenvolvimento", "Especialista em desenvolvimento de sistemas", "Desenvolvedor full-stack e product designer. Transforma o processo do cliente em sistema, da primeira tela ao banco de dados.", ["Full-stack", "Product design", "ADS · FATEC"]),
+  ("GR", "Gustavo Recouso", "Desenvolvimento", "Especialista em desenvolvimento de sistemas", "Cuida da construção e da evolução dos sistemas, para que cada entrega rode com estabilidade e cresça sem retrabalho.", ["Sistemas", "Integrações", "Evolução contínua"]),
+  ("PR", "Pedro Rua", "Marketing & analytics", "Analista de marketing e analytics", "Conecta produto, comunicação e dados: posicionamento, landing pages que convertem, CRM e painéis que mostram o que está funcionando.", ["Marketing", "CRM", "Analytics e BI"]),
+]
+
+def time_html():
+    return "".join(f'''<article class="pp rv"><div class="av" aria-hidden="true"><span>{ini}</span></div><div class="pbody"><p class="pro">{E(area)}</p><h3>{E(nome)}</h3><p class="pr-r">{E(papel)}</p><p class="pr-d">{E(desc)}</p><ul class="pr-t">{"".join(f"<li>{E(t)}</li>" for t in tags)}</ul></div></article>''' for ini, nome, area, papel, desc, tags in TIME)
+
+def preco_html(p):
+    if not p["preco"]:
+        return f'<div class="pr"><span class="val tbd">Em definição</span><span class="cond">{E(p["cond"])}</span></div>'
+    inte, cent, suf = p["preco"]
+    c = f'<i>,{cent}</i>' if cent else ''
+    s = f'<small class="suf">{suf}</small>' if suf else ''
+    pre = f'<span class="pre">{E(p["pre"])}</span>' if p.get("pre") else ''
+    return f'<div class="pr">{pre}<span class="val"><small>R$</small><b>{inte}</b>{c}{s}</span><span class="cond">{E(p["cond"])}</span></div>'
+
+def plano_html(p, grupo):
+    hl = " hl" if p.get("hl") else ""
+    badge = '<span class="pbadge">Recomendado</span>' if p.get("hl") else ""
+    itens = "".join(f"<li>{E(i)}</li>" for i in p.get("itens", []))
+    ul = f"<ul>{itens}</ul>" if itens else ""
+    if p["preco"]:
+        cta_t, msg = p.get("cta", f'Quero o {p["nome"]}'), f'Olá! Vim pelo site da CProject e quero contratar: {(grupo + " " + p["nome"]).strip()}.'
+    else:
+        cta_t, msg = "Quero ser avisado", f'Olá! Quero ser avisado quando o {p["nome"]} estiver disponível.'
+    cls = "btn" if p.get("hl") else "btn o"
+    return f'''<article class="plan{hl}">{badge}<div><p class="ptag">{E(p["tag"])}</p><h4>{E(p["nome"])}</h4><p class="pfor">{E(p["para"])}</p></div>{preco_html(p)}{ul}<a class="{cls}" href="{wa(msg)}" target="_blank" rel="noopener" data-origem="plano" data-plano="{E(p["nome"])}">{E(cta_t)}</a></article>'''
+
+def planos_html():
+    abas, paineis = [], []
+    for i, g in enumerate(PLANOS):
+        sel = "true" if i == 0 else "false"
+        abas.append(f'<button type="button" role="tab" id="tab-{g["id"]}" aria-controls="pn-{g["id"]}" aria-selected="{sel}" tabindex="{0 if i == 0 else -1}">{E(g["aba"])}</button>')
+        corpo = ""
+        if "produto" in g:
+            pr = g["produto"]
+            todos = "".join(f"<li>{E(t)}</li>" for t in pr["todos"])
+            corpo += f'''<div class="phead"><div class="mk"><b style="background:{pr["cor"]}">{pr["letra"]}</b><div><h3>{pr["nome"]}</h3><p>{E(pr["seg"])}</p></div></div></div>'''
+            corpo += '<div class="plans p3">' + "".join(plano_html(p, pr["nome"]) for p in g["planos"]) + '</div>'
+            corpo += f'<div class="incl"><p class="ititle">Em todos os planos do {pr["nome"]}</p><ul>{todos}</ul></div>'
+            corpo += f'<p class="pnote">{E(g["nota"])}</p>'
+            x = g["extra"]
+            corpo += f'''<article class="soon"><div class="mk"><b style="background:{x["cor"]}">{x["letra"]}</b><div><h3>{x["nome"]}</h3><p>{E(x["seg"])}</p></div></div><p class="stx">{E(x["txt"])}</p><span class="st c">{E(x["status"])}</span><a class="lk" href="{wa(x["wa"])}" target="_blank" rel="noopener" data-origem="cortando">{E(x["cta"])} {I_SETA}</a></article>'''
+        elif "packs" in g:
+            corpo += '<div class="packs">' + "".join(f'''<article class="pack"><h4>{n}</h4><div class="val"><small>R$</small><b>{a}</b><i>,{c}</i></div><a class="lk" href="{wa(f"Olá! Vim pelo site da CProject e quero o Pack de Skills {n}.")}" target="_blank" rel="noopener" data-origem="plano" data-plano="Pack {n}" aria-label="Escolher o pack {n}">Escolher {I_SETA}</a></article>''' for n, a, c in g["packs"]) + '</div>'
+        elif "custom" in g:
+            corpo += '<div class="custom">' + "".join(f'<article class="card"><h4>{E(t)}</h4><p>{E(d)}</p><a class="lk" href="{h}">Saiba mais {I_SETA}</a></article>' for t, d, h in g["custom"]) + '</div>'
+            corpo += f'<div class="ctas"><a class="btn" href="{wa("Olá! Vim pelo site da CProject e quero um orçamento para um projeto sob medida.")}" target="_blank" rel="noopener" data-origem="custom">{I_WA} Pedir orçamento</a></div>'
+        else:
+            n = len(g["planos"])
+            corpo += f'<div class="plans p{n}">' + "".join(plano_html(p, "") for p in g["planos"]) + '</div>'
+            if g.get("nota"): corpo += f'<p class="pnote">{E(g["nota"])}</p>'
+        paineis.append(f'''<div class="pane" role="tabpanel" id="pn-{g["id"]}" aria-labelledby="tab-{g["id"]}" tabindex="0"><div class="pintro"><h3 class="ptitle">{E(g["titulo"])}</h3><p>{E(g["intro"])}</p></div>{corpo}</div>''')
+    return f'<div class="tabs" role="tablist" aria-label="Linhas de produto">{"".join(abas)}</div>' + "".join(paineis)
+
+def portfolio_html():
+    cards = []
+    for i, p in enumerate(PORTFOLIO):
+        tags = "".join(f"<span>{E(t)}</span>" for t in p["tags"])
+        cards.append(f'''<li class="pf"><a href="{p["url"]}" target="_blank" rel="noopener" aria-label="{E(p["nome"])}: abrir o site em nova aba"><div class="shot"><div class="bar"><i></i><i></i><i></i><span>{p["host"]}</span></div><div class="vp"><img src="/assets/portfolio/pf-{p["slug"]}-560.webp" srcset="/assets/portfolio/pf-{p["slug"]}-560.webp 560w, /assets/portfolio/pf-{p["slug"]}.webp 960w" sizes="(max-width:640px) 84vw, 560px" width="560" height="1050" loading="lazy" decoding="async" alt="Página inicial do site {E(p["nome"])}"></div></div><div class="pfm"><div><h3>{E(p["nome"])}</h3><p>{E(p["seg"])}</p></div><span class="go" aria-hidden="true">↗</span></div><div class="tags">{tags}</div></a></li>''')
+    return "".join(cards)
+
+def offer_catalog():
+    itens = []
+    for g in PLANOS:
+        nome_g = g["titulo"]
+        for p in g.get("planos", []):
+            o = {"@type": "Offer", "name": (g["produto"]["nome"] + " " + p["nome"]) if "produto" in g else p["nome"], "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#planos"}
+            if p["preco"]:
+                inte, cent, suf = p["preco"]
+                o["price"] = f'{inte}.{cent or "00"}'
+                if suf: o["priceSpecification"] = {"@type": "UnitPriceSpecification", "price": o["price"], "priceCurrency": "BRL", "unitCode": "MON"}
+                if p.get("pre"): o["description"] = "Preço a partir de"
+            else:
+                continue
+            itens.append(o)
+        for n, a, c in g.get("packs", []):
+            itens.append({"@type": "Offer", "name": f"Pack de Skills {n}", "price": f"{a}.{c}", "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#planos"})
+    return {"@type": "OfferCatalog", "name": "Catálogo CProject Lab", "itemListElement": itens}
 
 def head(title, desc, path, schema, extra=""):
     url = BASE + path
@@ -115,7 +258,7 @@ def head(title, desc, path, schema, extra=""):
 
 def nav(home=True, atual=""):
     p = "" if home else "/"
-    links = [("Estúdio", f"{p}#estudio"), ("Produtos", f"{p}#produtos"), ("Hub", f"{p}#hub"), ("Case", f"{p}#case"), ("Contato", f"{p}#contato")]
+    links = [("Estúdio", f"{p}#estudio"), ("Planos", f"{p}#planos"), ("Portfólio", f"{p}#portfolio"), ("Dúvidas", f"{p}#faq"), ("Contato", f"{p}#contato")]
     lis = "".join(f'<li><a href="{h}">{t}</a></li>' for t, h in links)
     return f'''<header class="nav" id="topo">
   <div class="in">
@@ -132,12 +275,12 @@ def rodape():
   <div class="in">
     <div class="fg">
       <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}<span>CPr<i>oject</i></span></a>
-        <p>Estúdio full-stack, produtos próprios e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
+        <p>Estúdio full-stack, Sistemas Lab e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
       <div><h3 class="fh">Estúdio</h3><ul>{sv}</ul></div>
-      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#produtos">Sorrirmos</a></li><li><a href="/#produtos">Cortando</a></li><li><a href="/#hub">Packs de skills</a></li><li><a href="/#case">Case</a></li></ul></div>
+      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#planos">Sorrirmos</a></li><li><a href="/#planos">Cortando</a></li><li><a href="/#planos">Landing pages e BI</a></li><li><a href="/#planos">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
       <div><h3 class="fh">Contato</h3><ul><li><a href="{wa("Olá! Vim pelo site da CProject.")}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp {WA_FMT}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="{IG}" target="_blank" rel="noopener">@cproject.dev</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
     </div>
-    <div class="cp"><span>© {datetime.date.today().year} CProject · Bruno C. Peres</span><span>Feito sob medida, do rascunho ao produto no ar.</span></div>
+    <div class="cp"><span>© {datetime.date.today().year} CProject</span><span>Feito sob medida, do rascunho ao produto no ar.</span></div>
   </div>
 </footer>
 <a class="wa" href="{{WAF}}" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp" data-origem="flutuante">{I_WA}</a>
@@ -149,7 +292,7 @@ def rodape():
 ORG = {"@type": ["Organization", "ProfessionalService"], "@id": BASE + "/#org", "name": "CProject", "alternateName": "CProject Estúdio Digital",
        "url": BASE + "/", "logo": BASE + "/assets/icons/icon-512.png", "image": BASE + "/assets/og.png",
        "description": "Estúdio full-stack de sites, sistemas, dashboards e automações sob medida, com produtos próprios e soluções para profissionais.",
-       "email": EMAIL, "telephone": "+55-13-97417-7986", "founder": {"@type": "Person", "name": "Bruno C. Peres"},
+       "email": EMAIL, "telephone": "+55-13-97417-7986", "founder": {"@type": "Person", "name": "Bruno C. Peres"}, "employee": [{"@type": "Person", "name": "Bruno C. Peres", "jobTitle": "Especialista em desenvolvimento de sistemas"}, {"@type": "Person", "name": "Gustavo Recouso", "jobTitle": "Especialista em desenvolvimento de sistemas"}, {"@type": "Person", "name": "Pedro Rua", "jobTitle": "Analista de marketing e analytics"}],
        "sameAs": [IG], "areaServed": {"@type": "Country", "name": "Brasil"},
        "contactPoint": {"@type": "ContactPoint", "telephone": "+55-13-97417-7986", "contactType": "customer service", "availableLanguage": "Portuguese"}}
 
@@ -160,8 +303,9 @@ def home():
     schema = {"@context": "https://schema.org", "@graph": [ORG,
         {"@type": "WebSite", "@id": BASE + "/#site", "url": BASE + "/", "name": "CProject", "inLanguage": "pt-BR", "publisher": {"@id": BASE + "/#org"}},
         faq_schema(FAQ_HOME)]}
-    title = "CProject · Sites, sistemas e apps sob medida"
-    desc = "Estúdio full-stack de sites, sistemas, dashboards e automações sob medida, com produtos próprios e soluções prontas para profissionais."
+    schema["@graph"][0] = dict(ORG, hasOfferCatalog=offer_catalog())
+    title = "CProject · Sistemas, landing pages e BI com preço claro"
+    desc = "Sistemas Lab como o Sorrirmos a partir de R$ 89,90/mês, landing pages a partir de R$ 297, BI em template e projetos sob medida. Estúdio full-stack."
     sv = "".join(f'''<article class="card rv"><span class="n">0{i+1}</span><h3>{s["nome"]}</h3><p>{s["card"]}</p><a class="lk" href="/{s["slug"]}/">Ver {s["nome"].lower()} {I_SETA}</a></article>''' for i, s in enumerate(SERVICOS))
     ps = "".join(f'<article class="card rv"><h3>{t}</h3><p>{d}</p></article>' for t, d in PASSOS)
     out = head(title, desc, "/", schema, '<link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>\n') + nav() + f'''
@@ -169,12 +313,12 @@ def home():
 <section class="hero" aria-labelledby="h1">
   <canvas id="hero-cv" aria-hidden="true"></canvas>
   <div class="in">
-    <span class="eb">CProject · estúdio, produtos e hub</span>
+    <span class="eb">CProject · estúdio, Sistemas Lab e soluções prontas</span>
     <h1 id="h1">Sites, sistemas e apps <em class="g">sob medida</em>, do rascunho ao produto no ar.</h1>
-    <p class="lead">Um estúdio full-stack que também cria produtos próprios e soluções prontas para profissionais.</p>
+    <p class="lead">Um estúdio full-stack com sistemas por assinatura, landing pages e BI de preço fechado, e projetos sob medida quando o plano não basta.</p>
     <div class="ctas">
       <a class="btn" href="{wa("Olá! Vim pelo site da CProject e quero agendar a conversa de 15 minutos.")}" target="_blank" rel="noopener" data-origem="hero">{I_WA} Agendar conversa de 15 min</a>
-      <a class="btn o" href="#produtos">Conhecer os produtos</a>
+      <a class="btn o" href="#planos">Ver planos e preços</a>
     </div>
     <div class="stack" aria-label="Tecnologias"><span>Next.js</span><span>React</span><span>Supabase</span><span>Vercel</span></div>
   </div>
@@ -182,11 +326,11 @@ def home():
 
 <section class="sec" id="frentes" aria-labelledby="t-frentes">
   <div class="in">
-    <div class="hd rv"><span class="eb">01 · Ecossistema</span><h2 id="t-frentes">Três frentes, <em class="g">um único fluxo</em></h2><p>O mesmo time que desenvolve sob medida para clientes constrói produtos próprios e empacota o que funciona em soluções prontas.</p></div>
+    <div class="hd rv"><span class="eb">01 · Ecossistema</span><h2 id="t-frentes">Três frentes, <em class="g">um único fluxo</em></h2><p>O mesmo time que desenvolve sob medida para clientes constrói sistemas próprios e empacota o que funciona em soluções de preço fechado.</p></div>
     <div class="fr">
       <article class="card hl rv"><span class="n">ESTÚDIO</span><h3>Sob medida para a sua operação</h3><p>Sites, sistemas internos, dashboards e automações construídos do zero para o processo de cada cliente.</p><a class="lk" href="#estudio">Ver serviços {I_SETA}</a></article>
-      <article class="card rv"><span class="n">PRODUTOS</span><h3>Sistemas próprios por assinatura</h3><p>Plataformas da CProject para segmentos específicos, começando por clínicas e salões de beleza.</p><a class="lk" href="#produtos">Ver produtos {I_SETA}</a></article>
-      <article class="card rv"><span class="n">HUB</span><h3>Soluções prontas para profissionais</h3><p>Packs de skills de IA e materiais para quem quer ganhar tempo no dia a dia sem contratar um projeto inteiro.</p><a class="lk" href="#hub">Ver o hub {I_SETA}</a></article>
+      <article class="card rv"><span class="n">SISTEMAS LAB</span><h3>Sistemas próprios por assinatura</h3><p>Sorrirmos para clínicas odontológicas, a partir de R$ 89,90 por mês, e Cortando para barbearias, em breve.</p><a class="lk" href="#planos">Ver planos {I_SETA}</a></article>
+      <article class="card rv"><span class="n">SOLUÇÕES PRONTAS</span><h3>Preço fechado, entrega rápida</h3><p>Landing pages a partir de R$ 297, BI em template a partir de R$ 100 e packs de skills de IA a partir de R$ 79,90.</p><a class="lk" href="#planos">Ver preços {I_SETA}</a></article>
     </div>
   </div>
 </section>
@@ -198,30 +342,20 @@ def home():
   </div>
 </section>
 
-<section class="sec" id="produtos" aria-labelledby="t-produtos">
+<section class="sec" id="planos" aria-labelledby="t-planos">
   <div class="in">
-    <div class="hd rv"><span class="eb">03 · Produtos</span><h2 id="t-produtos">Produtos próprios para <em class="g">quem atende com hora marcada</em></h2><p>Sistemas da CProject para negócios que vivem de agenda e relacionamento com o cliente.</p></div>
-    <div class="pd">
-      <article class="card rv"><div class="top"><div class="mk"><b style="background:#8E80EF">S</b><h3>Sorrirmos</h3></div><span class="st">Pré-lançamento</span></div>
-        <p>CRM por assinatura para dentistas, nutricionistas e psicólogos: agenda, relacionamento com pacientes e rotina do consultório em um só lugar.</p>
-        <a class="lk" href="{wa("Olá! Quero entrar na lista de espera do Sorrirmos.")}" target="_blank" rel="noopener" data-origem="sorrirmos">Entrar na lista de espera {I_SETA}</a></article>
-      <article class="card rv"><div class="top"><div class="mk"><b style="background:#D9468A">C</b><h3>Cortando</h3></div><span class="st c">Em desenvolvimento</span></div>
-        <p>Sistema de gestão para salões de beleza e barbearias, pensado para a rotina de agenda, atendimento e equipe.</p>
-        <a class="lk" href="{wa("Olá! Quero saber quando o Cortando estiver disponível.")}" target="_blank" rel="noopener" data-origem="cortando">Quero ser avisado {I_SETA}</a></article>
-    </div>
+    <div class="hd rv"><span class="eb">03 · Planos e preços</span><h2 id="t-planos">Escolha por onde <em class="g">começar</em></h2><p>Catálogo CProject Lab: sistemas por assinatura, soluções de preço fechado e projetos sob orçamento. Escolha a linha e veja os valores.</p></div>
+    <div class="pl rv" id="produtos">{planos_html()}</div>
   </div>
 </section>
 
-<section class="sec alt" id="hub" aria-labelledby="t-hub">
-  <div class="in hub">
-    <div class="hd rv"><span class="eb">04 · Hub para profissionais</span><h2 id="t-hub">Soluções prontas para <em class="g">trabalhar melhor com IA</em></h2><p>Nem todo mundo precisa de um sistema sob medida. Para profissionais que querem ganhar tempo agora, o hub reúne ferramentas prontas, construídas a partir do que usamos nos nossos próprios projetos.</p>
-      <div class="ctas"><a class="btn" href="{wa("Olá! Quero saber sobre os packs de skills da CProject.")}" target="_blank" rel="noopener" data-origem="hub">Quero ser avisado do lançamento</a></div></div>
-    <div class="pk">
-      <article class="card rv"><span class="ic">{I_PACK}</span><div><h3>Packs de skills de IA</h3><p>Conjuntos de skills prontas para delegar tarefas recorrentes à IA, como redação, relatórios e atendimento.</p><span class="st c" style="margin-top:12px">Em breve</span></div></article>
-      <article class="card rv"><span class="ic">{I_SPARK}</span><div><h3>Conteúdo e formação em IA</h3><p>Materiais práticos para aplicar inteligência artificial na rotina profissional, sem jargão técnico.</p><span class="st c" style="margin-top:12px">Em breve</span></div></article>
-      <article class="card rv"><span class="ic">{I_DOC}</span><div><h3>Modelos e templates</h3><p>Estruturas prontas de processos, páginas e painéis para adaptar ao seu negócio.</p><span class="st c" style="margin-top:12px">Em breve</span></div></article>
-    </div>
+<section class="sec alt" id="portfolio" aria-labelledby="t-pf">
+  <div class="in">
+    <div class="hd pfh rv"><div><span class="eb">04 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Projetos publicados para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
+      <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
   </div>
+  <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
+  <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
 </section>
 
 <section class="sec" id="abordagem" aria-labelledby="t-ab">
@@ -231,37 +365,25 @@ def home():
   </div>
 </section>
 
-<section class="sec alt" id="case" aria-labelledby="t-case">
-  <div class="in cs">
-    <div class="rv"><span class="eb">06 · Case</span><h2 id="t-case" style="font-size:var(--h2);margin-top:16px">Fundação Virgínia Ferraz</h2>
-      <p style="color:var(--tx-2);margin-top:16px">Site institucional da Fundação Virgínia Ferraz, organização sem fins lucrativos ligada à ISTV, a serviço da cultura, da educação e da cidadania na Baixada Santista. Além da apresentação pública, o projeto inclui um painel administrativo próprio para a equipe gerenciar álbuns, agenda, notícias e eventos sem depender de suporte técnico.</p>
-      <div class="meta"><div><small>Páginas</small><b>8</b></div><div><small>Áreas de atuação</small><b>6</b></div><div><small>Painel admin</small><b>Sim</b></div></div>
-      <div class="tags"><span>Next.js</span><span>Vercel</span><span>Painel administrativo</span><span>No ar</span></div>
-      <div class="ctas"><a class="btn o" href="https://fvf-site-dun.vercel.app/" target="_blank" rel="noopener">Visitar o site ↗</a></div></div>
-    <figure class="mock rv" aria-hidden="true"><div class="bar"><i></i><i></i><i></i><span>fvf-site-dun.vercel.app</span></div><div class="bd"><div class="t"></div><div style="width:84%"></div><div style="width:70%"></div><div class="g"><span></span><span></span><span></span></div><div style="width:52%"></div></div></figure>
-  </div>
-</section>
-
-<section class="sec" id="quem" aria-labelledby="t-quem">
-  <div class="in cs">
-    <div class="rv"><span class="eb">07 · Quem constrói</span><h2 id="t-quem" style="font-size:var(--h2);margin-top:16px">Um fluxo, do briefing ao suporte</h2>
-      <p style="color:var(--tx-2);margin-top:16px">A CProject é conduzida por Bruno C. Peres, que reúne desenvolvimento full-stack, product design e relacionamento com o cliente em um único fluxo de trabalho. O mesmo time acompanha o projeto do briefing ao suporte pós-entrega, sem repasse entre áreas no caminho.</p>
-      <div class="pills"><span>Full-stack</span><span>Comunicação direta</span><span>Entrega incremental</span><span>Código sob medida</span><span>Suporte pós-entrega</span></div></div>
-    <dl class="ft rv"><div><dt>Responsável</dt><dd>Bruno C. Peres</dd></div><div><dt>Formação</dt><dd>ADS, FATEC</dd></div><div><dt>Papéis</dt><dd>Full-stack + Product Design</dd></div><div><dt>Stack</dt><dd>Next.js · React · Supabase</dd></div><div><dt>Instagram</dt><dd><a href="{IG}" target="_blank" rel="noopener">@cproject.dev</a></dd></div></dl>
-  </div>
-</section>
-
-<section class="sec alt" id="faq" aria-labelledby="t-faq">
+<section class="sec alt" id="quem" aria-labelledby="t-quem">
   <div class="in">
-    <div class="hd rv"><span class="eb">08 · Perguntas frequentes</span><h2 id="t-faq">Antes de conversar</h2></div>
+    <div class="hd rv"><span class="eb">06 · Quem constrói</span><h2 id="t-quem">A IA acelera. <em class="g">Gente de verdade responde.</em></h2><p>Usamos inteligência artificial em todo o processo para entregar mais rápido. Mas cada projeto tem especialistas com nome e sobrenome, que entendem o seu negócio, decidem com você e respondem pelo resultado do briefing ao suporte.</p></div>
+    <div class="team">{time_html()}</div>
+    <div class="pills rv"><span>Comunicação direta</span><span>Entrega incremental</span><span>IA com revisão humana</span><span>Suporte pós-entrega</span></div>
+  </div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="t-faq">
+  <div class="in">
+    <div class="hd rv"><span class="eb">07 · Perguntas frequentes</span><h2 id="t-faq">Antes de conversar</h2></div>
     <div class="faq rv">{faq_html(FAQ_HOME)}</div>
   </div>
 </section>
 
-<section class="sec" id="contato" aria-labelledby="t-ct">
+<section class="sec alt" id="contato" aria-labelledby="t-ct">
   <div class="in ct">
-    <div class="rv"><span class="eb">09 · Contato</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos conversar 15 minutos sobre o seu processo?</h2>
-      <p style="color:var(--tx-2);margin-top:16px">Sem proposta engessada nem jargão técnico: só entender a dor da operação e ver se faz sentido construir algo sob medida, usar um dos nossos produtos ou começar pelo hub.</p>
+    <div class="rv"><span class="eb">08 · Contato</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos conversar 15 minutos sobre o seu processo?</h2>
+      <p style="color:var(--tx-2);margin-top:16px">Sem proposta engessada nem jargão técnico: só entender a dor da operação e ver se faz sentido começar por um plano pronto ou construir algo sob medida.</p>
       <div class="ch">
         <a href="{wa("Olá! Vim pelo site da CProject e quero conversar.")}" target="_blank" rel="noopener" data-origem="contato">{I_WA}<span><small>WhatsApp</small>{WA_FMT}</span></a>
         <a href="mailto:{EMAIL}">{I_MAIL}<span><small>E-mail</small>{EMAIL}</span></a>
@@ -270,7 +392,7 @@ def home():
     <form class="fm rv" id="fm" novalidate aria-label="Enviar mensagem pelo WhatsApp">
       <div class="fl"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
       <div class="fl"><label for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization"></div>
-      <div class="fl w"><label for="f-int">Interesse</label><select id="f-int" name="interesse" required><option value="">Selecione</option><option>Site ou aplicativo</option><option>Sistema sob medida</option><option>Dashboard ou BI</option><option>Automação de processos</option><option>Sorrirmos</option><option>Cortando</option><option>Packs de skills de IA</option><option>Outro assunto</option></select></div>
+      <div class="fl w"><label for="f-int">Interesse</label><select id="f-int" name="interesse" required><option value="">Selecione</option><option>Sorrirmos</option><option>Cortando</option><option>Landing page</option><option>BI e dashboards</option><option>Packs de skills de IA</option><option>Event Coverage</option><option>Projeto sob medida (Custom)</option><option>Outro assunto</option></select></div>
       <div class="fl w"><label for="f-msg">O que você precisa?</label><textarea id="f-msg" name="mensagem" required placeholder="Conte em poucas linhas o processo que hoje dá trabalho."></textarea></div>
       <div class="hp" aria-hidden="true"><label for="f-site">Site</label><input id="f-site" name="site" tabindex="-1" autocomplete="off"></div>
       <button class="btn" type="submit">{I_WA} Enviar pelo WhatsApp</button>
