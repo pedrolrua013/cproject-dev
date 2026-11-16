@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "5"  # versão dos assets
+V = "6"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -108,6 +108,7 @@ PLANOS = [
              "txt": "Agenda, atendimento e equipe da barbearia em um só sistema.", "cta": "Quero ser avisado", "wa": "Olá! Quero ser avisado quando os planos do Cortando estiverem disponíveis."}},
   {"id": "landing", "aba": "Landing pages", "titulo": "Landing pages",
    "intro": "Do modelo pronto ao projeto sob medida, com WhatsApp, formulário e página preparada para o Google.",
+   "link": ("Ver tudo sobre sites e landing pages", "/criacao-de-sites-e-landing-pages/"),
    "planos": [
      {"nome": "Landing Page Template", "cta": "Quero a Template", "tag": "Mais rápida", "para": "Um modelo pronto da CProject adaptado à sua marca, para colocar a página no ar sem esperar um projeto inteiro.", "preco": ("297", None, ""), "cond": "pagamento único",
       "itens": ["Página única com as cores, o logo e os textos da sua marca", "Layout responsivo para celular e computador", "Botão de WhatsApp e formulário de contato", "Arquivos entregues para publicar onde preferir"]},
@@ -157,6 +158,11 @@ TIME = [
 def time_html():
     return "".join(f'''<article class="pp rv"><div class="av" aria-hidden="true"><span>{ini}</span></div><div class="pbody"><p class="pro">{E(area)}</p><h3>{E(nome)}</h3><p class="pr-r">{E(papel)}</p><p class="pr-d">{E(desc)}</p><ul class="pr-t">{"".join(f"<li>{E(t)}</li>" for t in tags)}</ul></div></article>''' for ini, nome, area, papel, desc, tags in TIME)
 
+BAND = ["Sistemas Lab", "Sorrirmos", "Cortando", "Landing pages", "Sites institucionais", "BI e dashboards", "Automações", "Packs de skills de IA", "Event Coverage", "Projetos sob medida"]
+def band_html():
+    li = "".join(f"<li>{E(t)}</li>" for t in BAND)
+    return f'<div class="band" aria-hidden="true"><ul>{li}{li}</ul></div>'
+
 def preco_html(p):
     if not p["preco"]:
         return f'<div class="pr"><span class="val tbd">Em definição</span><span class="cond">{E(p["cond"])}</span></div>'
@@ -202,6 +208,7 @@ def planos_html():
             n = len(g["planos"])
             corpo += f'<div class="plans p{n}">' + "".join(plano_html(p, "") for p in g["planos"]) + '</div>'
             if g.get("nota"): corpo += f'<p class="pnote">{E(g["nota"])}</p>'
+            if g.get("link"): corpo += f'<div class="ctas"><a class="btn o" href="{g["link"][1]}">{E(g["link"][0])} {I_SETA}</a></div>'
         paineis.append(f'''<div class="pane" role="tabpanel" id="pn-{g["id"]}" aria-labelledby="tab-{g["id"]}" tabindex="0"><div class="pintro"><h3 class="ptitle">{E(g["titulo"])}</h3><p>{E(g["intro"])}</p></div>{corpo}</div>''')
     return f'<div class="tabs" role="tablist" aria-label="Linhas de produto">{"".join(abas)}</div>' + "".join(paineis)
 
@@ -256,7 +263,7 @@ def head(title, desc, path, schema, extra=""):
 
 def nav(home=True, atual=""):
     p = "" if home else "/"
-    links = [("Estúdio", f"{p}#estudio"), ("Planos", f"{p}#planos"), ("Portfólio", f"{p}#portfolio"), ("Dúvidas", f"{p}#faq"), ("Contato", f"{p}#contato")]
+    links = [("Estúdio", f"{p}#estudio"), ("Planos", f"{p}#planos"), ("Sites", "/criacao-de-sites-e-landing-pages/"), ("Portfólio", f"{p}#portfolio"), ("Contato", f"{p}#contato")]
     lis = "".join(f'<li><a href="{h}">{t}</a></li>' for t, h in links)
     return f'''<header class="nav" id="topo">
   <div class="in">
@@ -275,7 +282,7 @@ def rodape():
       <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}<span>CPr<i>oject</i></span></a>
         <p>Estúdio full-stack, Sistemas Lab e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
       <div><h3 class="fh">Estúdio</h3><ul>{sv}</ul></div>
-      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#planos">Sorrirmos</a></li><li><a href="/#planos">Cortando</a></li><li><a href="/#planos">Landing pages e BI</a></li><li><a href="/#planos">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
+      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#planos">Sorrirmos</a></li><li><a href="/#planos">Cortando</a></li><li><a href="/criacao-de-sites-e-landing-pages/">Sites e landing pages</a></li><li><a href="/#planos">BI em template</a></li><li><a href="/#planos">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
       <div><h3 class="fh">Contato</h3><ul><li><a href="{wa("Olá! Vim pelo site da CProject.")}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp {WA_FMT}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="{IG}" target="_blank" rel="noopener">@cproject.dev</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
     </div>
     <div class="cp"><span>© {datetime.date.today().year} CProject</span><span>Feito sob medida, do rascunho ao produto no ar.</span></div>
@@ -321,6 +328,7 @@ def home():
     <div class="stack" aria-label="Tecnologias"><span>Next.js</span><span>React</span><span>Supabase</span><span>Vercel</span></div>
   </div>
 </section>
+{band_html()}
 
 <section class="sec" id="frentes" aria-labelledby="t-frentes">
   <div class="in">
@@ -461,14 +469,96 @@ def nao_achou():
 <main id="conteudo"><section class="ph" aria-labelledby="h1"><div class="in"><span class="eb">Erro 404</span><h1 id="h1">Esta página não existe, mas o resto do site sim.</h1><p class="lead">O endereço pode ter mudado. Volte para o início ou fale com a gente.</p><div class="ctas"><a class="btn" href="/">Voltar ao início</a><a class="btn o" href="/#contato">Contato</a></div></div></section></main>
 ''' + rodape().replace("{WAF}", E(wa("Olá! Vim pelo site da CProject.")))
 
+I_BOLT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></svg>'
+I_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+I_GROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>'
+I_PHONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M11 18h2"/></svg>'
+I_CHAT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4Z"/></svg>'
+I_LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>'
+I_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
+I_CHART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>'
+
+SITES_FAQ = [("Qual a diferença entre a Landing Page Template, a Hospedada e a Personalizada?", "A Template é um modelo pronto da CProject adaptado à sua marca, por R$ 297 em pagamento único. A Hospedada é o mesmo modelo publicado e mantido no ar pela CProject, por R$ 297 de implantação mais R$ 50 por mês. A Personalizada tem design, estrutura e textos criados do zero, a partir de R$ 997."),
+             ("A página funciona bem no celular?", "Sim. Todas as páginas são responsivas e pensadas primeiro para o celular, onde está a maior parte das visitas."),
+             ("Como os contatos chegam até mim?", "Pelo botão de WhatsApp, que abre a conversa com uma mensagem pronta, e pelo formulário de contato da página."),
+             ("A página aparece no Google?", "Ela sai preparada para isso, com títulos, descrições e estrutura que ajudam o Google a entender o seu negócio. Na Personalizada, o SEO é feito por página e inclui dados estruturados."),
+             ("E se eu precisar de um site com várias páginas ou um painel para atualizar?", "Aí o projeto entra no CProject Custom: sites institucionais e plataformas com painel próprio, com orçamento feito a partir de uma conversa.")]
+
+def sites_page():
+    path = "/criacao-de-sites-e-landing-pages/"
+    g = next(x for x in PLANOS if x["id"] == "landing")
+    ofertas = [{"@type": "Offer", "name": p["nome"], "price": p["preco"][0] + ".00", "priceCurrency": "BRL", "url": BASE + path} for p in g["planos"]]
+    schema = {"@context": "https://schema.org", "@graph": [ORG,
+        {"@type": "Service", "name": "Criação de sites e landing pages", "serviceType": "Desenvolvimento de sites e landing pages", "description": "Landing pages em template, hospedadas ou personalizadas, e sites sob medida, com WhatsApp, formulário e SEO.", "provider": {"@id": BASE + "/#org"}, "areaServed": {"@type": "Country", "name": "Brasil"}, "url": BASE + path, "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Landing pages", "itemListElement": ofertas}},
+        {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": BASE + "/"}, {"@type": "ListItem", "position": 2, "name": "Sites e landing pages", "item": BASE + path}]},
+        faq_schema(SITES_FAQ)]}
+    why = [(I_BOLT, "Credibilidade imediata", "Uma página profissional mostra que o seu negócio é sério antes mesmo da primeira conversa."),
+           (I_CLOCK, "Trabalha 24 horas", "A página apresenta, tira dúvidas e recebe contatos mesmo quando você não está atendendo."),
+           (I_GROW, "Base para crescer", "Estrutura pronta para anúncios, Google e medição, que acompanha o crescimento da empresa.")]
+    inc = [(I_PHONE, "Responsiva", "Pensada primeiro para o celular."), (I_CHAT, "WhatsApp e formulário", "Contato em um toque."),
+           (I_LOCK, "SSL e domínio", "Cadeado HTTPS nas versões hospedadas."), (I_SEARCH, "Pronta para o Google", "Títulos, descrições e estrutura."),
+           (I_CHART, "Medição", "Cliques acompanhados na Personalizada.")]
+    passos = [("Briefing", "Uma conversa curta para entender o negócio, o público e a oferta principal."),
+              ("Estrutura e texto", "Definimos as seções e escrevemos o texto pensando em quem vai ler e no que precisa fazer em seguida."),
+              ("Design e desenvolvimento", "A página ganha a identidade da sua marca, rápida no celular e com animações leves."),
+              ("Publicação", "Página no ar, botão de WhatsApp testado e tudo pronto para receber contatos.")]
+    W = "Olá! Vim pela página de sites e landing pages da CProject e quero conversar."
+    out = head("Sites e landing pages a partir de R$ 297 | CProject", "Landing pages em template por R$ 297, hospedadas por R$ 297 + R$ 50/mês ou personalizadas a partir de R$ 997, com WhatsApp, formulário e SEO.", path, schema) + nav(False) + f'''
+<main id="conteudo">
+<section class="ph" aria-labelledby="h1">
+  <div class="in">
+    <nav aria-label="Trilha"><ol class="bc"><li><a href="/">Início</a></li><li aria-current="page">Sites e landing pages</li></ol></nav>
+    <h1 id="h1">Sites e landing pages que <em class="g">transformam visita em conversa</em></h1>
+    <p class="lead">Do modelo pronto por R$ 297 ao projeto sob medida, com WhatsApp em um toque, formulário e estrutura preparada para o Google.</p>
+    <div class="ctas"><a class="btn" href="#planos">Ver planos e preços</a><a class="btn o" href="{wa(W)}" target="_blank" rel="noopener" data-origem="sites-hero">{I_WA} Falar no WhatsApp</a></div>
+  </div>
+</section>
+{band_html()}
+<section class="sec" aria-labelledby="t-why">
+  <div class="in"><div class="hd rv"><span class="eb">Por que ter uma página</span><h2 id="t-why">O seu cliente procura antes de chamar</h2><p>Quem encontra você no Google, no Instagram ou por indicação quer conferir antes de mandar mensagem. A página é o que responde por você nesse momento.</p></div>
+    <div class="why">{"".join(f'<article class="card rv"><span class="ic">{i}</span><h3>{t}</h3><p>{d}</p></article>' for i, t, d in why)}</div></div>
+</section>
+<section class="sec alt" id="planos" aria-labelledby="t-planos">
+  <div class="in"><div class="hd rv"><span class="eb">Planos e preços</span><h2 id="t-planos">Três formas de <em class="g">colocar a sua página no ar</em></h2><p>{E(g["intro"])}</p></div>
+    <div class="plans p3">{"".join(plano_html(p, "") for p in g["planos"])}</div>
+    <p class="pnote">Precisa de site com várias páginas ou painel para atualizar? <a href="/#planos">Veja o CProject Custom</a>.</p></div>
+</section>
+<section class="sec" aria-labelledby="t-inc">
+  <div class="in"><div class="hd rv"><span class="eb">Incluso</span><h2 id="t-inc">O básico bem feito, em toda página</h2></div>
+    <div class="inc">{"".join(f'<article class="card rv"><span class="ic">{i}</span><h3>{t}</h3><p>{d}</p></article>' for i, t, d in inc)}</div></div>
+</section>
+<section class="sec alt" id="portfolio" aria-labelledby="t-pf">
+  <div class="in">
+    <div class="hd pfh rv"><div><span class="eb">Portfólio</span><h2 id="t-pf">Páginas <em class="g">no ar</em></h2><p>Arraste para ver mais projetos e abra cada site para navegar.</p></div>
+      <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
+  </div>
+  <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
+  <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
+</section>
+<section class="sec" aria-labelledby="t-como">
+  <div class="in"><div class="hd rv"><span class="eb">Como funciona</span><h2 id="t-como">Do briefing à página no ar</h2></div>
+    <div class="ps">{"".join(f'<article class="card rv"><h3>{t}</h3><p>{d}</p></article>' for t, d in passos)}</div></div>
+</section>
+<section class="sec alt" aria-labelledby="t-faq">
+  <div class="in"><div class="hd rv"><span class="eb">Perguntas frequentes</span><h2 id="t-faq">Dúvidas sobre sites e landing pages</h2></div><div class="faq rv">{faq_html(SITES_FAQ)}</div></div>
+</section>
+<section class="sec" aria-labelledby="t-cta">
+  <div class="in" style="text-align:center"><div class="rv"><span class="eb">Próximo passo</span><p class="big" id="t-cta">Conte em uma mensagem o que você vende e para quem. A gente indica o plano certo.</p>
+    <div class="ctas"><a class="btn" href="{wa(W)}" target="_blank" rel="noopener" data-origem="sites-cta">{I_WA} Conversar no WhatsApp</a><a class="btn o" href="/#contato">Outros contatos</a></div></div></div>
+</section>
+</main>
+''' + rodape().replace("{WAF}", E(wa(W)))
+    return out
+
 def escrever(rel, txt):
     p = RAIZ / rel; p.parent.mkdir(parents=True, exist_ok=True); p.write_text(txt, encoding="utf-8")
 
 escrever("index.html", home())
 for s in SERVICOS: escrever(f'{s["slug"]}/index.html', servico(s))
 escrever("politica-de-privacidade/index.html", politica())
+escrever("criacao-de-sites-e-landing-pages/index.html", sites_page())
 escrever("404.html", nao_achou())
-urls = ["/"] + [f'/{s["slug"]}/' for s in SERVICOS] + ["/politica-de-privacidade/"]
+urls = ["/", "/criacao-de-sites-e-landing-pages/"] + [f'/{s["slug"]}/' for s in SERVICOS] + ["/politica-de-privacidade/"]
 escrever("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{HOJE}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 escrever("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
 print("ok", urls)

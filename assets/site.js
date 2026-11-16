@@ -16,9 +16,36 @@
 
   // reveal
   if ('IntersectionObserver' in window && !reduz) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
+    // escalonamento entre irmãos e limpeza após a entrada (libera o hover)
+    $$('.rv').forEach(el => { const irm = [...el.parentElement.children].filter(c => c.classList.contains('rv')); const i = irm.indexOf(el); if (i > 0) el.style.setProperty('--d', Math.min(i, 6) * 0.08 + 's'); });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const el = e.target; el.classList.add('on'); io.unobserve(el); setTimeout(() => { el.classList.remove('rv', 'on'); el.style.removeProperty('--d'); }, 1500); } }), {rootMargin: '0px 0px -8% 0px'});
     $$('.rv').forEach(el => io.observe(el));
   } else $$('.rv').forEach(el => el.classList.add('on'));
+
+  // luz que segue o cursor
+  if (matchMedia('(hover:hover)').matches) {
+    document.addEventListener('pointermove', e => {
+      const c = e.target.closest('.card,.plan,.pack,.pp');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, {passive: true});
+  }
+
+  // paralaxe dos brilhos de fundo
+  if (!reduz) {
+    const secs = $$('.sec'); let tk = false;
+    const par = () => { tk = false; const vh = innerHeight; secs.forEach(s => { const r = s.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return; const p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); s.style.setProperty('--p', Math.max(-1, Math.min(1, p)).toFixed(3)); }); };
+    addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(par); } }, {passive: true}); par();
+  }
+
+  // vídeos: carregam só perto da tela e pausam fora dela
+  const vids = $$('video[data-src]');
+  if (vids.length && 'IntersectionObserver' in window) {
+    const vo = new IntersectionObserver(es => es.forEach(e => { const v = e.target;
+      if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!reduz) v.play().catch(() => {}); } else v.pause(); }), {rootMargin: '200px'});
+    vids.forEach(v => vo.observe(v));
+  }
 
   // whatsapp: evento
   document.addEventListener('click', e => {
