@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "7"  # versão dos assets
+V = "8"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -517,7 +517,8 @@ def sites_page():
     W = "Olá! Vim pela página de sites e landing pages da CProject e quero conversar."
     out = head("Sites e landing pages a partir de R$ 297 | CProject", "Landing pages em template por R$ 297, hospedadas por R$ 297 + R$ 50/mês ou personalizadas a partir de R$ 997, com WhatsApp, formulário e SEO.", path, schema) + nav(False) + f'''
 <main id="conteudo">
-<section class="ph" aria-labelledby="h1">
+<section class="ph vid" aria-labelledby="h1">
+  <video class="hv" id="hv" muted loop playsinline preload="none" poster="/assets/video/hero-poster.webp" data-d="/assets/video/hero-1600.mp4" data-m="/assets/video/hero-m.mp4" data-pm="/assets/video/hero-poster-m.webp" data-still="/assets/video/hero-still.webp" aria-hidden="true" tabindex="-1"></video>
   <div class="in">
     <nav aria-label="Trilha"><ol class="bc"><li><a href="/">Início</a></li><li aria-current="page">Sites e landing pages</li></ol></nav>
     <h1 id="h1">Sites e landing pages que <em class="g">transformam visita em conversa</em></h1>
