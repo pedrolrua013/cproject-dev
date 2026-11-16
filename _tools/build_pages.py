@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "8"  # versão dos assets
+V = "9"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -164,7 +164,7 @@ def band_html():
     return f'<div class="band" aria-hidden="true"><ul>{li}{li}</ul></div>'
 
 def quem_html(eb):
-    return f'''<section class="sec alt" id="quem" aria-labelledby="t-quem">
+    return f'''<section class="sec img" id="quem" aria-labelledby="t-quem">
   <div class="in">
     <div class="hd rv"><span class="eb">{eb}</span><h2 id="t-quem">Todo mundo tem IA. <em class="g">Nem todo mundo tem especialista.</em></h2><p>Hoje qualquer pessoa gera um site ou um sistema em minutos. O que faz diferença é quem entende o seu negócio, faz as perguntas certas e responde pelo resultado. Na CProject, você conversa com profissionais de desenvolvimento, marketing e dados, que acompanham o projeto do primeiro briefing ao suporte.</p></div>
     <div class="team">{time_html()}</div>
@@ -358,7 +358,7 @@ def home():
   </div>
 </section>
 
-<section class="sec alt" id="estudio" aria-labelledby="t-estudio">
+<section class="sec light" id="estudio" aria-labelledby="t-estudio">
   <div class="in">
     <div class="hd rv"><span class="eb">02 · Estúdio</span><h2 id="t-estudio">Quatro serviços, da interface ao back-end</h2><p>Sem passar o projeto entre equipes diferentes no caminho: quem desenha é quem desenvolve e quem dá suporte.</p></div>
     <div class="sv">{sv}</div>
@@ -372,7 +372,7 @@ def home():
   </div>
 </section>
 
-<section class="sec alt" id="portfolio" aria-labelledby="t-pf">
+<section class="sec teal" id="portfolio" aria-labelledby="t-pf">
   <div class="in">
     <div class="hd pfh rv"><div><span class="eb">04 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Projetos publicados para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
       <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
@@ -381,7 +381,7 @@ def home():
   <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
 </section>
 
-<section class="sec" id="abordagem" aria-labelledby="t-ab">
+<section class="sec light" id="abordagem" aria-labelledby="t-ab">
   <div class="in">
     <div class="hd rv"><span class="eb">05 · Abordagem</span><h2 id="t-ab">Como o projeto acontece</h2><p>Nada de tela solta ou protótipo estático: cada etapa já entrega algo que roda de verdade. Passe pelas etapas para acompanhar o caminho.</p></div>
     {tl_html(PASSOS)}
@@ -398,7 +398,7 @@ def home():
   </div>
 </section>
 
-<section class="sec alt" id="contato" aria-labelledby="t-ct">
+<section class="sec gold" id="contato" aria-labelledby="t-ct">
   <div class="in ct">
     <div class="rv"><span class="eb">08 · Contato</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos conversar 15 minutos sobre o seu processo?</h2>
       <p style="color:var(--tx-2);margin-top:16px">Sem proposta engessada nem jargão técnico: só entender a dor da operação e ver se faz sentido começar por um plano pronto ou construir algo sob medida.</p>
@@ -442,7 +442,7 @@ def servico(s):
     <div class="ctas"><a class="btn" href="{wa(s["wa"])}" target="_blank" rel="noopener" data-origem="servico">{I_WA} Falar sobre {s["nome"].lower()}</a><a class="btn o" href="#como">Como funciona</a></div>
   </div>
 </section>
-<section class="sec alt" aria-labelledby="t-entra">
+<section class="sec light" aria-labelledby="t-entra">
   <div class="in two">
     <article class="card rv"><span class="n">ESCOPO</span><h2 id="t-entra" class="sr">O que entra</h2><h3>O que entra no projeto</h3><ul>{lis(s["entra"])}</ul></article>
     <article class="card rv"><span class="n">PARA QUEM</span><h3>Para quem faz sentido</h3><ul>{lis(s["quem"])}</ul></article>
@@ -527,7 +527,7 @@ def sites_page():
   </div>
 </section>
 {band_html()}
-<section class="sec" aria-labelledby="t-why">
+<section class="sec light" aria-labelledby="t-why">
   <div class="in"><div class="hd rv"><span class="eb">Por que ter uma página</span><h2 id="t-why">O seu cliente procura antes de chamar</h2><p>Quem encontra você no Google, no Instagram ou por indicação quer conferir antes de mandar mensagem. A página é o que responde por você nesse momento.</p></div>
     <div class="why">{"".join(f'<article class="card rv"><span class="ic">{i}</span><h3>{t}</h3><p>{d}</p></article>' for i, t, d in why)}</div></div>
 </section>
@@ -536,11 +536,11 @@ def sites_page():
     <div class="plans p3">{"".join(plano_html(p, "") for p in g["planos"])}</div>
     <p class="pnote">Precisa de site com várias páginas ou painel para atualizar? <a href="/#planos">Veja o CProject Custom</a>.</p></div>
 </section>
-<section class="sec" aria-labelledby="t-inc">
+<section class="sec light" aria-labelledby="t-inc">
   <div class="in"><div class="hd rv"><span class="eb">Incluso</span><h2 id="t-inc">O básico bem feito, em toda página</h2></div>
     <div class="inc">{"".join(f'<article class="card rv"><span class="ic">{i}</span><h3>{t}</h3><p>{d}</p></article>' for i, t, d in inc)}</div></div>
 </section>
-<section class="sec alt" id="portfolio" aria-labelledby="t-pf">
+<section class="sec teal" id="portfolio" aria-labelledby="t-pf">
   <div class="in">
     <div class="hd pfh rv"><div><span class="eb">Portfólio</span><h2 id="t-pf">Páginas <em class="g">no ar</em></h2><p>Arraste para ver mais projetos e abra cada site para navegar.</p></div>
       <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
@@ -548,7 +548,7 @@ def sites_page():
   <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
   <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
 </section>
-<section class="sec" aria-labelledby="t-como">
+<section class="sec light" aria-labelledby="t-como">
   <div class="in"><div class="hd rv"><span class="eb">Como funciona</span><h2 id="t-como">Do briefing à página no ar</h2></div>
     {tl_html(passos)}
     {perf_html()}</div>
@@ -557,7 +557,7 @@ def sites_page():
 <section class="sec" aria-labelledby="t-faq">
   <div class="in"><div class="hd rv"><span class="eb">Perguntas frequentes</span><h2 id="t-faq">Dúvidas sobre sites e landing pages</h2></div><div class="faq rv">{faq_html(SITES_FAQ)}</div></div>
 </section>
-<section class="sec alt" aria-labelledby="t-cta">
+<section class="sec gold" aria-labelledby="t-cta">
   <div class="in" style="text-align:center"><div class="rv"><span class="eb">Próximo passo</span><p class="big" id="t-cta">Conte em uma mensagem o que você vende e para quem. A gente indica o plano certo.</p>
     <div class="ctas"><a class="btn" href="{wa(W)}" target="_blank" rel="noopener" data-origem="sites-cta">{I_WA} Conversar no WhatsApp</a><a class="btn o" href="/#contato">Outros contatos</a></div></div></div>
 </section>
