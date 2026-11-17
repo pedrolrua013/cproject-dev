@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "10"  # versão dos assets
+V = "11"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -179,7 +179,7 @@ def tl_html(passos):
 
 def perf_html():
     return f'''<div class="perf rv"><div class="perf-t"><span class="eb">Performance</span><h3 class="big">Com a CProject não é só design. <em class="g">É performance.</em></h3><p>Notas entre 99 e 100 no PageSpeed Insights, a ferramenta do Google que mede velocidade, acessibilidade, boas práticas e SEO, inclusive no celular. Página rápida carrega antes de o cliente desistir e conta pontos para aparecer no Google.</p></div>
-    <figure class="mbk"><div class="mbk-card"><div class="mbk-sc" aria-hidden="true"><span><b>99</b>Desempenho</span><span><b>100</b>Acessibilidade</span><span><b>100</b>Boas práticas</span><span><b>100</b>SEO</span></div><img class="mbk-img" src="/assets/pagespeed-macbook-760.webp" srcset="/assets/pagespeed-macbook-760.webp 760w, /assets/pagespeed-macbook.webp 1400w" sizes="(max-width:700px) 118vw, 860px" width="1400" height="847" loading="lazy" decoding="async" alt="Notebook com o PageSpeed Insights do site da CProject no celular: 99 em desempenho e 100 em acessibilidade, práticas recomendadas e SEO"></div><figcaption>Resultado do site da CProject no PageSpeed Insights, versão para celular.</figcaption></figure></div>'''
+    <figure class="mbk"><div class="mbk-card"><span class="mbk-neon" aria-hidden="true"></span><span class="mbk-neon glow" aria-hidden="true"></span><img class="mbk-img" src="/assets/pagespeed-macbook-760.webp" srcset="/assets/pagespeed-macbook-760.webp 760w, /assets/pagespeed-macbook.webp 1400w" sizes="(max-width:700px) 118vw, (max-width:1000px) 760px, 520px" width="1400" height="847" loading="lazy" decoding="async" alt="Notebook com o PageSpeed Insights do site da CProject no celular: 99 em desempenho e 100 em acessibilidade, práticas recomendadas e SEO"></div><figcaption>Resultado do site da CProject no PageSpeed Insights, versão para celular.</figcaption></figure></div>'''
 
 def preco_html(p):
     if not p["preco"]:
