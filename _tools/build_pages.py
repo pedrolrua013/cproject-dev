@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "12"  # versão dos assets
+V = "13"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -280,8 +280,10 @@ def head(title, desc, path, schema, extra=""):
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{url}">
 <meta property="og:image" content="{BASE}/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="CProject: estúdio, produtos e hub">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{E(title)}"><meta name="twitter:description" content="{E(desc)}"><meta name="twitter:image" content="{BASE}/assets/og.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
-<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico?v={V}" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg?v={V}">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png?v={V}">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png?v={V}">
 <link rel="preload" href="/assets/fonts/saira-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v={V}">
