@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "13"  # versão dos assets
+V = "14"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -183,6 +183,26 @@ def quem_html(eb):
   </div>
 </section>'''
 
+def xp_html():
+    W_ = wa("Olá! Vim pelo site da CProject e quero começar o meu experimento.")
+    passos = [("Hipótese", "Mapeamos o processo real antes de desenhar qualquer tela. A ideia vira uma pergunta que dá para testar."),
+              ("Teste", "Protótipo rápido na mão de quem vai usar. O que não resolve o dia a dia sai da fórmula."),
+              ("Desenvolvimento", "Código limpo, entregas em partes e teste em cima de teste até tudo rodar estável."),
+              ("Produto no ar", "Publicado, medido e evoluindo. Funcionalidade nova só entra quando nasce de uma necessidade real.")]
+    li = "".join(f'<li><b>0{i+1}</b><h3>{E(t)}</h3><p>{E(d)}</p></li>' for i, (t, d) in enumerate(passos))
+    return f'''<section class="xp" id="experimento" aria-labelledby="t-xp" data-xp>
+  <div class="xp-pin">
+    <canvas class="xp-cv" aria-hidden="true"></canvas>
+    <div class="in xp-ui">
+      <div class="xp-hd"><span class="eb">O experimento</span><h2 id="t-xp">Toda ideia entra no frasco como <em class="g">hipótese</em>.</h2></div>
+      <ol class="xp-steps">{li}</ol>
+      <div class="xp-end"><h3>Resultado: <em class="g">produto no ar.</em></h3><p>Sem fumacinha colorida. Só o que passou no teste.</p><a class="btn" href="{W_}" target="_blank" rel="noopener" data-origem="experimento">{I_WA} Começar meu experimento</a></div>
+    </div>
+    <div class="xp-meter" aria-hidden="true"><small>Reação</small><span class="xp-pct"><b>0</b>%</span></div>
+    <div class="xp-hint" aria-hidden="true">Role para iniciar a reação</div>
+  </div>
+</section>'''
+
 def tl_html(passos):
     li = "".join(f'<li class="tl-s" tabindex="0" data-i="{i}"><span class="tl-dot"><b>0{i+1}</b></span><h3>{E(t)}</h3><p>{E(d)}</p></li>' for i, (t, d) in enumerate(passos))
     return f'<div class="tl rv" style="--n:{len(passos)}" data-tl><div class="tl-line" aria-hidden="true"><i class="tl-fill"></i></div><ol>{li}</ol></div>'
@@ -344,7 +364,7 @@ def home():
     desc = "Sistemas Lab como o Sorrirmos a partir de R$ 89,90/mês, landing pages a partir de R$ 297, BI em template e projetos sob medida. Estúdio full-stack."
     sv = "".join(f'''<article class="card rv"><span class="n">0{i+1}</span><h3>{s["nome"]}</h3><p>{s["card"]}</p><a class="lk" href="/{s["slug"]}/">Ver {s["nome"].lower()} {I_SETA}</a></article>''' for i, s in enumerate(SERVICOS))
     ps = "".join(f'<article class="card rv"><h3>{t}</h3><p>{d}</p></article>' for t, d in PASSOS)
-    out = head(title, desc, "/", schema, '<link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>\n') + nav() + f'''
+    out = head(title, desc, "/", schema, '<link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>\n' + f'<script src="/assets/xp.js?v={V}" defer></script>\n') + nav() + f'''
 <main id="conteudo">
 <section class="hero" aria-labelledby="h1">
   <canvas class="lab" data-lab aria-hidden="true"></canvas>
@@ -361,6 +381,7 @@ def home():
 </section>
 {band_html()}
 {manifesto_html()}
+{xp_html()}
 
 <section class="sec" id="frentes" aria-labelledby="t-frentes">
   <div class="in">
