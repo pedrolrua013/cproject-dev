@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "11"  # versão dos assets
+V = "12"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -18,7 +18,7 @@ def wa(msg):
 
 E = html.escape
 
-LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1.5 30.5 16 16 30.5 1.5 16Z" fill="#0D1C3A" stroke="#C9A86A" stroke-opacity=".6"/><path d="M19.6 12.2a5 5 0 1 0 0 7.6" fill="none" stroke="#C9A86A" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="16" r="1.4" fill="#64FFDA"/></svg>'
+LOGO = '<img src="/assets/brand/logo.svg" width="134" height="47" alt="CProject">'
 I_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.79 14.06c-.24.68-1.42 1.3-1.95 1.35-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.93-4.66-4.11-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg>'
 I_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>'
 I_IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>'
@@ -151,13 +151,23 @@ PORTFOLIO = [
 ]
 
 TIME = [
-  ("BP", "Bruno C. Peres", "Desenvolvimento", "Especialista em desenvolvimento de sistemas", "Desenvolvedor full-stack e product designer. Transforma o processo do cliente em sistema, da primeira tela ao banco de dados.", ["Full-stack", "Product design", "ADS · FATEC"]),
-  ("GR", "Gustavo Recouso", "Desenvolvimento", "Especialista em desenvolvimento de sistemas", "Cuida da construção e da evolução dos sistemas, para que cada entrega rode com estabilidade e cresça sem retrabalho.", ["Sistemas", "Integrações", "Evolução contínua"]),
-  ("PR", "Pedro Rua", "Marketing & analytics", "Analista de marketing e analytics", "Conecta produto, comunicação e dados: posicionamento, landing pages que convertem, CRM e painéis que mostram o que está funcionando.", ["Marketing", "CRM", "Analytics e BI"]),
+  ("bruno", "Bruno C. Peres", "Fundador · Desenvolvimento", "Desenvolvedor full-stack", "Fundador da CProject. Transforma o processo do cliente em sistema, da primeira tela ao banco de dados, e cuida para que cada entrega rode com estabilidade.", ["Full-stack", "Product design", "Arquitetura de sistemas"]),
+  ("gustavo", "Gustavo Recouso", "Tecnologia & negócios", "Marketing e Sistemas de Informação", "Formado em Marketing e cursando Sistemas de Informação, atua com TI em uma empresa de comércio exterior, no desenvolvimento e no financeiro. Une a visão de negócio à construção dos sistemas.", ["Sistemas", "Processos", "Visão de negócio"]),
+  ("pedro", "Pedro Rua", "Marketing & dados", "Analista de marketing e CRM", "Especialista em dashboards e sistemas com IA aplicada. Conecta produto, comunicação e dados: landing pages que convertem, CRM e painéis que mostram o que está funcionando.", ["Marketing", "CRM", "Dashboards e IA"]),
 ]
 
 def time_html():
-    return "".join(f'''<article class="pp rv"><div class="av" aria-hidden="true"><span>{ini}</span></div><div class="pbody"><p class="pro">{E(area)}</p><h3>{E(nome)}</h3><p class="pr-r">{E(papel)}</p><p class="pr-d">{E(desc)}</p><ul class="pr-t">{"".join(f"<li>{E(t)}</li>" for t in tags)}</ul></div></article>''' for ini, nome, area, papel, desc, tags in TIME)
+    return "".join(f'''<article class="pp rv"><div class="av ft" aria-hidden="true"><img src="/assets/team/{foto}.webp" width="560" height="560" loading="lazy" decoding="async" alt=""></div><div class="pbody"><p class="pro">{E(area)}</p><h3>{E(nome)}</h3><p class="pr-r">{E(papel)}</p><p class="pr-d">{E(desc)}</p><ul class="pr-t">{"".join(f"<li>{E(t)}</li>" for t in tags)}</ul></div></article>''' for foto, nome, area, papel, desc, tags in TIME)
+
+def manifesto_html():
+    return '''<section class="mani" id="lab" aria-labelledby="t-lab" data-mani>
+  <div class="in">
+    <span class="eb">CProject Lab</span>
+    <h2 id="t-lab" class="mani-w"><span>Testar.</span> <span>Desenvolver.</span> <span>Inovar.</span></h2>
+    <p class="mani-p">Somos um laboratório onde cada ideia é uma hipótese. Sem fumacinha colorida: só código, muita energia e teste em cima de teste, até a solução funcionar no dia a dia de quem usa.</p>
+    <ul class="mani-v"><li>Qualidade</li><li>Simplicidade e clareza</li><li>Agilidade</li><li>Autonomia</li><li>Proximidade</li><li>Sustentabilidade</li></ul>
+  </div>
+</section>'''
 
 BAND = ["Sistemas Lab", "Sorrirmos", "Cortando", "Landing pages", "Sites institucionais", "BI e dashboards", "Automações", "Packs de skills de IA", "Event Coverage", "Projetos sob medida"]
 def band_html():
@@ -265,13 +275,14 @@ def head(title, desc, path, schema, extra=""):
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#07122A">
+<meta name="theme-color" content="#1D131E">
 <meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="CProject">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{url}">
 <meta property="og:image" content="{BASE}/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="CProject: estúdio, produtos e hub">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{E(title)}"><meta name="twitter:description" content="{E(desc)}"><meta name="twitter:image" content="{BASE}/assets/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/saira-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v={V}">
 {extra}<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False, separators=(",", ":"))}</script>
@@ -285,7 +296,7 @@ def nav(home=True, atual=""):
     lis = "".join(f'<li><a href="{h}">{t}</a></li>' for t, h in links)
     return f'''<header class="nav" id="topo">
   <div class="in">
-    <a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}<span>CPr<i>oject</i></span></a>
+    <a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}</a>
     <button class="burg" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span></button>
     <ul id="menu">{lis}</ul>
     <a class="btn nb" href="{wa("Olá! Vim pelo site da CProject e quero conversar.")}" target="_blank" rel="noopener" data-origem="nav">Vamos conversar</a>
@@ -297,7 +308,7 @@ def rodape():
     return f'''<footer>
   <div class="in">
     <div class="fg">
-      <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}<span>CPr<i>oject</i></span></a>
+      <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}</a>
         <p>Estúdio full-stack, Sistemas Lab e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
       <div><h3 class="fh">Estúdio</h3><ul>{sv}</ul></div>
       <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#planos">Sorrirmos</a></li><li><a href="/#planos">Cortando</a></li><li><a href="/criacao-de-sites-e-landing-pages/">Sites e landing pages</a></li><li><a href="/#planos">BI em template</a></li><li><a href="/#planos">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
@@ -312,10 +323,10 @@ def rodape():
 </html>
 '''
 
-ORG = {"@type": ["Organization", "ProfessionalService"], "@id": BASE + "/#org", "name": "CProject", "alternateName": "CProject Estúdio Digital",
+ORG = {"@type": ["Organization", "ProfessionalService"], "@id": BASE + "/#org", "name": "CProject", "alternateName": ["CProject Lab", "CProject Estúdio Digital"],
        "url": BASE + "/", "logo": BASE + "/assets/icons/icon-512.png", "image": BASE + "/assets/og.png",
        "description": "Estúdio full-stack de sites, sistemas, dashboards e automações sob medida, com produtos próprios e soluções para profissionais.",
-       "email": EMAIL, "telephone": "+55-13-97417-7986", "founder": {"@type": "Person", "name": "Bruno C. Peres"}, "employee": [{"@type": "Person", "name": "Bruno C. Peres", "jobTitle": "Especialista em desenvolvimento de sistemas"}, {"@type": "Person", "name": "Gustavo Recouso", "jobTitle": "Especialista em desenvolvimento de sistemas"}, {"@type": "Person", "name": "Pedro Rua", "jobTitle": "Analista de marketing e analytics"}],
+       "email": EMAIL, "telephone": "+55-13-97417-7986", "founder": {"@type": "Person", "name": "Bruno C. Peres"}, "employee": [{"@type": "Person", "name": "Bruno C. Peres", "jobTitle": "Fundador e desenvolvedor full-stack"}, {"@type": "Person", "name": "Gustavo Recouso", "jobTitle": "Tecnologia e negócios"}, {"@type": "Person", "name": "Pedro Rua", "jobTitle": "Analista de marketing e CRM"}],
        "sameAs": [IG], "areaServed": {"@type": "Country", "name": "Brasil"},
        "contactPoint": {"@type": "ContactPoint", "telephone": "+55-13-97417-7986", "contactType": "customer service", "availableLanguage": "Portuguese"}}
 
@@ -334,9 +345,9 @@ def home():
     out = head(title, desc, "/", schema, '<link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>\n') + nav() + f'''
 <main id="conteudo">
 <section class="hero" aria-labelledby="h1">
-  <video class="hv" id="hv" muted loop playsinline preload="none" poster="/assets/video/hero-poster.webp" data-d="/assets/video/hero-1600.mp4" data-m="/assets/video/hero-m.mp4" data-pm="/assets/video/hero-poster-m.webp" data-still="/assets/video/hero-still.webp" aria-hidden="true" tabindex="-1"></video>
+  <canvas class="lab" data-lab aria-hidden="true"></canvas>
   <div class="in">
-    <span class="eb">CProject · estúdio, Sistemas Lab e soluções prontas</span>
+    <span class="eb">CProject Lab · testar, desenvolver, inovar</span>
     <h1 id="h1">Sites, sistemas e apps <em class="g">sob medida</em>, do rascunho ao produto no ar.</h1>
     <p class="lead">Um estúdio full-stack com sistemas por assinatura, landing pages e BI de preço fechado, e projetos sob medida quando o plano não basta.</p>
     <div class="ctas">
@@ -347,6 +358,7 @@ def home():
   </div>
 </section>
 {band_html()}
+{manifesto_html()}
 
 <section class="sec" id="frentes" aria-labelledby="t-frentes">
   <div class="in">
@@ -519,7 +531,7 @@ def sites_page():
     out = head("Sites e landing pages a partir de R$ 297 | CProject", "Landing pages em template por R$ 297, hospedadas por R$ 297 + R$ 50/mês ou personalizadas a partir de R$ 997, com WhatsApp, formulário e SEO.", path, schema) + nav(False) + f'''
 <main id="conteudo">
 <section class="ph vid" aria-labelledby="h1">
-  <video class="hv" id="hv" muted loop playsinline preload="none" poster="/assets/video/hero-poster.webp" data-d="/assets/video/hero-1600.mp4" data-m="/assets/video/hero-m.mp4" data-pm="/assets/video/hero-poster-m.webp" data-still="/assets/video/hero-still.webp" aria-hidden="true" tabindex="-1"></video>
+  <canvas class="lab" data-lab aria-hidden="true"></canvas>
   <div class="in">
     <nav aria-label="Trilha"><ol class="bc"><li><a href="/">Início</a></li><li aria-current="page">Sites e landing pages</li></ol></nav>
     <h1 id="h1">Sites e landing pages que <em class="g">transformam visita em conversa</em></h1>

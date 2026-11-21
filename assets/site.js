@@ -206,3 +206,104 @@
     msg.innerHTML = w ? 'Abrimos o WhatsApp com sua mensagem pronta. É só enviar.' : 'Se o WhatsApp não abriu, <a href="' + url + '" target="_blank" rel="noopener">toque aqui</a> ou escreva para bruno.perescp@gmail.com.';
   });
 })();
+/* CProject Lab · experiência imersiva do topo: os símbolos da marca flutuam em profundidade,
+   reagem ao cursor e à rolagem, e o isotipo <=/> se monta no centro da cena. */
+(() => {
+  const cv = document.querySelector('canvas[data-lab]');
+  if (!cv || !cv.getContext) return;
+  const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = cv.getContext('2d');
+  const SYM = {"asterisco": "M -23.4,0 L -50,-9.4 L -31.8,-39.6 L -13.5,-23.0 L -19.0,-48.2 L 18.7,-48.2 L 12.9,-22.8 L 31.6,-39.6 L 50,-9.1 L 23.7,0 L 49.7,9.4 L 31.6,39.8 L 12.9,22.8 L 18.7,48.2 L -19.2,48.2 L -13.5,23.0 L -31.8,39.6 L -50,9.4 Z M -23.4,0", "chevrons": "M -8.4,0 L -49.2,40.8 L -40.0,50 L 9.8,0.0 L 9.8,-0.0 L 9.8,-0.0 L -40.0,-50 L -49.2,-40.8 Z M -8.4,0 M 30.9,0 L -9.8,40.8 L -0.7,50 L 49.2,0.0 L 49.2,-0.0 L 49.2,-0.0 L -0.7,-50 L -9.8,-40.8 Z M 30.9,0", "frasco": "M 27.2,44.2 C 26.6,44.7 25.5,45.7 24.5,45.7 L -24.6,45.7 C -26.3,45.1 -28.5,43.8 -28.9,40.8 C -29.4,37.8 -28.4,34.9 -27.2,31.8 L -23.9,23.0 L -8.6,-16.9 L -8.5,-16.9 L -8.5,-40.1 L -11.2,-40.1 C -12.4,-40.3 -13.3,-41.4 -13.4,-42.8 C -13.4,-43.6 -13.1,-44.6 -12.5,-45.1 C -12.2,-45.5 -11.9,-45.6 -11.5,-45.6 L 11.7,-45.7 C 12.9,-45.3 13.6,-44.1 13.6,-42.8 C 13.4,-41.6 12.8,-40.2 11.5,-40.2 L 8.5,-40.1 L 8.5,-17.0 L 8.5,-16.9 L 21.0,15.7 L 27.2,31.9 C 28.2,34.5 29.0,37.2 29.0,39.6 C 29.0,41.4 28.5,43.0 27.2,44.2 M 32.7,38.3 L 32.8,38.2 L 32.3,35.0 L 32.2,34.9 L 32.2,34.8 L 30.9,30.8 L 21.6,6.6 L 12.3,-17.7 L 12.3,-29.3 L 12.3,-30.5 L 12.3,-36.0 C 15.2,-36.6 17.3,-39.5 17.3,-43.0 C 17.3,-44.7 16.8,-46.4 15.8,-47.7 C 14.7,-49.1 13.3,-49.9 11.7,-49.9 L -11.8,-50 L -11.9,-50 L -11.9,-49.9 C -14.3,-49.4 -16.2,-47.5 -16.9,-45.0 C -17.4,-42.8 -17.1,-40.5 -15.9,-38.7 C -15.0,-37.4 -13.7,-36.4 -12.3,-36.1 L -12.2,-17.9 L -22.7,9.4 L -30.8,30.6 C -32.8,35.7 -34.2,41.6 -30.5,46.5 C -28.9,48.4 -27.0,49.5 -24.7,49.9 L -24.7,50 L 24.9,49.9 L 25.0,49.9 C 27.8,49.2 30.1,47.4 31.6,44.9 C 31.6,44.8 31.6,44.8 31.6,44.8 C 31.7,44.7 31.8,44.6 31.8,44.4 C 31.8,44.3 31.8,44.1 31.9,44.0 C 32.0,43.8 32.0,43.7 32.1,43.5 L 32.7,41.7 L 32.6,41.2 C 32.6,41.2 32.6,41.1 32.6,41.0 C 32.6,40.9 32.6,40.9 32.6,40.9 L 32.7,40.8 L 32.8,38.9 C 32.8,38.7 32.8,38.6 32.7,38.5 C 32.7,38.4 32.7,38.3 32.7,38.3 M 21.1,42.1 C 21.0,42.1 20.8,42.2 20.7,42.3 C 20.2,42.5 19.7,42.8 19.0,42.8 L -19.3,42.8 L -19.3,42.8 C -22.5,42.2 -24.9,38.9 -24.6,35.6 L -24.4,33.9 C -24.3,32.1 -23.7,30.6 -23.0,29.0 C -22.9,28.6 -22.7,28.3 -22.6,27.9 L -13.9,5.0 L -6.2,5.0 C -3.7,5.0 -1.2,4.0 1.1,3.0 L 1.5,2.8 L 6.2,0.8 C 7.3,0.3 8.5,0.1 10.0,0.2 L 12.0,0.4 L 17.3,14.2 L 23.6,30.9 C 25.2,34.9 25.0,40.1 21.1,42.1 M 5.9,-12.4 L -1.3,-12.4 L -1.3,-16.7 L 5.9,-16.7 Z M 5.9,-12.4 M 5.9,-24.9 L 5.8,-20.6 L -1.3,-20.7 L -1.3,-24.9 Z M 5.9,-24.9 M 5.9,-29.6 L -1.3,-29.6 L -1.3,-33.8 L 5.8,-33.7 Z M 5.9,-29.6", "igual": "M -50,-42.4 L -50,-12.3 L 50,-12.3 L 50,-42.4 Z M -50,-42.4 M -50,12.3 L -50,42.4 L 50,42.4 L 50,12.3 Z M -50,12.3", "quadrado": "M 50,41.7 L -50,41.7 L -50,-41.7 L 50,-41.7 Z M 50,41.7", "barra": "M 19.1,-46.6 L -6.7,50 L -19.1,46.6 L 6.7,-50 Z M 19.1,-46.6"};
+  const ISO = ["M -77.6,0 L -27.6,49.9 L -38.8,61.1 L -100,0.0 L -99.9,0 L -99.9,-0.0 L -38.8,-61.1 L -27.6,-49.9 Z M -77.6,0", "M -42.7,-17.9 L -42.7,-5.2 L -0.5,-5.2 L -0.5,-17.9 Z M -42.7,-17.9", "M -42.7,5.1 L -42.7,17.9 L -0.5,17.9 L -0.5,5.1 Z M -42.7,5.1", "M 48.9,-57.0 L 17.3,60.9 L 2.1,56.8 L 33.7,-61.1 Z M 48.9,-57.0", "M 100,-19.2 L 60.6,20.1 L 49.4,8.9 L 77.6,-19.2 L 49.4,-47.4 L 60.6,-58.6 L 99.8,-19.3 L 99.8,-19.3 Z M 100,-19.2"];
+  const P = Object.fromEntries(Object.entries(SYM).map(([k, d]) => [k, new Path2D(d)]));
+  const IP = ISO.map(d => new Path2D(d));
+  const COR = ['195,177,215', '233,243,228', '150,122,224'];
+  const ISO_PAR = [-26, -12, -12, 10, 26];
+  let W = 0, H = 0, dpr = 1, itens = [], mx = 0, my = 0, tx = 0, ty = 0, px = -1e4, py = -1e4, sp = 0, raf = null, vis = true, t0 = performance.now();
+  const mob = () => W < 760;
+
+  function montar() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    const ks = Object.keys(P), n = mob() ? 20 : 42;
+    itens = Array.from({length: n}, (_, i) => ({
+      k: ks[i % ks.length], x: Math.random() * 2.4 - 1.2, y: Math.random() * 2 - 1, z: Math.random(),
+      r: Math.random() * 6.283, vr: (Math.random() - .5) * .006, vx: (Math.random() - .5) * .0007, vy: (Math.random() - .5) * .0007,
+      c: i % 6 === 0 ? 1 : i % 3 === 0 ? 2 : 0, s: .55 + Math.random() * .75, ox: 0, oy: 0
+    }));
+  }
+
+  function iso(t) {
+    const m = mob(), sz = m ? Math.min(W * .62, 260) : Math.min(W * .34, H * .5, 430);
+    const cx = m ? W * .5 : W * .74, cy = m ? H * .2 : H * .5;
+    const k = sz / 200, ent = reduz ? 1 : Math.min(1, t / 1800), e = 1 - Math.pow(1 - ent, 3);
+    const respira = reduz ? 0 : Math.sin(t / 1400) * .015;
+    ctx.save();
+    ctx.globalAlpha = (m ? .34 : .95) * e;
+    const g = ctx.createLinearGradient(cx - sz / 2, cy - sz / 2, cx + sz / 2, cy + sz / 2);
+    g.addColorStop(0, '#E9F3E4'); g.addColorStop(.45, '#C3B1D7'); g.addColorStop(1, '#8F72DD');
+    ctx.fillStyle = g;
+    ctx.shadowColor = 'rgba(150,122,224,.55)'; ctx.shadowBlur = m ? 18 : 34;
+    IP.forEach((p, i) => {
+      const sep = (1 - e) * (i - 2) * 70, par = ISO_PAR[i];
+      ctx.save();
+      ctx.translate(cx + sep + mx * par, cy + my * par * .6 - sp * (40 + i * 18));
+      ctx.scale(k * (1 + respira), k * (1 + respira));
+      ctx.fill(p);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  function quadro(t) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const base = Math.min(W, H) * (mob() ? .07 : .055);
+    const lista = itens.map(o => ({o, z: o.z + sp * .9})).filter(a => a.z < 1.25).sort((a, b) => a.z - b.z);
+    for (const {o, z} of lista) {
+      const f = .3 + z * 1.15;
+      let sx = W / 2 + o.x * W * .5 * (.7 + z * .5) + mx * z * 60;
+      let sy = H / 2 + o.y * H * .5 * (.7 + z * .5) + my * z * 40;
+      const dx = sx - px, dy = sy - py, d = Math.hypot(dx, dy);
+      if (d < 150 && !reduz) { const fz = (1 - d / 150) * 26; o.ox += (dx / (d || 1)) * fz * .12; o.oy += (dy / (d || 1)) * fz * .12; }
+      o.ox *= .94; o.oy *= .94;
+      sx += o.ox; sy += o.oy;
+      const tam = base * f * o.s, a = Math.max(0, Math.min(1, (.1 + z * .55) * (z > 1 ? (1.25 - z) / .25 : 1)));
+      const perto = d < 150 ? (1 - d / 150) * .35 : 0;
+      ctx.save();
+      ctx.translate(sx, sy); ctx.rotate(o.r); ctx.scale(tam / 100, tam / 100);
+      ctx.fillStyle = `rgba(${COR[o.c]},${Math.min(1, a + perto)})`;
+      ctx.fill(P[o.k]);
+      ctx.restore();
+    }
+    iso(t);
+  }
+
+  function passo(now) {
+    const t = now - t0;
+    mx += (tx - mx) * .05; my += (ty - my) * .05;
+    for (const o of itens) { o.x += o.vx; o.y += o.vy; o.r += o.vr; if (o.x > 1.3) o.x = -1.3; if (o.x < -1.3) o.x = 1.3; if (o.y > 1.1) o.y = -1.1; if (o.y < -1.1) o.y = 1.1; }
+    quadro(t);
+    raf = vis ? requestAnimationFrame(passo) : null;
+  }
+
+  montar();
+  if (reduz) { quadro(99999); addEventListener('resize', () => { montar(); quadro(99999); }); return; }
+  const alvo = cv.parentElement;
+  alvo.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; tx = (px / W - .5) * 2; ty = (py / H - .5) * 2; }, {passive: true});
+  alvo.addEventListener('pointerleave', () => { px = py = -1e4; tx = ty = 0; });
+  addEventListener('scroll', () => { sp = Math.max(0, Math.min(1, scrollY / (H || 1))); }, {passive: true});
+  new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis && !raf) raf = requestAnimationFrame(passo); }).observe(cv);
+  document.addEventListener('visibilitychange', () => { vis = !document.hidden; if (vis && !raf) raf = requestAnimationFrame(passo); });
+  let tr; addEventListener('resize', () => { clearTimeout(tr); tr = setTimeout(montar, 150); });
+  raf = requestAnimationFrame(passo);
+})();
+(() => {
+  const m = document.querySelector('[data-mani]');
+  if (!m) return;
+  const ws = [...m.querySelectorAll('.mani-w span')];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { ws.forEach(w => w.classList.add('on')); return; }
+  const upd = () => { const r = m.getBoundingClientRect(), vh = innerHeight; const p = (vh - r.top) / (vh * .9); ws.forEach((w, i) => w.classList.toggle('on', p > .35 + i * .18)); };
+  addEventListener('scroll', upd, {passive: true}); upd();
+})();
