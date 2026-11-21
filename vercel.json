@@ -43,39 +43,6 @@
   ],
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cproject-dev.vercel.app"
-        }
-      ],
-      "destination": "https://cproject.com.br/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cproject-dev-jagua2.vercel.app"
-        }
-      ],
-      "destination": "https://cproject.com.br/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cproject-dev-git-main-jagua2.vercel.app"
-        }
-      ],
-      "destination": "https://cproject.com.br/:path*",
-      "permanent": true
-    },
-    {
       "source": "/sites-e-apps",
       "destination": "/aplicativos-e-plataformas/",
       "permanent": true
