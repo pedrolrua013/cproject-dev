@@ -47,7 +47,29 @@
       "has": [
         {
           "type": "host",
-          "value": "cproject-dev(-jagua2|-git-main-jagua2)?\\.vercel\\.app"
+          "value": "cproject-dev.vercel.app"
+        }
+      ],
+      "destination": "https://cproject.com.br/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "cproject-dev-jagua2.vercel.app"
+        }
+      ],
+      "destination": "https://cproject.com.br/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "cproject-dev-git-main-jagua2.vercel.app"
         }
       ],
       "destination": "https://cproject.com.br/:path*",
