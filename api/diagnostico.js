@@ -4,7 +4,7 @@
 //   SMTP_USER (ex.: contato@cproject.com.br), SMTP_PASS, CONTACT_TO (padrão contato@cproject.com.br)
 const nodemailer = require('nodemailer');
 
-const LIMITES = {nome: 120, empresa: 120, segmento: 80, whatsapp: 20, busca: 2000};
+const LIMITES = {interesse: 80, nome: 120, empresa: 120, segmento: 80, whatsapp: 20, busca: 2000};
 const limpa = (v, max) => String(v ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').trim().slice(0, max);
 
 module.exports = async (req, res) => {
@@ -35,7 +35,8 @@ module.exports = async (req, res) => {
   });
   const wa = 'https://wa.me/55' + digitos.replace(/^55(?=\d{10,11}$)/, '');
   const texto = [
-    'Nova solicitação de diagnóstico gratuito pelo site:', '',
+    'Novo contato pelo site:', '',
+    `Interesse: ${d.interesse || 'Consultoria gratuita'}`,
     `Nome: ${d.nome}`, `Empresa: ${d.empresa}`, `Segmento: ${d.segmento}`, `WhatsApp: ${d.whatsapp} (${wa})`, '',
     'O que busca:', d.busca,
   ].join('\n');
@@ -44,7 +45,7 @@ module.exports = async (req, res) => {
     await tx.sendMail({
       from: `"Site CProject Lab" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_TO || 'contato@cproject.com.br',
-      subject: `Diagnóstico gratuito · ${d.empresa} (${d.segmento})`.replace(/[\r\n]/g, ' '),
+      subject: `Site · ${d.interesse || 'Consultoria gratuita'} · ${d.empresa}`.replace(/[\r\n]/g, ' '),
       text: texto,
     });
     return res.status(200).json({ok: true});

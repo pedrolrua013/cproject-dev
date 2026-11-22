@@ -231,6 +231,15 @@
     bt.addEventListener('click', () => dataLayer.push({event: 'begin_checkout', produto: bt.dataset.produto, via: LINKS[ck.dataset.ck + '-' + ck.querySelector('input:checked').value] ? 'pagamento' : 'whatsapp'}));
   });
 
+  // WhatsApp flutuante só depois de rolar e fora do formulário
+  const waf = $('.wa'), fmz = $('#formulario');
+  if (waf) {
+    let noForm = false;
+    const vis = () => waf.classList.toggle('on', scrollY > innerHeight * .6 && !noForm);
+    if (fmz && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => { noForm = e.isIntersecting; vis(); }, {threshold: .15}).observe(fmz);
+    addEventListener('scroll', vis, {passive: true}); vis();
+  }
+
   // formulário de diagnóstico -> e-mail (fallback: WhatsApp)
   const fm = $('#fm');
   if (fm) fm.addEventListener('submit', async e => {
@@ -246,15 +255,15 @@
     });
     if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, empresa, segmento, um WhatsApp com DDD e o que você busca.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
     const d = Object.fromEntries(new FormData(fm));
-    const txt = `Olá! Vim pelo site da CProject Lab e quero o diagnóstico gratuito.\n\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nSegmento: ${d.segmento}\nWhatsApp: ${d.whatsapp}\n\n${d.busca}`;
+    const txt = `Olá! Vim pelo site da CProject Lab. Interesse: ${d.interesse || 'Consultoria gratuita'}.\n\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nSegmento: ${d.segmento}\nWhatsApp: ${d.whatsapp}\n\n${d.busca}`;
     const wurl = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
     bt.disabled = true; msg.textContent = 'Enviando...';
     try {
       const r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)});
       if (!r.ok) throw new Error(r.status);
-      dataLayer.push({event: 'generate_lead', origem: 'diagnostico', segmento: d.segmento});
+      dataLayer.push({event: 'generate_lead', interesse: d.interesse, segmento: d.segmento}); if (window.va) window.va('event', {name: 'lead', data: {interesse: d.interesse || ''}});
       fm.reset(); msg.className = 'fmsg ok';
-      msg.textContent = 'Recebemos sua solicitação! Em breve entramos em contato pelo WhatsApp para marcar a entrevista inicial.';
+      msg.textContent = 'Recebemos sua mensagem! Em breve entramos em contato pelo WhatsApp.';
     } catch (err) {
       msg.className = 'fmsg err';
       msg.innerHTML = 'Não conseguimos enviar agora. <a href="' + wurl + '" target="_blank" rel="noopener">Envie pelo WhatsApp</a> ou escreva para contato@cproject.com.br.';
