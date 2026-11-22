@@ -189,6 +189,25 @@
     tr.addEventListener('click', e => { const a = e.target.closest('a'); if (a) dataLayer.push({event: 'portfolio_click', site: a.href}); });
   }
 
+  // Sistemas Lab: carrossel e planos expansíveis
+  const slt = $('.sl-t');
+  if (slt) {
+    const cs = [...slt.querySelectorAll('[data-sl]')];
+    cs.forEach(c => c.addEventListener('click', () => {
+      const abrir = c.getAttribute('aria-expanded') !== 'true';
+      cs.forEach(o => { o.setAttribute('aria-expanded', o === c && abrir); const p = document.getElementById(o.getAttribute('aria-controls')); if (p) p.hidden = !(o === c && abrir); });
+      if (abrir) {
+        const p = document.getElementById(c.getAttribute('aria-controls'));
+        p.scrollIntoView({block: 'nearest', behavior: reduz ? 'auto' : 'smooth'});
+        dataLayer.push({event: 'sistema_lab', sistema: c.dataset.sl});
+      }
+    }));
+    const passo = () => (slt.querySelector('.sl')?.offsetWidth || 300) + 16;
+    $$('[data-sldir]').forEach(b => b.addEventListener('click', () => slt.scrollBy({left: passo() * +b.dataset.sldir, behavior: reduz ? 'auto' : 'smooth'})));
+    const nav = () => { const [a, z] = $$('[data-sldir]'); if (!a) return; a.disabled = slt.scrollLeft < 4; z.disabled = slt.scrollLeft + slt.clientWidth >= slt.scrollWidth - 4; };
+    slt.addEventListener('scroll', nav, {passive: true}); addEventListener('resize', nav); nav();
+  }
+
   // formulário de diagnóstico -> e-mail (fallback: WhatsApp)
   const fm = $('#fm');
   if (fm) fm.addEventListener('submit', async e => {
