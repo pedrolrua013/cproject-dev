@@ -44,62 +44,62 @@
   "redirects": [
     {
       "source": "/sites-e-apps",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
       "permanent": true
     },
     {
       "source": "/sites-e-apps/",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
       "permanent": true
     },
     {
       "source": "/aplicativos-e-plataformas",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
       "permanent": true
     },
     {
       "source": "/aplicativos-e-plataformas/",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/sistemas-sob-medida",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/sistemas-sob-medida/",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/dashboards-e-bi",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/dashboards-e-bi/",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/automacao-de-processos",
-      "destination": "/#solucoes",
-      "permanent": true
-    },
-    {
-      "source": "/automacao-de-processos/",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
       "permanent": true
     },
     {
       "source": "/criacao-de-sites-e-landing-pages",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
       "permanent": true
     },
     {
       "source": "/criacao-de-sites-e-landing-pages/",
-      "destination": "/#solucoes",
+      "destination": "/sites-e-landing-pages/",
+      "permanent": true
+    },
+    {
+      "source": "/sistemas-sob-medida",
+      "destination": "/sistemas-lab/",
+      "permanent": true
+    },
+    {
+      "source": "/sistemas-sob-medida/",
+      "destination": "/sistemas-lab/",
+      "permanent": true
+    },
+    {
+      "source": "/automacao-de-processos",
+      "destination": "/intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/automacao-de-processos/",
+      "destination": "/intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/dashboards-e-bi",
+      "destination": "/data/",
+      "permanent": true
+    },
+    {
+      "source": "/dashboards-e-bi/",
+      "destination": "/data/",
       "permanent": true
     }
   ]

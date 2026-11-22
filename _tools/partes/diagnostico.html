@@ -1,0 +1,21 @@
+<section class="sec teal" id="diagnostico" aria-labelledby="t-ct">
+  <div class="in ct">
+    <div class="rv" id="contato"><span class="eb">Consultoria gratuita</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos entender o seu negócio?</h2>
+      <p style="color:var(--tx-2);margin-top:16px">Preencha o formulário e entramos em contato para marcar a entrevista inicial gratuita. Se preferir, fale direto pelos canais abaixo.</p>
+      <div class="ch">
+        <a href="https://wa.me/5513974177986?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20CProject%20Lab%20e%20quero%20conversar." target="_blank" rel="noopener" data-origem="contato"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.79 14.06c-.24.68-1.42 1.3-1.95 1.35-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.93-4.66-4.11-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg><span><small>WhatsApp</small>+55 (13) 97417-7986</span></a>
+        <a href="mailto:contato@cproject.com.br"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><span><small>E-mail</small>contato@cproject.com.br</span></a>
+        <a href="https://instagram.com/cproject.lab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span><small>Instagram</small>@cproject.lab</span></a>
+      </div></div>
+    <form class="fm rv" id="fm" method="post" action="/api/diagnostico" novalidate aria-label="Solicitar diagnóstico gratuito">
+      <div class="fl"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" maxlength="120" required></div>
+      <div class="fl"><label for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization" maxlength="120" required></div>
+      <div class="fl"><label for="f-seg">Segmento</label><select id="f-seg" name="segmento" required><option value="">Selecione</option><option>Saúde e odontologia</option><option>Beleza, estética e barbearia</option><option>Advocacia e serviços profissionais</option><option>Comércio e varejo</option><option>Alimentação</option><option>Indústria, logística e comércio exterior</option><option>Educação</option><option>Imobiliário e construção</option><option>Outro</option></select></div>
+      <div class="fl"><label for="f-wpp">WhatsApp</label><input id="f-wpp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(13) 90000-0000" required></div>
+      <div class="fl w"><label for="f-msg">O que você busca?</label><textarea id="f-msg" name="busca" maxlength="2000" required placeholder="Ex.: mais clientes, organizar a agenda, automatizar o atendimento."></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="f-site">Site</label><input id="f-site" name="site" tabindex="-1" autocomplete="off"></div>
+      <button class="btn" type="submit">Solicitar diagnóstico gratuito</button>
+      <p class="fmsg" id="fmsg" role="status" aria-live="polite">Usamos seus dados só para entrar em contato. Veja a <a href="/politica-de-privacidade/">política de privacidade</a>.</p>
+    </form>
+  </div>
+</section>

@@ -208,6 +208,29 @@
     slt.addEventListener('scroll', nav, {passive: true}); addEventListener('resize', nav); nav();
   }
 
+  // Sistemas Lab: abrir pelo endereço (#sorrirmos, #cortando)
+  if (slt && /^#(sorrirmos|cortando)$/.test(location.hash)) {
+    const c = slt.querySelector('[data-sl="' + location.hash.slice(1) + '"]');
+    if (c) setTimeout(() => { c.click(); c.scrollIntoView({block: 'center'}); }, 300);
+  }
+
+  // catálogo: opção escolhida -> preço e link de compra
+  const LINKS = window.CP_CHECKOUT || {};
+  $$('.ck').forEach(ck => {
+    const bt = ck.querySelector('.ck-b'), pr = ck.querySelector('.ck-p');
+    const atualizar = () => {
+      const r = ck.querySelector('input:checked'); if (!r) return;
+      const [a, b] = r.dataset.preco.split(',');
+      pr.querySelector('b').textContent = a; pr.querySelector('i').textContent = b ? ',' + b : ''; pr.querySelector('em').textContent = r.dataset.cond;
+      const nome = ck.dataset.produto + ' (' + r.nextElementSibling.textContent + ')';
+      const link = LINKS[ck.dataset.ck + '-' + r.value];
+      bt.href = link || 'https://wa.me/5513974177986?text=' + encodeURIComponent('Olá! Quero comprar: ' + nome + '.');
+      bt.dataset.produto = nome;
+    };
+    ck.addEventListener('change', atualizar); atualizar();
+    bt.addEventListener('click', () => dataLayer.push({event: 'begin_checkout', produto: bt.dataset.produto, via: LINKS[ck.dataset.ck + '-' + ck.querySelector('input:checked').value] ? 'pagamento' : 'whatsapp'}));
+  });
+
   // formulário de diagnóstico -> e-mail (fallback: WhatsApp)
   const fm = $('#fm');
   if (fm) fm.addEventListener('submit', async e => {
