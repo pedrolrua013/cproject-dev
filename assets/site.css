@@ -653,3 +653,14 @@ footer .logo img{height:40px}
   .xp-pct{font-size:1.9rem}
   .xp.on .xp-hint{display:none}
 }
+/* v15 · página única */
+.sv.s3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:980px){.sv.s3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.sv.s3{grid-template-columns:minmax(0,1fr)}}
+.plan.soon-plan{border-style:dashed}
+.fmsg a{color:inherit}
+.fmsg.ok{color:var(--verde)}
+@media (max-width:759px){
+  .xp-hd h2{font-size:1.6rem;max-width:18ch}
+  .xp.on .xp-steps li.ativo p{font-size:.95rem}
+}

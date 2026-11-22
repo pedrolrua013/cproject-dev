@@ -45,7 +45,7 @@
     dpr = Math.min(devicePixelRatio || 1, mob ? 1.5 : 2);
     W = cv.clientWidth; H = cv.clientHeight; mob = W < 760;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-    if (mob) { cx = W * .47; cy = H * .46; S = Math.min(H * .46, W * .74); }
+    if (mob) { cx = W * .5; cy = H * .45; S = Math.min(H * .24, W * .52); }
     else { cx = W * .67; cy = H * .53; S = Math.min(H * .74, W * .38); }
     geo();
     far = Array.from({length: mob ? 60 : 130}, () => ({x: R(), y: R(), z: .2 + R() * .8}));

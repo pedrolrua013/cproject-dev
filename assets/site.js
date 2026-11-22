@@ -189,21 +189,34 @@
     tr.addEventListener('click', e => { const a = e.target.closest('a'); if (a) dataLayer.push({event: 'portfolio_click', site: a.href}); });
   }
 
-  // formulário -> WhatsApp
+  // formulário de diagnóstico -> e-mail (fallback: WhatsApp)
   const fm = $('#fm');
-  if (fm) fm.addEventListener('submit', e => {
+  if (fm) fm.addEventListener('submit', async e => {
     e.preventDefault();
-    const msg = $('#fmsg'); msg.className = 'fmsg'; msg.textContent = '';
+    const msg = $('#fmsg'), bt = fm.querySelector('button[type=submit]');
+    msg.className = 'fmsg'; msg.textContent = '';
     if (fm.querySelector('[name=site]').value) return;
     let ok = true;
-    fm.querySelectorAll('[required]').forEach(c => { const v = c.value.trim().length > 1; c.setAttribute('aria-invalid', !v); if (!v) ok = false; });
-    if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, interesse e uma linha sobre o que você precisa.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
+    fm.querySelectorAll('[required]').forEach(c => {
+      let v = c.value.trim().length > 1;
+      if (c.name === 'whatsapp') v = c.value.replace(/\D/g, '').length >= 10;
+      c.setAttribute('aria-invalid', !v); if (!v) ok = false;
+    });
+    if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, empresa, segmento, um WhatsApp com DDD e o que você busca.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
     const d = Object.fromEntries(new FormData(fm));
-    const txt = `Olá! Vim pelo site da CProject.\n\nNome: ${d.nome}\n${d.empresa ? 'Empresa: ' + d.empresa + '\n' : ''}Interesse: ${d.interesse}\n\n${d.mensagem}`;
-    const url = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
-    dataLayer.push({event: 'whatsapp_click', page: location.pathname, origem: 'formulario'});
-    const w = window.open(url, '_blank', 'noopener');
-    msg.innerHTML = w ? 'Abrimos o WhatsApp com sua mensagem pronta. É só enviar.' : 'Se o WhatsApp não abriu, <a href="' + url + '" target="_blank" rel="noopener">toque aqui</a> ou escreva para bruno.perescp@gmail.com.';
+    const txt = `Olá! Vim pelo site da CProject Lab e quero o diagnóstico gratuito.\n\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nSegmento: ${d.segmento}\nWhatsApp: ${d.whatsapp}\n\n${d.busca}`;
+    const wurl = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
+    bt.disabled = true; msg.textContent = 'Enviando...';
+    try {
+      const r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)});
+      if (!r.ok) throw new Error(r.status);
+      dataLayer.push({event: 'generate_lead', origem: 'diagnostico', segmento: d.segmento});
+      fm.reset(); msg.className = 'fmsg ok';
+      msg.textContent = 'Recebemos sua solicitação! Em breve entramos em contato pelo WhatsApp para marcar a entrevista inicial.';
+    } catch (err) {
+      msg.className = 'fmsg err';
+      msg.innerHTML = 'Não conseguimos enviar agora. <a href="' + wurl + '" target="_blank" rel="noopener">Envie pelo WhatsApp</a> ou escreva para contato@cproject.com.br.';
+    } finally { bt.disabled = false; }
   });
 })();
 /* CProject Lab · experiência imersiva do topo: os símbolos da marca flutuam em profundidade,
