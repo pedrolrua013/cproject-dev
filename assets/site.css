@@ -862,3 +862,19 @@ footer .logo img{height:40px}
 .pf-l li.pf-b{color:var(--tx);font-weight:600}
 .pf-l{width:fit-content;max-width:100%;margin:18px auto 4px}
 .pf-l li::before{content:"✓";border:0;transform:none;width:auto;height:auto;top:0;left:0;color:var(--lav);font-weight:700;background:none}
+/* Sorrirmos: fluxo WhatsApp -> agenda */
+.sl-flow{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:14px;counter-reset:f}
+.sl-flow li{position:relative;padding-left:44px;counter-increment:f}
+.sl-flow li::before{content:counter(f);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--lav);color:#1D131E;font:700 .85rem/1 var(--f)}
+.sl-flow li:not(:last-child)::after{content:"";position:absolute;left:14px;top:34px;bottom:-12px;width:2px;background:var(--line-2)}
+.sl-flow b{display:block;font:600 1rem/1.3 var(--f);color:var(--tx)}
+.sl-flow span{display:block;color:var(--tx-3);font-size:.92rem;margin-top:3px}
+.sl-mais{margin-top:18px;color:var(--tx-3);font-size:.92rem;max-width:52ch}
+.sl-mock-chat{display:grid;gap:14px;padding-bottom:28px}
+.mk-chat{background:#EFEAE2;border-radius:18px;padding:14px;display:grid;gap:8px;box-shadow:0 30px 60px -24px rgba(0,0,0,.6);transform:rotate(1.2deg)}
+.mk-chat .mk-bar{color:#075E54;border-color:#DDD5CA;padding-bottom:10px}
+.mk-chat p{max-width:82%;font-size:.8rem;line-height:1.4;padding:8px 11px;border-radius:12px 12px 12px 4px;background:#fff;color:#1D131E;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.mk-chat p.me{justify-self:end;background:#D9FDD3;border-radius:12px 12px 4px 12px}
+.sl-mock-chat .mk-app{transform:rotate(-1.2deg)}
+.mk-app li.mk-new{background:#F1ECFA;margin:0 -8px;padding:10px 8px;border-radius:10px}
+.mk-app i.new{background:#3B286F;color:#fff}
