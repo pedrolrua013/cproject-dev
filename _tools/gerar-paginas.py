@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '23'
+VERSAO = '24'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5513974177986'
@@ -176,7 +176,6 @@ def home():
   <div class="in">
     <div class="hd rv"><span class="eb">Quem constrói</span><h2 id="t-eq">Gente de verdade <em class="g">do outro lado</em></h2><p>Você conversa direto com quem desenvolve: desenvolvimento, negócios e marketing no mesmo time, do primeiro contato ao suporte.</p></div>
     {parte('equipe-cards.html')}
-    <div class="cli rv"><p>Quem já trabalhou com a gente</p><ul>{clientes}</ul></div>
   </div>
 </section>'''
     return '\n\n'.join([parte('hero.html'), parte('band.html'), parte('consultoria.html'), solucoes, destaque,
