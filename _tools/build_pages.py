@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "16"  # versão dos assets
+V = "17"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -156,6 +156,7 @@ CORTANDO = {"nome": "Cortando", "cor": "#D9468A", "letra": "C", "seg": "Gestão 
 PORTFOLIO = [
   {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Site com páginas de serviço", "SEO local", "Orçamento pelo WhatsApp"]},
   {"slug": "drc", "nome": "DRC Compressores", "seg": "Recondicionamento de compressores · Santos, SP", "url": "https://drc-compressores.vercel.app/", "host": "drc-compressores.vercel.app", "tags": ["Landing page", "Catálogo de marcas", "WhatsApp"]},
+  {"slug": "acqua", "nome": "Acqua Mundo", "seg": "Aquário do Guarujá · Praia da Enseada", "url": "https://acqua-mundo-site.vercel.app/", "host": "acqua-mundo-site.vercel.app", "tags": ["Site institucional", "Atrações", "Informações de visita"]},
   {"slug": "yamam", "nome": "Grupo Yamam", "seg": "Segurança patrimonial, portaria e limpeza · SP e Baixada Santista", "url": "https://grupo-yamam.vercel.app/", "host": "grupo-yamam.vercel.app", "tags": ["Site institucional", "Serviços", "Orçamento"]},
   {"slug": "beatriz", "nome": "Beatriz Geraldi", "seg": "Nutricionista · São Paulo e online", "url": "https://beatriz-geraldi.vercel.app/", "host": "beatriz-geraldi.vercel.app", "tags": ["Landing page", "Consulta online", "Formulário"]},
   {"slug": "ingrid", "nome": "Ingrid Krichinak", "seg": "Nutricionista · Santos e online", "url": "https://ingrid-krichinak.vercel.app/", "host": "ingrid-krichinak.vercel.app", "tags": ["Landing page", "Planos e agendamento", "WhatsApp"]},
