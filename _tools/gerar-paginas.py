@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '20'
+VERSAO = '21'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5513974177986'
@@ -42,7 +42,7 @@ WA_ICON = re.search(r'<svg.*?</svg>', (PARTES / 'whatsapp-flutuante.html').read_
 LINHAS = [
     # slug, nome, símbolo, problema, descrição, gancho
     ('/sites-e-landing-pages/', 'Sites e landing pages', 'isotipo', 'Ser encontrado e escolhido',
-     'Sites e páginas rápidos no celular, bem posicionados no Google e feitos para gerar contato.', 'Orçamento sob medida'),
+     'Landing pages com preço fechado e sites completos, rápidos no celular e prontos para o Google.', 'A partir de R$ 297'),
     ('/sistemas-lab/', 'Sistemas Lab', 'quadrado', 'Organizar agenda e atendimento',
      'Sistemas de gestão personalizados para nichos, como clínicas odontológicas e barbearias.', 'A partir de R$ 89,90/mês'),
     ('/intelligence/', 'CProject Intelligence', 'asterisco', 'Ganhar tempo com IA',
@@ -149,7 +149,7 @@ FAQ_HOME = [
     ('Como funciona o suporte depois da entrega?', 'Ajustes e evolução são conversados direto com quem construiu o projeto, sem intermediário e sem fila de ticket.'),
 ]
 
-CLIENTES = ['Fundação Virgínia Ferraz', 'ISTV', 'Rotary Club São Caetano do Sul - Olímpico', 'Gelomac', 'Grupo Yamam', 'Bonomi Almeida', 'Ingrid Krichinak']
+CLIENTES = ['Fundação Virgínia Ferraz', 'ISTV', 'Rotary Club São Caetano do Sul - Olímpico', 'Gelomac', 'DRC Compressores', 'Grupo Yamam', 'Beatriz Geraldi', 'Ingrid Krichinak', 'Marysol', 'Figueiredo Barros Advocacia', 'Bonomi Almeida']
 
 
 def home():
@@ -224,7 +224,7 @@ PRODUTOS = {
         eb='Sites e landing pages', sym='isotipo', parte='linha-sites.html',
         h1='Seu negócio <em class="g">encontrado</em> e escolhido',
         lead='Sites e páginas criados para o seu público, rápidos no celular e prontos para transformar visita em contato.',
-        ctas=[('Quero um site', '#formulario'), ('Ver portfólio', '#portfolio')],
+        ctas=[('Ver planos', '#sites'), ('Ver portfólio', '#portfolio')],
         extra=lambda: parte('portfolio.html').replace('<span class="eb">Portfólio</span>', '<span class="eb">Portfólio</span>'),
         passos=[('Briefing', 'Entendemos o negócio, o público e o objetivo da página.'),
                 ('Estrutura e textos', 'Organizamos as seções e escrevemos os textos pensando em quem vai visitar.'),
@@ -233,7 +233,7 @@ PRODUTOS = {
         faq=[('O site aparece no Google?', 'Configuramos o SEO de cada página e os dados estruturados para o Google entender o seu negócio. A posição depende também da concorrência e do conteúdo, mas o site já sai preparado.'),
              ('Vocês cuidam de domínio e hospedagem?', 'Sim. Publicamos e mantemos o site no ar, com domínio, certificado de segurança e ajustes quando você precisar.'),
              ('Qual a diferença entre site e landing page?', 'O site apresenta a empresa como um todo, em várias páginas. A landing page é uma página única focada em uma oferta ou campanha.'),
-             ('Quanto custa?', 'Depende do tamanho e do que o site precisa ter. Passamos o orçamento depois de uma conversa rápida sobre o seu negócio.')],
+             ('Quanto custa?', 'A Landing Page Template sai por R$ 297 em pagamento único; a Hospedada, por R$ 297 de implantação + R$ 50 por mês; a Personalizada, a partir de R$ 997. Sites completos são orçados conforme o escopo.')],
         form=('Sites e landing pages', 'Vamos criar o seu site?', 'Conte sobre o seu negócio e o que o site precisa ter. Respondemos com os próximos passos e o orçamento.', 'Quero um site')),
     '/sistemas-lab/': dict(
         eb='Sistemas Lab', sym='quadrado', parte='linha-sistemas.html',
@@ -276,6 +276,7 @@ PRODUTOS = {
         faq=[('A verba dos anúncios está inclusa nos R$ 500?', 'Não. Os R$ 500 por mês são pela gestão das campanhas. A verba dos anúncios é definida com você e fica por conta do cliente.'),
              ('Em quais plataformas vocês anunciam?', 'No Google e nas redes sociais. A escolha depende do seu público e do objetivo.'),
              ('Quanto devo investir em anúncios?', 'Depende da região, da concorrência e do objetivo. Definimos o valor junto com você no briefing.'),
+             ('Recebo relatório dos resultados?', 'Sim. Todo mês você recebe um relatório com cliques, contatos e custo por contato.'),
              ('Combina com um site novo?', 'Sim. Anúncio bom precisa de uma página que converta: sites e landing pages da CProject Lab já saem preparados para isso.')],
         form=('CProject Growth', 'Vamos trazer mais clientes?', 'Conte sobre o seu negócio e a região que você atende. Respondemos com os próximos passos.', 'Quero o Growth')),
     '/data/': dict(
@@ -299,9 +300,10 @@ def produto(path):
     corpo = [topo(d['eb'], d['h1'], d['lead'], d['ctas'], d['sym']), parte(d['parte'])]
     if 'extra' in d:
         corpo.append(d['extra']())
+    s1 = path == '/sites-e-landing-pages/'
     corpo.append(etapas('Como funciona', d.get('passos_titulo', 'Do primeiro contato <em class="g">ao resultado</em>'), 'Um processo simples, com você acompanhando cada etapa.', d['passos'],
-                        'sec light' if path != '/sites-e-landing-pages/' else 'sec light'))
-    corpo.append(faq(d['faq'], 'sec light white'))
+                        'sec light white' if s1 else 'sec light'))
+    corpo.append(faq(d['faq'], 'sec light' if s1 else 'sec light white'))
     i, t, x, b = d['form']
     corpo.append(formulario(d['eb'], t, x, i, b, NOTA_CONSULTORIA))
     return '\n\n'.join(corpo)
