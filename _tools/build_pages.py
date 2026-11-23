@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "15"  # versão dos assets
+V = "16"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -154,10 +154,14 @@ CORTANDO = {"nome": "Cortando", "cor": "#D9468A", "letra": "C", "seg": "Gestão 
   "wa": "Olá! Quero ser avisado quando os planos do Cortando estiverem disponíveis."}
 
 PORTFOLIO = [
-  {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Landing page", "SEO local", "Orçamento pelo WhatsApp"]},
+  {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Site com páginas de serviço", "SEO local", "Orçamento pelo WhatsApp"]},
+  {"slug": "drc", "nome": "DRC Compressores", "seg": "Recondicionamento de compressores · Santos, SP", "url": "https://drc-compressores.vercel.app/", "host": "drc-compressores.vercel.app", "tags": ["Landing page", "Catálogo de marcas", "WhatsApp"]},
+  {"slug": "yamam", "nome": "Grupo Yamam", "seg": "Segurança patrimonial, portaria e limpeza · SP e Baixada Santista", "url": "https://grupo-yamam.vercel.app/", "host": "grupo-yamam.vercel.app", "tags": ["Site institucional", "Serviços", "Orçamento"]},
+  {"slug": "beatriz", "nome": "Beatriz Geraldi", "seg": "Nutricionista · São Paulo e online", "url": "https://beatriz-geraldi.vercel.app/", "host": "beatriz-geraldi.vercel.app", "tags": ["Landing page", "Consulta online", "Formulário"]},
   {"slug": "ingrid", "nome": "Ingrid Krichinak", "seg": "Nutricionista · Santos e online", "url": "https://ingrid-krichinak.vercel.app/", "host": "ingrid-krichinak.vercel.app", "tags": ["Landing page", "Planos e agendamento", "WhatsApp"]},
-  {"slug": "yamam", "nome": "Grupo Yamam", "seg": "Segurança patrimonial, portaria e limpeza · SP e Baixada Santista", "url": "https://grupo-yamam.vercel.app/", "host": "grupo-yamam.vercel.app", "tags": ["Site institucional", "SEO", "Blog"]},
-  {"slug": "bonomi", "nome": "Bonomi Almeida", "seg": "Advocacia · Estado de São Paulo", "url": "https://bonomi-almeida.vercel.app/", "host": "bonomi-almeida.vercel.app", "tags": ["Site institucional", "Áreas de atuação"]},
+  {"slug": "marysol", "nome": "Marysol", "seg": "Administração de condomínios · Guarujá e Bertioga", "url": "https://marysol.vercel.app/", "host": "marysol.vercel.app", "tags": ["Landing page", "Serviços", "Proposta pelo WhatsApp"]},
+  {"slug": "figueiredo", "nome": "Figueiredo Barros Advocacia", "seg": "Advocacia · Santos e estado de SP", "url": "https://figueiredo-barros.vercel.app/", "host": "figueiredo-barros.vercel.app", "tags": ["Site institucional", "Áreas de atuação", "Contato"]},
+  {"slug": "bonomi", "nome": "Bonomi Almeida", "seg": "Advocacia · Estado de São Paulo", "url": "https://bonomi-almeida.vercel.app/", "host": "bonomi-almeida.vercel.app", "tags": ["Site institucional", "Áreas de atuação", "Contato"]},
 ]
 
 TIME = [
@@ -293,7 +297,7 @@ def sorrirmos_html():
     todos = "".join(f"<li>{E(t)}</li>" for t in pr["todos"])
     return f'''<section class="sec app" id="sorrirmos" aria-labelledby="t-sor">
   <div class="in">
-    <div class="hd rv"><span class="eb">02 · Sorrirmos</span><div class="mk mk-xl"><b style="background:{pr["cor"]}">{pr["letra"]}</b><div><h2 id="t-sor">Sorrirmos</h2><p>{E(pr["seg"])}</p></div></div><p>Agenda, pacientes e confirmações da clínica em um só sistema, com o WhatsApp trabalhando por você na véspera de cada consulta.</p></div>
+    <div class="hd rv"><span class="eb">03 · Sorrirmos</span><div class="mk mk-xl"><b style="background:{pr["cor"]}">{pr["letra"]}</b><div><h2 id="t-sor">Sorrirmos</h2><p>{E(pr["seg"])}</p></div></div><p>Agenda, pacientes e confirmações da clínica em um só sistema, com o WhatsApp trabalhando por você na véspera de cada consulta.</p></div>
     <div class="plans p3">{"".join(plano_html(p, pr["nome"]) for p in g["planos"])}</div>
     <div class="incl rv"><p class="ititle">Em todos os planos do Sorrirmos</p><ul>{todos}</ul></div>
     <p class="pnote">{E(g["nota"])}</p>
@@ -306,7 +310,7 @@ def cortando_html():
     return f'''<section class="sec img app" id="cortando" aria-labelledby="t-cor">
   <div class="in">
     <div class="cor rv">
-      <div><span class="eb">03 · Cortando</span><div class="mk mk-xl"><b style="background:{c["cor"]}">{c["letra"]}</b><div><h2 id="t-cor">Cortando</h2><p>{E(c["seg"])}</p></div></div><p class="cor-t">{E(c["txt"])}</p><span class="st c">Planos em definição</span></div>
+      <div><span class="eb">04 · Cortando</span><div class="mk mk-xl"><b style="background:{c["cor"]}">{c["letra"]}</b><div><h2 id="t-cor">Cortando</h2><p>{E(c["seg"])}</p></div></div><p class="cor-t">{E(c["txt"])}</p><span class="st c">Planos em definição</span></div>
       <div class="cor-c"><p class="ititle">O que vem no Cortando</p><ul>{itens}</ul><a class="btn" href="{wa(c["wa"])}" target="_blank" rel="noopener" data-origem="cortando">{I_WA} Quero ser avisado do lançamento</a></div>
     </div>
   </div>
@@ -438,31 +442,31 @@ def home():
 
 {lp_html()}
 
+<section class="sec teal" id="portfolio" aria-labelledby="t-pf">
+  <div class="in">
+    <div class="hd pfh rv"><div><span class="eb">02 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Landing pages e sites que a CProject desenvolveu para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
+      <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
+  </div>
+  <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
+  <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
+</section>
+
 {sorrirmos_html()}
 
 {cortando_html()}
 
 <section class="sec light" id="estudio" aria-labelledby="t-estudio">
   <div class="in">
-    <div class="hd rv"><span class="eb">04 · Estúdio</span><h2 id="t-estudio">Quatro serviços, da interface ao back-end</h2><p>Sem passar o projeto entre equipes diferentes no caminho: quem desenha é quem desenvolve e quem dá suporte.</p></div>
+    <div class="hd rv"><span class="eb">05 · Estúdio</span><h2 id="t-estudio">Quatro serviços, da interface ao back-end</h2><p>Sem passar o projeto entre equipes diferentes no caminho: quem desenha é quem desenvolve e quem dá suporte.</p></div>
     <div class="sv">{sv}</div>
   </div>
 </section>
 
 <section class="sec" id="solucoes" aria-labelledby="t-sol">
   <div class="in">
-    <div class="hd rv"><span class="eb">05 · Mais soluções</span><h2 id="t-sol">Outras soluções do <em class="g">CProject Lab</em></h2><p>Painéis de BI, packs de skills de IA e projetos sob medida para quando a operação pede algo além da página e dos sistemas.</p></div>
+    <div class="hd rv"><span class="eb">06 · Mais soluções</span><h2 id="t-sol">Outras soluções do <em class="g">CProject Lab</em></h2><p>Painéis de BI, packs de skills de IA e projetos sob medida para quando a operação pede algo além da página e dos sistemas.</p></div>
     <div class="pl rv" id="produtos">{planos_html()}</div>
   </div>
-</section>
-
-<section class="sec teal" id="portfolio" aria-labelledby="t-pf">
-  <div class="in">
-    <div class="hd pfh rv"><div><span class="eb">06 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Projetos publicados para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
-      <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
-  </div>
-  <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
-  <div class="in"><div class="pfp" aria-hidden="true"><i id="pfbar"></i></div></div>
 </section>
 
 <section class="sec light" id="abordagem" aria-labelledby="t-ab">
