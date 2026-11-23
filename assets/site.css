@@ -913,3 +913,6 @@ footer .logo img{height:40px}
 .ad-r .pr{border-top:0;padding-top:0;margin-top:0}
 .ad-r .pr .val,.ad-r .pr{align-items:flex-start;text-align:left}
 #quem-somos .pr-r{color:#3B286F;font-weight:600}
+.tag-pre{display:inline-block;vertical-align:middle;margin-left:10px;padding:5px 10px;border-radius:999px;background:var(--lav);color:#1D131E;font:600 .62rem/1 var(--m);letter-spacing:.1em;text-transform:uppercase}
+.pbadge.pb-soon{background:var(--sf-2);color:var(--lav);border:1px dashed var(--lav)}
+.plan.soon-plan{opacity:.82}

@@ -101,6 +101,16 @@
       "source": "/dashboards-e-bi/",
       "destination": "/data/",
       "permanent": true
+    },
+    {
+      "source": "/catalogo",
+      "destination": "/intelligence/",
+      "permanent": false
+    },
+    {
+      "source": "/catalogo/",
+      "destination": "/intelligence/",
+      "permanent": false
     }
   ]
 }

@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '22'
+VERSAO = '23'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5513974177986'
@@ -42,15 +42,15 @@ WA_ICON = re.search(r'<svg.*?</svg>', (PARTES / 'whatsapp-flutuante.html').read_
 LINHAS = [
     # slug, nome, símbolo, problema, descrição, gancho
     ('/sites-e-landing-pages/', 'Sites e landing pages', 'isotipo', 'Ser encontrado e escolhido',
-     'Landing pages com preço fechado e sites completos, rápidos no celular e prontos para o Google.', 'A partir de R$ 297'),
+     'Landing pages e sites completos, rápidos no celular e prontos para o Google.', 'A partir de R$ 997'),
     ('/sistemas-lab/', 'Sistemas Lab', 'quadrado', 'Organizar agenda e atendimento',
-     'Sistemas de gestão personalizados para nichos, como clínicas odontológicas e barbearias.', 'A partir de R$ 89,90/mês'),
+     'Sistemas de gestão personalizados para nichos, como clínicas odontológicas e barbearias.', 'Pré-lançamento · lista aberta'),
     ('/intelligence/', 'CProject Intelligence', 'asterisco', 'Ganhar tempo com IA',
-     'Packs de IA por profissão, IA sob medida e automações que tiram tarefa repetitiva da equipe.', 'Packs a partir de R$ 79,90'),
+     'IA sob medida para a sua rotina e automações que tiram tarefa repetitiva da equipe.', 'Projeto sob medida'),
     ('/growth/', 'CProject Growth', 'crescer', 'Atrair mais clientes',
      'Gestão de tráfego pago no Google e nas redes sociais, com plano único.', 'R$ 500/mês + verba'),
     ('/data/', 'CProject Data', 'igual', 'Decidir com base em números',
-     'Templates de BI por segmento e dashboards sob medida com os seus dados.', 'Templates a partir de R$ 100'),
+     'Dashboards sob medida com os seus dados, para acompanhar o que importa.', 'Projeto sob medida'),
 ]
 
 
@@ -64,7 +64,7 @@ def cabecalho(atual):
   <div class="in">
     <a class="logo" href="/" aria-label="CProject Lab, página inicial"><img src="/assets/brand/logo.svg" width="134" height="47" alt="CProject Lab"></a>
     <button class="burg" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span></button>
-    <ul id="menu"><li><a href="/consultoria/"{cur('/consultoria/')}>Consultoria</a></li><li class="dd"><a href="/#solucoes"{sol}>Soluções</a><ul class="sub" aria-label="Soluções">{sub}</ul></li><li><a href="/catalogo/"{cur('/catalogo/')}>Catálogo</a></li><li><a href="/#portfolio">Portfólio</a></li></ul>
+    <ul id="menu"><li><a href="/consultoria/"{cur('/consultoria/')}>Consultoria</a></li><li class="dd"><a href="/#solucoes"{sol}>Soluções</a><ul class="sub" aria-label="Soluções">{sub}</ul></li><li><a href="/#portfolio">Portfólio</a></li></ul>
     <a class="btn nb" href="/consultoria/#formulario" data-origem="nav">Consultoria gratuita</a>
   </div>
 </header>'''
@@ -79,7 +79,7 @@ def rodape():
       <div><a class="logo" href="/" aria-label="CProject Lab, página inicial"><img src="/assets/brand/logo.svg" width="134" height="47" alt="CProject Lab"></a>
         <p>Um laboratório que estuda o seu negócio e desenvolve as soluções que fazem ele crescer.</p><p class="f-loc">Baixada Santista, SP · atendimento em todo o Brasil</p></div>
       <div><h3 class="fh">Soluções</h3><ul><li><a href="/consultoria/">CProject Consulting</a></li>{sol}</ul></div>
-      <div><h3 class="fh">Empresa</h3><ul><li><a href="/catalogo/">Catálogo</a></li><li><a href="/#portfolio">Portfólio</a></li><li><a href="/#quem-somos">Quem somos</a></li><li><a href="/sistemas-lab/#sorrirmos">Sorrirmos</a></li><li><a href="/sistemas-lab/#cortando">Cortando</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
+      <div><h3 class="fh">Empresa</h3><ul><li><a href="/#portfolio">Portfólio</a></li><li><a href="/#quem-somos">Quem somos</a></li><li><a href="/sistemas-lab/#sorrirmos">Sorrirmos</a></li><li><a href="/sistemas-lab/#cortando">Cortando</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
       <div><h3 class="fh">Contato</h3><ul><li><a href="{wa('Olá! Vim pelo site da CProject Lab.')}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp +55 (13) 97417-7986</a></li><li><a href="mailto:contato@cproject.com.br">contato@cproject.com.br</a></li><li><a href="https://instagram.com/cproject.lab" target="_blank" rel="noopener">@cproject.lab</a></li></ul></div>
     </div>
     <div class="cp"><span>© 2026 CProject Lab</span>{cnpj}<span>Testar. Desenvolver. Inovar.</span></div>
@@ -146,10 +146,11 @@ FAQ_HOME = [
     ('Como funciona a consultoria gratuita?', 'Começa com uma entrevista inicial gratuita, em que entendemos o negócio, os fluxos, o que já existe e onde você quer chegar. Depois analisamos tudo e entregamos um plano de ação com as soluções recomendadas e o orçamento de cada uma.'),
     ('A entrevista inicial tem custo?', 'Não. A entrevista inicial é gratuita e sem compromisso de contratação.'),
     ('Vocês atendem fora da Baixada Santista?', 'Sim. Estamos na Baixada Santista e atendemos empresas de todo o Brasil de forma online.'),
+    ('Como funciona o pagamento?', 'Projetos: 50% na aprovação da proposta e 50% na entrega. Mensalidades (hospedagem, gestão de tráfego e assinaturas) são cobradas todo mês. As formas de pagamento são informadas na proposta.'),
     ('Como funciona o suporte depois da entrega?', 'Ajustes e evolução são conversados direto com quem construiu o projeto, sem intermediário e sem fila de ticket.'),
 ]
 
-CLIENTES = ['Fundação Virgínia Ferraz', 'ISTV', 'Rotary Club São Caetano do Sul - Olímpico', 'Gelomac', 'DRC Compressores', 'Grupo Yamam', 'Beatriz Geraldi', 'Ingrid Krichinak', 'Marysol', 'Figueiredo Barros Advocacia', 'Bonomi Almeida']
+CLIENTES = ['Fundação Virgínia Ferraz', 'ISTV', 'Rotary Club São Caetano do Sul - Olímpico', 'Gelomac', 'DRC Compressores', 'Figueiredo Barros Advocacia', 'Bonomi Almeida']
 
 
 def home():
@@ -162,10 +163,10 @@ def home():
 </section>'''
     destaque = f'''<section class="sec teal" id="sistemas-lab" aria-labelledby="t-dest">
   <div class="in dest">
-    <div class="rv"><span class="eb">Sistemas Lab</span><h2 id="t-dest">Sistemas de gestão feitos <em class="g">para o seu nicho</em></h2><p>Cada Sistema Lab nasce do estudo da rotina de um segmento e já vem com o que aquele negócio precisa. Funciona por assinatura, sem projeto do zero.</p><div class="ctas"><a class="btn" href="/sistemas-lab/">Conhecer os Sistemas Lab</a></div></div>
+    <div class="rv"><span class="eb">Sistemas Lab</span><h2 id="t-dest">Sistemas de gestão feitos <em class="g">para o seu nicho</em></h2><p>Cada Sistema Lab nasce do estudo da rotina de um segmento e já vem com o que aquele negócio precisa. Funciona por assinatura, sem projeto do zero. O Sorrirmos, para clínicas odontológicas, está em pré-lançamento.</p><div class="ctas"><a class="btn" href="/sistemas-lab/">Conhecer os Sistemas Lab</a></div></div>
     <div class="dest-c rv">
-      <a class="dest-i" href="/sistemas-lab/#sorrirmos"><span class="mk"><b style="background:#8E80EF">S</b><span><span class="sl-n">Sorrirmos</span><span class="sl-x">Clínicas e consultórios odontológicos</span></span></span><span class="sl-m">A partir de R$ 89,90/mês</span>{SETA}</a>
-      <a class="dest-i" href="/sistemas-lab/#cortando"><span class="mk"><b style="background:#D9468A">C</b><span><span class="sl-n">Cortando</span><span class="sl-x">Barbearias e salões de beleza</span></span></span><span class="sl-m">Planos em breve</span>{SETA}</a>
+      <a class="dest-i" href="/sistemas-lab/#sorrirmos"><span class="mk"><b style="background:#8E80EF">S</b><span><span class="sl-n">Sorrirmos</span><span class="sl-x">Clínicas e consultórios odontológicos</span></span></span><span class="sl-m">Pré-lançamento</span>{SETA}</a>
+      <a class="dest-i" href="/sistemas-lab/#cortando"><span class="mk"><b style="background:#D9468A">C</b><span><span class="sl-n">Cortando</span><span class="sl-x">Barbearias e salões de beleza</span></span></span><span class="sl-m">Em desenvolvimento</span>{SETA}</a>
       <a class="dest-i dest-n" href="/sistemas-lab/#sistemas-lista"><span class="mk"><b style="background:var(--lav)">+</b><span><span class="sl-n">Próximo Sistema Lab</span><span class="sl-x">Sugira o seu segmento</span></span></span>{SETA}</a>
     </div>
   </div>
@@ -224,43 +225,46 @@ PRODUTOS = {
         eb='Sites e landing pages', sym='isotipo', parte='linha-sites.html',
         h1='Seu negócio <em class="g">encontrado</em> e escolhido',
         lead='Sites e páginas criados para o seu público, rápidos no celular e prontos para transformar visita em contato.',
-        ctas=[('Ver planos', '#sites'), ('Ver portfólio', '#portfolio')],
+        ctas=[('Quero uma landing page', '#formulario'), ('Ver planos', '#sites')],
         extra=lambda: parte('portfolio.html').replace('<span class="eb">Portfólio</span>', '<span class="eb">Portfólio</span>'),
-        passos=[('Briefing', 'Entendemos o negócio, o público e o objetivo da página.'),
-                ('Estrutura e textos', 'Organizamos as seções e escrevemos os textos pensando em quem vai visitar.'),
-                ('Desenvolvimento', 'Site rápido, responsivo e com SEO configurado, com você acompanhando.'),
-                ('Publicação', 'Domínio, certificado de segurança e site no ar. Depois, manutenção por nossa conta.')],
+        passos=[('Briefing e proposta', 'Entendemos o negócio, o público e o objetivo, e enviamos a proposta com escopo, prazo e valor.'),
+                ('Entrada de 50%', 'Com a proposta aprovada e a entrada paga, o projeto entra na agenda.'),
+                ('Desenvolvimento e aprovação', 'Estrutura, textos e páginas com você acompanhando e aprovando antes de publicar.'),
+                ('Entrega e publicação', 'Com os 50% restantes, publicamos com domínio e certificado de segurança. Hospedagem e manutenção seguem por R$ 50/mês.')],
         faq=[('O site aparece no Google?', 'Configuramos o SEO de cada página e os dados estruturados para o Google entender o seu negócio. A posição depende também da concorrência e do conteúdo, mas o site já sai preparado.'),
              ('Vocês cuidam de domínio e hospedagem?', 'Sim. Publicamos e mantemos o site no ar, com domínio, certificado de segurança e ajustes quando você precisar.'),
              ('Qual a diferença entre site e landing page?', 'O site apresenta a empresa como um todo, em várias páginas. A landing page é uma página única focada em uma oferta ou campanha.'),
-             ('Quanto custa?', 'A Landing Page Template sai por R$ 297 em pagamento único; a Hospedada, por R$ 297 de implantação + R$ 50 por mês; a Personalizada, a partir de R$ 997. Sites completos são orçados conforme o escopo.')],
+             ('Quanto custa?', 'A Landing Page Personalizada sai a partir de R$ 997. Sites completos são orçados conforme o escopo. Os modelos prontos (Template e Hospedada) estão em produção.'),
+             ('Como funciona o pagamento?', 'Projetos: 50% na aprovação da proposta e 50% na entrega. Mensalidades (hospedagem, gestão de tráfego e assinaturas) são cobradas todo mês. As formas de pagamento são informadas na proposta.')],
         form=('Sites e landing pages', 'Vamos criar o seu site?', 'Conte sobre o seu negócio e o que o site precisa ter. Respondemos com os próximos passos e o orçamento.', 'Quero um site')),
     '/sistemas-lab/': dict(
         eb='Sistemas Lab', sym='quadrado', parte='linha-sistemas.html',
         h1='Sistemas feitos para <em class="g">o seu nicho</em>',
         lead='Os Sistemas Lab são sistemas de gestão personalizados para nichos específicos. Cada um nasce do estudo da rotina de um segmento, já vem com o que aquele tipo de negócio precisa e funciona por assinatura.',
-        ctas=[('Ver os sistemas e planos', '#sistemas-lista'), ('Quero uma demonstração', '#formulario')],
+        ctas=[('Entrar na lista de lançamento', '#formulario'), ('Ver os sistemas e planos', '#sistemas-lista')],
         passos=[('Demonstração', 'Mostramos o sistema funcionando e tiramos as dúvidas da sua equipe.'),
                 ('Implantação', 'Configuramos o sistema com os dados e a rotina da sua empresa.'),
                 ('Dia a dia', 'Agenda, atendimento e lembretes rodando, com a equipe já usando.'),
                 ('Suporte e evolução', 'Suporte direto com quem desenvolve e novas funções que nascem do uso real.')],
-        faq=[('Tem taxa de implantação?', 'Nos planos mensais do Sorrirmos há uma taxa única de implantação de R$ 297. No plano anual, a implantação é isenta.'),
+        faq=[('Quando o Sorrirmos estará disponível?', 'Está em fase final de desenvolvimento. Entre na lista de lançamento para ser avisado primeiro quando as assinaturas abrirem.'),
+             ('Tem taxa de implantação?', 'Nos planos mensais do Sorrirmos há uma taxa única de implantação de R$ 297. No plano anual, a implantação é isenta.'),
              ('O custo das mensagens de WhatsApp está incluso?', 'Sim. O Sorrirmos usa o WhatsApp oficial e o custo das mensagens já está incluso nos planos.'),
              ('Como fica a LGPD?', 'O paciente dá o aceite antes de qualquer envio de mensagem.'),
              ('O meu segmento não tem um Sistema Lab. E agora?', 'Conte para a gente: novos Sistemas Lab nascem de nichos com a mesma necessidade. Se for urgente, um sistema sob medida pode ser indicado na consultoria.')],
-        form=('Sistemas Lab', 'Quer ver o sistema funcionando?', 'Peça uma demonstração do Sorrirmos ou entre na lista do Cortando. Se o seu nicho ainda não tem sistema, conte qual é.', 'Quero uma demonstração')),
+        form=('Sistemas Lab', 'Entre na lista de lançamento', 'Deixe o seu contato e avisamos primeiro quando o Sorrirmos e o Cortando abrirem as assinaturas. Se o seu nicho ainda não tem sistema, conte qual é.', 'Entrar na lista')),
     '/intelligence/': dict(
         eb='CProject Intelligence', sym='asterisco', parte='linha-intelligence.html',
         h1='Inteligência artificial <em class="g">trabalhando</em> para o seu negócio',
-        lead='Da IA pronta para usar à IA criada junto com a sua equipe, com automações que tiram tarefa repetitiva do dia a dia.',
-        ctas=[('Ver catálogo de packs', '/catalogo/#packs'), ('Quero IA sob medida', '#formulario')],
+        lead='IA criada junto com a sua equipe e automações que tiram tarefa repetitiva do dia a dia. Packs prontos por profissão em breve.',
+        ctas=[('Quero IA sob medida', '#formulario'), ('Ver as opções', '#intelligence')],
         passos_titulo='Como funciona o Intelligence Sob Medida',
         passos=[('Reuniões iniciais', 'Entendemos a rotina da equipe e onde a IA pode ajudar de verdade.'),
                 ('Mapeamento das tarefas', 'Escolhemos as tarefas que mais tomam tempo e que a IA resolve bem.'),
+                ('Proposta e entrada', 'Enviamos a proposta com escopo e valor; com a aprovação, 50% de entrada.'),
                 ('Criação do pack', 'Montamos as skills, modelos e fluxos no padrão da sua empresa.'),
                 ('Treinamento e acompanhamento', 'Treinamos a equipe e acompanhamos o uso para ajustar o que for preciso.')],
-        faq=[('Preciso de algum programa específico?', 'Os packs são instalados no assistente de IA que você já usa. Na compra, orientamos a instalação e fazemos uma sessão de treinamento.'),
-             ('E os dados sensíveis dos meus clientes?', 'Todo pack vem com orientações de uso seguro: o que pode e o que não pode ir para a IA, conforme a LGPD e o código de ética da profissão.'),
+        faq=[('Os packs de IA prontos já estão à venda?', 'Ainda não. Os primeiros packs por profissão estão em produção. Deixe o seu contato para ser avisado no lançamento.'),
+             ('E os dados sensíveis dos meus clientes?', 'Definimos com você o que pode e o que não pode ir para a IA, conforme a LGPD e o código de ética da sua profissão.'),
              ('A IA substitui o profissional?', 'Não. A IA apoia o trabalho, mas todo conteúdo técnico, jurídico ou clínico precisa ser revisado por quem responde por ele.'),
              ('Qual a diferença entre o pack pronto e o sob medida?', 'O pack pronto é feito para as tarefas comuns de uma profissão. O sob medida é criado em reuniões com a sua equipe, a partir dos seus documentos e processos.')],
         form=('CProject Intelligence', 'Vamos colocar a IA para trabalhar?', 'Conte quais tarefas mais tomam tempo da sua equipe. Respondemos com o caminho ideal: pack pronto, sob medida ou automação.', 'Quero falar sobre IA')),
@@ -273,7 +277,8 @@ PRODUTOS = {
                 ('Criação das campanhas', 'Planejamos e criamos os anúncios no Google e nas redes sociais.'),
                 ('Campanhas no ar', 'Publicamos e acompanhamos de perto o desempenho dos anúncios.'),
                 ('Acompanhamento e ajustes', 'Conversamos sobre os resultados direto com quem gerencia e ajustamos o que for preciso.')],
-        faq=[('A verba dos anúncios está inclusa nos R$ 500?', 'Não. Os R$ 500 por mês são pela gestão das campanhas. A verba dos anúncios é definida com você e fica por conta do cliente.'),
+        faq=[('Como funciona o pagamento?', 'A gestão de R$ 500 é cobrada todo mês. A verba dos anúncios é paga direto à plataforma, no cartão ou boleto do próprio cliente.'),
+             ('A verba dos anúncios está inclusa nos R$ 500?', 'Não. Os R$ 500 por mês são pela gestão das campanhas. A verba dos anúncios é definida com você e fica por conta do cliente.'),
              ('Em quais plataformas vocês anunciam?', 'No Google e nas redes sociais. A escolha depende do seu público e do objetivo.'),
              ('Quanto devo investir em anúncios?', 'Depende da região, da concorrência e do objetivo. Definimos o valor junto com você no briefing.'),
              ('Recebo relatório dos resultados?', 'Sim. Todo mês você recebe um relatório com cliques, contatos e custo por contato.'),
@@ -283,14 +288,14 @@ PRODUTOS = {
         eb='CProject Data', sym='igual', parte='linha-data.html',
         h1='Decisões com base em <em class="g">dados</em>',
         lead='Dashboards e BI que reúnem os números da empresa em um só lugar, sem montar relatório na mão toda semana.',
-        ctas=[('Ver templates de BI', '/catalogo/#bi'), ('Quero um painel sob medida', '#formulario')],
-        passos=[('Template ou briefing', 'Escolha um template do seu segmento ou conte quais números precisa acompanhar.'),
+        ctas=[('Quero um painel sob medida', '#formulario'), ('Ver as opções', '#data')],
+        passos=[('Briefing e proposta', 'Você conta quais números precisa acompanhar; enviamos a proposta e, com a aprovação, 50% de entrada.'),
                 ('Conexão dos dados', 'Ligamos o painel à sua planilha, sistema ou banco de dados.'),
                 ('Configuração', 'Ajustamos indicadores, gráficos e filtros ao seu jeito de decidir.'),
-                ('Painel no ar', 'Você acompanha tudo por um link, com os dados atualizados.')],
+                ('Painel no ar', 'Com os 50% restantes, o painel vai ao ar e você acompanha tudo por um link.')],
         faq=[('De onde vêm os dados?', 'Da sua planilha, do seu sistema ou do seu banco de dados. Conectamos as fontes ao painel.'),
-             ('Qual a diferença entre o template e o com hospedagem?', 'No template, o painel roda na sua ferramenta e a atualização é feita por você. Com hospedagem, ele fica online num endereço próprio, com atualização automática e suporte contínuo.'),
-             ('E se o meu segmento não tiver template?', 'Montamos um dashboard sob medida, com os seus indicadores e fontes de dados.')],
+             ('Os templates de BI já estão à venda?', 'Ainda não. Os primeiros templates por segmento estão em produção. Deixe o seu contato para ser avisado no lançamento.'),
+             ('Preciso esperar os templates?', 'Não. Montamos um dashboard sob medida, com os seus indicadores e fontes de dados.')],
         form=('CProject Data', 'Quais números você quer enxergar?', 'Conte de onde vêm os dados da sua empresa e o que você precisa acompanhar.', 'Quero falar sobre dados')),
 }
 
@@ -395,9 +400,6 @@ PAGINAS = [
     ('/data/', 'CProject Data · Dashboards e BI · CProject Lab',
      'Templates de BI por segmento, integração de dados e dashboards sob medida para decidir com base em números.',
      'CProject Data', lambda: produto('/data/'), 'data', PRODUTOS['/data/']['faq']),
-    ('/catalogo/', 'Catálogo · Packs de IA e templates de BI · CProject Lab',
-     'Compre direto packs de IA por profissão e templates de BI por segmento, com preço fechado.',
-     'Catálogo', catalogo, 'catalogo', None),
 ]
 
 
