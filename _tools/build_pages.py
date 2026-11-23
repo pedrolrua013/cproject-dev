@@ -10,7 +10,7 @@ WA_FMT = "+55 (13) 97417-7986"
 EMAIL = "bruno.perescp@gmail.com"
 IG = "https://instagram.com/cproject.dev"
 HOJE = datetime.date.today().isoformat()
-V = "14"  # versão dos assets
+V = "15"  # versão dos assets
 
 def wa(msg):
     from urllib.parse import quote
@@ -83,7 +83,8 @@ PASSOS = [("Diagnóstico", "Mapeamento do processo manual que está travando a o
           ("Construção incremental", "Ciclos curtos de desenvolvimento, com você acompanhando cada entrega e código pensado para evoluir sem retrabalho."),
           ("Entrega e suporte direto", "Sistema no ar, com ajustes e evolução conversando direto com quem construiu, sem intermediário.")]
 
-FAQ_HOME = [("O que a CProject faz?", "A CProject reúne três frentes: um estúdio que desenvolve sites, sistemas, dashboards e automações sob medida; os Sistemas Lab, como o Sorrirmos e o Cortando; e soluções prontas, como landing pages, BI em template e packs de skills de IA."),
+FAQ_HOME = [("O que a CProject faz?", "A CProject cria landing pages com gestão de tráfego pago no Google Ads, desenvolve os sistemas próprios Sorrirmos, para clínicas odontológicas, e Cortando, para barbearias e salões, e faz sites, sistemas, dashboards e automações sob medida."),
+            ("A gestão de tráfego pago inclui o valor dos anúncios?", "Não. Os R$ 500 por mês cobrem a criação, o acompanhamento e o ajuste das campanhas no Google Ads. A verba dos anúncios é definida com você e paga diretamente ao Google, na sua própria conta."),
             ("Quanto custa o Sorrirmos?", "O Sorrirmos tem três planos: Starter por R$ 89,90 por mês, Professional por R$ 199,90 por mês e Max Clinic por R$ 499,90 por mês. Nos contratos mensais há uma taxa única de implantação de R$ 297; no plano anual a implantação é isenta."),
             ("Qual a diferença entre a landing page Template e a Hospedada?", "A Landing Page Template custa R$ 297 em pagamento único. A Hospedada custa R$ 297 de implantação mais R$ 50 por mês, e a CProject cuida da publicação e da hospedagem da página. Para design e textos totalmente sob medida, a Landing Page Personalizada parte de R$ 997."),
             ("O BI em template precisa de hospedagem?", "Não é obrigatório. O BI Template custa R$ 100 em pagamento único. Se preferir o painel publicado e mantido pela CProject, a opção BI Template + Hospedagem custa R$ 100 de implantação mais R$ 50 por mês."),
@@ -142,6 +143,15 @@ PLANOS = [
               ("Automações", "Integrações e automações, inclusive pelo WhatsApp, que tiram tarefa repetitiva da equipe.", "/automacao-de-processos/"),
               ("BI personalizado", "Painéis conectados às suas fontes de dados, com os indicadores que orientam a decisão.", "/dashboards-e-bi/")]},
 ]
+
+TRAFEGO = {"nome": "Gestão de tráfego pago · Google Ads", "preco": ("500", None, "/mês"),
+  "cond": "gestão mensal · verba de anúncios paga direto ao Google",
+  "itens": ["Campanhas de pesquisa com as palavras que o seu cliente digita no Google", "Conversão configurada no clique do WhatsApp e no formulário", "Ajuste contínuo de termos, anúncios e lances", "Relatório mensal com cliques, contatos e custo por contato"]}
+
+CORTANDO = {"nome": "Cortando", "cor": "#D9468A", "letra": "C", "seg": "Gestão para barbearias e salões de beleza",
+  "txt": "O sistema do CProject Lab para quem vive de horário marcado na cadeira: agenda, clientes e equipe da barbearia ou do salão em um só lugar.",
+  "itens": ["Agenda por profissional e por serviço", "Lembrete e confirmação de horário pelo WhatsApp", "Cadastro de clientes com histórico de atendimentos", "Visão do dia da equipe em uma tela"],
+  "wa": "Olá! Quero ser avisado quando os planos do Cortando estiverem disponíveis."}
 
 PORTFOLIO = [
   {"slug": "gelomac", "nome": "Gelomac", "seg": "Climatização comercial e industrial · Santos, SP", "url": "https://gelomac.com.br/", "host": "gelomac.com.br", "tags": ["Landing page", "SEO local", "Orçamento pelo WhatsApp"]},
@@ -234,7 +244,7 @@ def plano_html(p, grupo):
 
 def planos_html():
     abas, paineis = [], []
-    for i, g in enumerate(PLANOS):
+    for i, g in enumerate([x for x in PLANOS if x["id"] not in ("sistemas", "landing")]):
         sel = "true" if i == 0 else "false"
         abas.append(f'<button type="button" role="tab" id="tab-{g["id"]}" aria-controls="pn-{g["id"]}" aria-selected="{sel}" tabindex="{0 if i == 0 else -1}">{E(g["aba"])}</button>')
         corpo = ""
@@ -260,6 +270,48 @@ def planos_html():
         paineis.append(f'''<div class="pane" role="tabpanel" id="pn-{g["id"]}" aria-labelledby="tab-{g["id"]}" tabindex="0"><div class="pintro"><h3 class="ptitle">{E(g["titulo"])}</h3><p>{E(g["intro"])}</p></div>{corpo}</div>''')
     return f'<div class="tabs" role="tablist" aria-label="Linhas de produto">{"".join(abas)}</div>' + "".join(paineis)
 
+def trafego_html(origem="lp"):
+    t = TRAFEGO
+    itens = "".join(f"<li>{E(i)}</li>" for i in t["itens"])
+    msg = "Olá! Vim pelo site da CProject e quero contratar a gestão de tráfego pago no Google Ads."
+    return f'''<article class="addon rv"><div class="ad-l"><p class="ptag">Complemento · leve visitas para a sua página</p><h3>Gestão de tráfego pago <em class="g">Google Ads</em></h3><p class="pfor">A landing page transforma visita em conversa. O Google Ads coloca a página na frente de quem já está procurando o que você oferece. A CProject cria, acompanha e ajusta as campanhas todo mês.</p><ul>{itens}</ul></div><div class="ad-r">{preco_html(t)}<a class="btn" href="{wa(msg)}" target="_blank" rel="noopener" data-origem="trafego-{origem}" data-plano="Tráfego pago Google Ads">{I_WA} Quero tráfego pago</a><p class="ad-n">Funciona com qualquer landing page da CProject.</p></div></article>'''
+
+def lp_html():
+    g = next(x for x in PLANOS if x["id"] == "landing")
+    return f'''<section class="sec lpx" id="landing-pages" aria-labelledby="t-lp">
+  <div class="in">
+    <div class="hd rv"><span class="eb">01 · Landing pages</span><h2 id="t-lp">A sua página no ar, <em class="g">pronta para vender</em></h2><p>{E(g["intro"])} E, se quiser, com tráfego pago no Google para trazer as visitas.</p></div>
+    <div class="plans p3">{"".join(plano_html(p, "") for p in g["planos"])}</div>
+    {trafego_html()}
+    <div class="ctas rv"><a class="btn o" href="/criacao-de-sites-e-landing-pages/">Ver tudo sobre sites e landing pages {I_SETA}</a></div>
+  </div>
+</section>'''
+
+def sorrirmos_html():
+    g = next(x for x in PLANOS if x["id"] == "sistemas")
+    pr = g["produto"]
+    todos = "".join(f"<li>{E(t)}</li>" for t in pr["todos"])
+    return f'''<section class="sec app" id="sorrirmos" aria-labelledby="t-sor">
+  <div class="in">
+    <div class="hd rv"><span class="eb">02 · Sorrirmos</span><div class="mk mk-xl"><b style="background:{pr["cor"]}">{pr["letra"]}</b><div><h2 id="t-sor">Sorrirmos</h2><p>{E(pr["seg"])}</p></div></div><p>Agenda, pacientes e confirmações da clínica em um só sistema, com o WhatsApp trabalhando por você na véspera de cada consulta.</p></div>
+    <div class="plans p3">{"".join(plano_html(p, pr["nome"]) for p in g["planos"])}</div>
+    <div class="incl rv"><p class="ititle">Em todos os planos do Sorrirmos</p><ul>{todos}</ul></div>
+    <p class="pnote">{E(g["nota"])}</p>
+  </div>
+</section>'''
+
+def cortando_html():
+    c = CORTANDO
+    itens = "".join(f"<li>{E(i)}</li>" for i in c["itens"])
+    return f'''<section class="sec img app" id="cortando" aria-labelledby="t-cor">
+  <div class="in">
+    <div class="cor rv">
+      <div><span class="eb">03 · Cortando</span><div class="mk mk-xl"><b style="background:{c["cor"]}">{c["letra"]}</b><div><h2 id="t-cor">Cortando</h2><p>{E(c["seg"])}</p></div></div><p class="cor-t">{E(c["txt"])}</p><span class="st c">Planos em definição</span></div>
+      <div class="cor-c"><p class="ititle">O que vem no Cortando</p><ul>{itens}</ul><a class="btn" href="{wa(c["wa"])}" target="_blank" rel="noopener" data-origem="cortando">{I_WA} Quero ser avisado do lançamento</a></div>
+    </div>
+  </div>
+</section>'''
+
 def portfolio_html():
     cards = []
     for i, p in enumerate(PORTFOLIO):
@@ -272,7 +324,7 @@ def offer_catalog():
     for g in PLANOS:
         nome_g = g["titulo"]
         for p in g.get("planos", []):
-            o = {"@type": "Offer", "name": (g["produto"]["nome"] + " " + p["nome"]) if "produto" in g else p["nome"], "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#planos"}
+            o = {"@type": "Offer", "name": (g["produto"]["nome"] + " " + p["nome"]) if "produto" in g else p["nome"], "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#solucoes"}
             if p["preco"]:
                 inte, cent, suf = p["preco"]
                 o["price"] = f'{inte}.{cent or "00"}'
@@ -282,7 +334,8 @@ def offer_catalog():
                 continue
             itens.append(o)
         for n, a, c in g.get("packs", []):
-            itens.append({"@type": "Offer", "name": f"Pack de Skills {n}", "price": f"{a}.{c}", "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#planos"})
+            itens.append({"@type": "Offer", "name": f"Pack de Skills {n}", "price": f"{a}.{c}", "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#solucoes"})
+    itens.append({"@type": "Offer", "name": "Gestão de tráfego pago Google Ads", "price": "500.00", "priceCurrency": "BRL", "seller": {"@id": BASE + "/#org"}, "url": BASE + "/#landing-pages", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "500.00", "priceCurrency": "BRL", "unitCode": "MON"}})
     return {"@type": "OfferCatalog", "name": "Catálogo CProject Lab", "itemListElement": itens}
 
 def head(title, desc, path, schema, extra=""):
@@ -314,7 +367,7 @@ def head(title, desc, path, schema, extra=""):
 
 def nav(home=True, atual=""):
     p = "" if home else "/"
-    links = [("Estúdio", f"{p}#estudio"), ("Planos", f"{p}#planos"), ("Sites", "/criacao-de-sites-e-landing-pages/"), ("Portfólio", f"{p}#portfolio"), ("Contato", f"{p}#contato")]
+    links = [("Landing pages", f"{p}#landing-pages"), ("Sorrirmos", f"{p}#sorrirmos"), ("Cortando", f"{p}#cortando"), ("Estúdio", f"{p}#estudio"), ("Portfólio", f"{p}#portfolio"), ("Contato", f"{p}#contato")]
     lis = "".join(f'<li><a href="{h}">{t}</a></li>' for t, h in links)
     return f'''<header class="nav" id="topo">
   <div class="in">
@@ -333,7 +386,7 @@ def rodape():
       <div><a class="logo" href="/" aria-label="CProject, página inicial">{LOGO}</a>
         <p>Estúdio full-stack, Sistemas Lab e soluções prontas para profissionais, do rascunho ao produto no ar.</p></div>
       <div><h3 class="fh">Estúdio</h3><ul>{sv}</ul></div>
-      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#planos">Sorrirmos</a></li><li><a href="/#planos">Cortando</a></li><li><a href="/criacao-de-sites-e-landing-pages/">Sites e landing pages</a></li><li><a href="/#planos">BI em template</a></li><li><a href="/#planos">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
+      <div><h3 class="fh">Ecossistema</h3><ul><li><a href="/#sorrirmos">Sorrirmos</a></li><li><a href="/#cortando">Cortando</a></li><li><a href="/#landing-pages">Tráfego pago Google Ads</a></li><li><a href="/criacao-de-sites-e-landing-pages/">Sites e landing pages</a></li><li><a href="/#solucoes">BI em template</a></li><li><a href="/#solucoes">Packs de skills</a></li><li><a href="/#portfolio">Portfólio</a></li></ul></div>
       <div><h3 class="fh">Contato</h3><ul><li><a href="{wa("Olá! Vim pelo site da CProject.")}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp {WA_FMT}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="{IG}" target="_blank" rel="noopener">@cproject.dev</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
     </div>
     <div class="cp"><span>© {datetime.date.today().year} CProject</span><span>Feito sob medida, do rascunho ao produto no ar.</span></div>
@@ -374,7 +427,7 @@ def home():
     <p class="lead">Um estúdio full-stack com sistemas por assinatura, landing pages e BI de preço fechado, e projetos sob medida quando o plano não basta.</p>
     <div class="ctas">
       <a class="btn" href="{wa("Olá! Vim pelo site da CProject e quero agendar a conversa de 15 minutos.")}" target="_blank" rel="noopener" data-origem="hero">{I_WA} Agendar conversa de 15 min</a>
-      <a class="btn o" href="#planos">Ver planos e preços</a>
+      <a class="btn o" href="#landing-pages">Ver landing pages e preços</a>
     </div>
     <div class="stack" aria-label="Tecnologias"><span>Next.js</span><span>React</span><span>Supabase</span><span>Vercel</span></div>
   </div>
@@ -383,34 +436,29 @@ def home():
 {manifesto_html()}
 {xp_html()}
 
-<section class="sec" id="frentes" aria-labelledby="t-frentes">
-  <div class="in">
-    <div class="hd rv"><span class="eb">01 · Ecossistema</span><h2 id="t-frentes">Três frentes, <em class="g">um único fluxo</em></h2><p>O mesmo time que desenvolve sob medida para clientes constrói sistemas próprios e empacota o que funciona em soluções de preço fechado.</p></div>
-    <div class="fr">
-      <article class="card hl rv"><span class="n">ESTÚDIO</span><h3>Sob medida para a sua operação</h3><p>Sites, sistemas internos, dashboards e automações construídos do zero para o processo de cada cliente.</p><a class="lk" href="#estudio">Ver serviços {I_SETA}</a></article>
-      <article class="card rv"><span class="n">SISTEMAS LAB</span><h3>Sistemas próprios por assinatura</h3><p>Sorrirmos para clínicas odontológicas, a partir de R$ 89,90 por mês, e Cortando para barbearias, em breve.</p><a class="lk" href="#planos">Ver planos {I_SETA}</a></article>
-      <article class="card rv"><span class="n">SOLUÇÕES PRONTAS</span><h3>Preço fechado, entrega rápida</h3><p>Landing pages a partir de R$ 297, BI em template a partir de R$ 100 e packs de skills de IA a partir de R$ 79,90.</p><a class="lk" href="#planos">Ver preços {I_SETA}</a></article>
-    </div>
-  </div>
-</section>
+{lp_html()}
+
+{sorrirmos_html()}
+
+{cortando_html()}
 
 <section class="sec light" id="estudio" aria-labelledby="t-estudio">
   <div class="in">
-    <div class="hd rv"><span class="eb">02 · Estúdio</span><h2 id="t-estudio">Quatro serviços, da interface ao back-end</h2><p>Sem passar o projeto entre equipes diferentes no caminho: quem desenha é quem desenvolve e quem dá suporte.</p></div>
+    <div class="hd rv"><span class="eb">04 · Estúdio</span><h2 id="t-estudio">Quatro serviços, da interface ao back-end</h2><p>Sem passar o projeto entre equipes diferentes no caminho: quem desenha é quem desenvolve e quem dá suporte.</p></div>
     <div class="sv">{sv}</div>
   </div>
 </section>
 
-<section class="sec" id="planos" aria-labelledby="t-planos">
+<section class="sec" id="solucoes" aria-labelledby="t-sol">
   <div class="in">
-    <div class="hd rv"><span class="eb">03 · Planos e preços</span><h2 id="t-planos">Escolha por onde <em class="g">começar</em></h2><p>Catálogo CProject Lab: sistemas por assinatura, soluções de preço fechado e projetos sob orçamento. Escolha a linha e veja os valores.</p></div>
+    <div class="hd rv"><span class="eb">05 · Mais soluções</span><h2 id="t-sol">Outras soluções do <em class="g">CProject Lab</em></h2><p>Painéis de BI, packs de skills de IA e projetos sob medida para quando a operação pede algo além da página e dos sistemas.</p></div>
     <div class="pl rv" id="produtos">{planos_html()}</div>
   </div>
 </section>
 
 <section class="sec teal" id="portfolio" aria-labelledby="t-pf">
   <div class="in">
-    <div class="hd pfh rv"><div><span class="eb">04 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Projetos publicados para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
+    <div class="hd pfh rv"><div><span class="eb">06 · Portfólio</span><h2 id="t-pf">Sites e landing pages <em class="g">no ar</em></h2><p>Projetos publicados para negócios de segmentos diferentes. Arraste para ver mais projetos e abra cada site para navegar.</p></div>
       <div class="pfnav"><button type="button" class="pfb" data-dir="-1" aria-label="Projeto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="pfb" data-dir="1" aria-label="Próximo projeto">{I_SETA}</button></div></div>
   </div>
   <div class="pfw rv"><ul class="pft" id="pft" aria-label="Projetos do portfólio">{portfolio_html()}</ul></div>
@@ -419,24 +467,24 @@ def home():
 
 <section class="sec light" id="abordagem" aria-labelledby="t-ab">
   <div class="in">
-    <div class="hd rv"><span class="eb">05 · Abordagem</span><h2 id="t-ab">Como o projeto acontece</h2><p>Nada de tela solta ou protótipo estático: cada etapa já entrega algo que roda de verdade. Passe pelas etapas para acompanhar o caminho.</p></div>
+    <div class="hd rv"><span class="eb">07 · Abordagem</span><h2 id="t-ab">Como o projeto acontece</h2><p>Nada de tela solta ou protótipo estático: cada etapa já entrega algo que roda de verdade. Passe pelas etapas para acompanhar o caminho.</p></div>
     {tl_html(PASSOS)}
     {perf_html()}
   </div>
 </section>
 
-{quem_html("06 · Quem constrói")}
+{quem_html("08 · Quem constrói")}
 
 <section class="sec" id="faq" aria-labelledby="t-faq">
   <div class="in">
-    <div class="hd rv"><span class="eb">07 · Perguntas frequentes</span><h2 id="t-faq">Antes de conversar</h2></div>
+    <div class="hd rv"><span class="eb">09 · Perguntas frequentes</span><h2 id="t-faq">Antes de conversar</h2></div>
     <div class="faq rv">{faq_html(FAQ_HOME)}</div>
   </div>
 </section>
 
 <section class="sec gold" id="contato" aria-labelledby="t-ct">
   <div class="in ct">
-    <div class="rv"><span class="eb">08 · Contato</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos conversar 15 minutos sobre o seu processo?</h2>
+    <div class="rv"><span class="eb">10 · Contato</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">Vamos conversar 15 minutos sobre o seu processo?</h2>
       <p style="color:var(--tx-2);margin-top:16px">Sem proposta engessada nem jargão técnico: só entender a dor da operação e ver se faz sentido começar por um plano pronto ou construir algo sob medida.</p>
       <div class="ch">
         <a href="{wa("Olá! Vim pelo site da CProject e quero conversar.")}" target="_blank" rel="noopener" data-origem="contato">{I_WA}<span><small>WhatsApp</small>{WA_FMT}</span></a>
@@ -526,7 +574,8 @@ I_LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-widt
 I_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
 I_CHART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>'
 
-SITES_FAQ = [("Qual a diferença entre a Landing Page Template, a Hospedada e a Personalizada?", "A Template é um modelo pronto da CProject adaptado à sua marca, por R$ 297 em pagamento único. A Hospedada é o mesmo modelo publicado e mantido no ar pela CProject, por R$ 297 de implantação mais R$ 50 por mês. A Personalizada tem design, estrutura e textos criados do zero, a partir de R$ 997."),
+SITES_FAQ = [("Vocês fazem a gestão de tráfego pago para a página?", "Sim. A gestão de tráfego pago no Google Ads custa R$ 500 por mês e cobre a criação, o acompanhamento e o ajuste das campanhas. A verba dos anúncios é definida com você e paga diretamente ao Google, na sua própria conta."),
+             ("Qual a diferença entre a Landing Page Template, a Hospedada e a Personalizada?", "A Template é um modelo pronto da CProject adaptado à sua marca, por R$ 297 em pagamento único. A Hospedada é o mesmo modelo publicado e mantido no ar pela CProject, por R$ 297 de implantação mais R$ 50 por mês. A Personalizada tem design, estrutura e textos criados do zero, a partir de R$ 997."),
              ("A página funciona bem no celular?", "Sim. Todas as páginas são responsivas e pensadas primeiro para o celular, onde está a maior parte das visitas."),
              ("Como os contatos chegam até mim?", "Pelo botão de WhatsApp, que abre a conversa com uma mensagem pronta, e pelo formulário de contato da página."),
              ("A página aparece no Google?", "Ela sai preparada para isso, com títulos, descrições e estrutura que ajudam o Google a entender o seu negócio. Na Personalizada, o SEO é feito por página e inclui dados estruturados."),
@@ -570,7 +619,8 @@ def sites_page():
 <section class="sec alt" id="planos" aria-labelledby="t-planos">
   <div class="in"><div class="hd rv"><span class="eb">Planos e preços</span><h2 id="t-planos">Três formas de <em class="g">colocar a sua página no ar</em></h2><p>{E(g["intro"])}</p></div>
     <div class="plans p3">{"".join(plano_html(p, "") for p in g["planos"])}</div>
-    <p class="pnote">Precisa de site com várias páginas ou painel para atualizar? <a href="/#planos">Veja o CProject Custom</a>.</p></div>
+    {trafego_html("sites")}
+    <p class="pnote">Precisa de site com várias páginas ou painel para atualizar? <a href="/#solucoes">Veja o CProject Custom</a>.</p></div>
 </section>
 <section class="sec light" aria-labelledby="t-inc">
   <div class="in"><div class="hd rv"><span class="eb">Incluso</span><h2 id="t-inc">O básico bem feito, em toda página</h2></div>
