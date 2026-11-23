@@ -856,3 +856,9 @@ footer .logo img{height:40px}
 .dest-i .mk{justify-content:flex-start;text-align:left}
 .ph.sy-igual{--symw:clamp(160px,17vw,240px)}
 .ph.sy-quadrado{--symw:clamp(160px,17vw,240px)}
+.pf-l{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px;text-align:left}
+.pf-l li{position:relative;padding-left:24px;font-size:.95rem;color:var(--tx-2)}
+.pf-l li::before{content:"";position:absolute;left:2px;top:.35em;width:12px;height:7px;border-left:2px solid var(--lav);border-bottom:2px solid var(--lav);transform:rotate(-45deg)}
+.pf-l li.pf-b{color:var(--tx);font-weight:600}
+.pf-l{width:fit-content;max-width:100%;margin:18px auto 4px}
+.pf-l li::before{content:"✓";border:0;transform:none;width:auto;height:auto;top:0;left:0;color:var(--lav);font-weight:700;background:none}
