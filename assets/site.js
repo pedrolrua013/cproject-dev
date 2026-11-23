@@ -189,21 +189,85 @@
     tr.addEventListener('click', e => { const a = e.target.closest('a'); if (a) dataLayer.push({event: 'portfolio_click', site: a.href}); });
   }
 
-  // formulário -> WhatsApp
+  // Sistemas Lab: carrossel e planos expansíveis
+  const slt = $('.sl-t');
+  if (slt) {
+    const cs = [...slt.querySelectorAll('[data-sl]')];
+    cs.forEach(c => c.addEventListener('click', () => {
+      const abrir = c.getAttribute('aria-expanded') !== 'true';
+      cs.forEach(o => { o.setAttribute('aria-expanded', o === c && abrir); const p = document.getElementById(o.getAttribute('aria-controls')); if (p) p.hidden = !(o === c && abrir); });
+      if (abrir) {
+        const p = document.getElementById(c.getAttribute('aria-controls'));
+        p.scrollIntoView({block: 'nearest', behavior: reduz ? 'auto' : 'smooth'});
+        dataLayer.push({event: 'sistema_lab', sistema: c.dataset.sl});
+      }
+    }));
+    const passo = () => (slt.querySelector('.sl')?.offsetWidth || 300) + 16;
+    $$('[data-sldir]').forEach(b => b.addEventListener('click', () => slt.scrollBy({left: passo() * +b.dataset.sldir, behavior: reduz ? 'auto' : 'smooth'})));
+    const nav = () => { const [a, z] = $$('[data-sldir]'); if (!a) return; a.disabled = slt.scrollLeft < 4; z.disabled = slt.scrollLeft + slt.clientWidth >= slt.scrollWidth - 4; };
+    slt.addEventListener('scroll', nav, {passive: true}); addEventListener('resize', nav); nav();
+  }
+
+  // Sistemas Lab: abrir pelo endereço (#sorrirmos, #cortando)
+  if (slt && /^#(sorrirmos|cortando)$/.test(location.hash)) {
+    const c = slt.querySelector('[data-sl="' + location.hash.slice(1) + '"]');
+    if (c) setTimeout(() => { c.click(); c.scrollIntoView({block: 'center'}); }, 300);
+  }
+
+  // catálogo: opção escolhida -> preço e link de compra
+  const LINKS = window.CP_CHECKOUT || {};
+  $$('.ck').forEach(ck => {
+    const bt = ck.querySelector('.ck-b'), pr = ck.querySelector('.ck-p');
+    const atualizar = () => {
+      const r = ck.querySelector('input:checked'); if (!r) return;
+      const [a, b] = r.dataset.preco.split(',');
+      pr.querySelector('b').textContent = a; pr.querySelector('i').textContent = b ? ',' + b : ''; pr.querySelector('em').textContent = r.dataset.cond;
+      const nome = ck.dataset.produto + ' (' + r.nextElementSibling.textContent + ')';
+      const link = LINKS[ck.dataset.ck + '-' + r.value];
+      bt.href = link || 'https://wa.me/5513974177986?text=' + encodeURIComponent('Olá! Quero comprar: ' + nome + '.');
+      bt.dataset.produto = nome;
+    };
+    ck.addEventListener('change', atualizar); atualizar();
+    bt.addEventListener('click', () => dataLayer.push({event: 'begin_checkout', produto: bt.dataset.produto, via: LINKS[ck.dataset.ck + '-' + ck.querySelector('input:checked').value] ? 'pagamento' : 'whatsapp'}));
+  });
+
+  // WhatsApp flutuante só depois de rolar e fora do formulário
+  const waf = $('.wa'), fmz = $('#formulario');
+  if (waf) {
+    let noForm = false;
+    const vis = () => waf.classList.toggle('on', scrollY > innerHeight * .6 && !noForm);
+    if (fmz && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => { noForm = e.isIntersecting; vis(); }, {threshold: .15}).observe(fmz);
+    addEventListener('scroll', vis, {passive: true}); vis();
+  }
+
+  // formulário de diagnóstico -> e-mail (fallback: WhatsApp)
   const fm = $('#fm');
-  if (fm) fm.addEventListener('submit', e => {
+  if (fm) fm.addEventListener('submit', async e => {
     e.preventDefault();
-    const msg = $('#fmsg'); msg.className = 'fmsg'; msg.textContent = '';
+    const msg = $('#fmsg'), bt = fm.querySelector('button[type=submit]');
+    msg.className = 'fmsg'; msg.textContent = '';
     if (fm.querySelector('[name=site]').value) return;
     let ok = true;
-    fm.querySelectorAll('[required]').forEach(c => { const v = c.value.trim().length > 1; c.setAttribute('aria-invalid', !v); if (!v) ok = false; });
-    if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, interesse e uma linha sobre o que você precisa.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
+    fm.querySelectorAll('[required]').forEach(c => {
+      let v = c.value.trim().length > 1;
+      if (c.name === 'whatsapp') v = c.value.replace(/\D/g, '').length >= 10;
+      c.setAttribute('aria-invalid', !v); if (!v) ok = false;
+    });
+    if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, empresa, segmento, um WhatsApp com DDD e o que você busca.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
     const d = Object.fromEntries(new FormData(fm));
-    const txt = `Olá! Vim pelo site da CProject.\n\nNome: ${d.nome}\n${d.empresa ? 'Empresa: ' + d.empresa + '\n' : ''}Interesse: ${d.interesse}\n\n${d.mensagem}`;
-    const url = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
-    dataLayer.push({event: 'whatsapp_click', page: location.pathname, origem: 'formulario'});
-    const w = window.open(url, '_blank', 'noopener');
-    msg.innerHTML = w ? 'Abrimos o WhatsApp com sua mensagem pronta. É só enviar.' : 'Se o WhatsApp não abriu, <a href="' + url + '" target="_blank" rel="noopener">toque aqui</a> ou escreva para bruno.perescp@gmail.com.';
+    const txt = `Olá! Vim pelo site da CProject Lab. Interesse: ${d.interesse || 'Consultoria gratuita'}.\n\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nSegmento: ${d.segmento}\nWhatsApp: ${d.whatsapp}\n\n${d.busca}`;
+    const wurl = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
+    bt.disabled = true; msg.textContent = 'Enviando...';
+    try {
+      const r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)});
+      if (!r.ok) throw new Error(r.status);
+      dataLayer.push({event: 'generate_lead', interesse: d.interesse, segmento: d.segmento}); if (window.va) window.va('event', {name: 'lead', data: {interesse: d.interesse || ''}});
+      fm.reset(); msg.className = 'fmsg ok';
+      msg.textContent = 'Recebemos sua mensagem! Em breve entramos em contato pelo WhatsApp.';
+    } catch (err) {
+      msg.className = 'fmsg err';
+      msg.innerHTML = 'Não conseguimos enviar agora. <a href="' + wurl + '" target="_blank" rel="noopener">Envie pelo WhatsApp</a> ou escreva para contato@cproject.com.br.';
+    } finally { bt.disabled = false; }
   });
 })();
 /* CProject Lab · experiência imersiva do topo: os símbolos da marca flutuam em profundidade,

@@ -2,12 +2,15 @@
   "name": "cproject-dev",
   "version": "1.0.0",
   "private": true,
-  "description": "Landing da CProject: estúdio, produtos e hub (site estático).",
+  "description": "Site da CProject Lab (página única) + função de envio do formulário de diagnóstico.",
   "scripts": {
     "build": "node _tools/build-dist.mjs",
     "start": "node server.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
   }
 }
