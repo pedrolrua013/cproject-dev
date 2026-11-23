@@ -2,15 +2,12 @@
   "name": "cproject-dev",
   "version": "1.0.0",
   "private": true,
-  "description": "Site da CProject Lab (página única) + função de envio do formulário de diagnóstico.",
+  "description": "Site da CProject Lab + função do formulário (api/diagnostico.js, sem dependências).",
   "scripts": {
     "build": "node _tools/build-dist.mjs",
     "start": "node server.js"
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "nodemailer": "^6.9.16"
   }
 }
