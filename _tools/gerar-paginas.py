@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '24'
+VERSAO = '25'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5513974177986'
@@ -153,8 +153,34 @@ FAQ_HOME = [
 CLIENTES = ['Fundação Virgínia Ferraz', 'ISTV', 'Rotary Club São Caetano do Sul - Olímpico', 'Gelomac', 'DRC Compressores', 'Figueiredo Barros Advocacia', 'Bonomi Almeida']
 
 
+# ---------------------------------------------------------------- prévias visuais dos cartões da home
+def _nav(url):
+    return f'<span class="pv-bar"><i></i><i></i><i></i><span>{url}</span></span>'
+
+
+PREVIAS = {
+    '/sites-e-landing-pages/': '<span class="pv pv-sites" aria-hidden="true">'
+        + ''.join(f'<span class="pv-win">{_nav(u)}<img src="/assets/portfolio/pf-{f}-560.webp" alt="" width="560" height="1050" loading="lazy"></span>'
+                  for f, u in [('gelomac', 'gelomac.com.br'), ('drc', 'drccompressores.com.br')])
+        + '<span class="pv-tag">Projetos reais do portfólio</span></span>',
+    '/sistemas-lab/': '<span class="pv pv-sis" aria-hidden="true"><span class="pv-app"><span class="pv-ah">Agenda · hoje</span>'
+        + ''.join(f'<span class="pv-row{c}"><b>{h}</b><span>{n}</span><em>{st}</em></span>' for h, n, st, c in [
+            ('09:00', 'Ana S.', 'Confirmado', ''), ('10:30', 'Carlos L.', 'Confirmado', ''), ('14:00', 'Marina A.', 'Novo', ' pv-new')])
+        + '</span><span class="pv-chat"><span>Queria marcar uma limpeza</span><span class="bot">Marcado: quinta às 14h ✓</span></span></span>',
+    '/intelligence/': '<span class="pv pv-ia" aria-hidden="true"><span class="pv-msg me">Resuma este contrato e liste os prazos</span>'
+        + '<span class="pv-msg ai"><b>Resumo pronto</b><i style="width:92%"></i><i style="width:78%"></i><i style="width:85%"></i></span>'
+        + '<span class="pv-auto"><span class="pv-dot"></span>Automação: lembrete enviado ao cliente</span></span>',
+    '/growth/': '<span class="pv pv-gr" aria-hidden="true"><span class="pv-search"><span class="pv-q">dentista em santos</span></span>'
+        + '<span class="pv-ad"><small>Patrocinado · suaempresa.com.br</small><b>Sua empresa no topo do Google</b><span>Agende pelo WhatsApp em 1 minuto.</span></span>'
+        + '<span class="pv-up">' + ''.join(f'<i style="height:{h}%"></i>' for h in [28, 36, 34, 48, 55, 66, 80]) + '<em>Contatos</em></span></span>',
+    '/data/': '<span class="pv pv-data" aria-hidden="true"><span class="pv-kpis">'
+        + ''.join(f'<span><small>{k}</small><i style="width:{w}%"></i></span>' for k, w in [('Faturamento', 70), ('Clientes', 55), ('Ticket médio', 62)])
+        + '</span><span class="pv-chart">' + ''.join(f'<i style="height:{h}%"></i>' for h in [35, 48, 42, 60, 56, 72, 68, 85]) + '</span></span>',
+}
+
+
 def home():
-    cards = ''.join(f'''<a class="sol-c rv" href="{p}"><span class="sol-i">{icone(s)}</span><span class="sol-l">{n}</span><h3>{prob}</h3><p>{d}</p><span class="sol-f"><b>{g}</b><span class="sol-go">Ver solução {SETA}</span></span></a>''' for p, n, s, prob, d, g in LINHAS)
+    cards = ''.join(f'''<a class="sol-c rv" href="{p}">{PREVIAS[p]}<span class="sol-h"><span class="sol-i">{icone(s)}</span><span class="sol-l">{n}</span></span><h3>{prob}</h3><p>{d}</p><span class="sol-f"><b>{g}</b><span class="sol-go">Ver solução {SETA}</span></span></a>''' for p, n, s, prob, d, g in LINHAS)
     solucoes = f'''<section class="sec light" id="solucoes" aria-labelledby="t-sol">
   <div class="in">
     <div class="hd rv"><span class="eb">Soluções individuais</span><h2 id="t-sol">O que o seu negócio <em class="g">precisa resolver</em>?</h2><p>Escolha pelo problema. Cada solução pode ser contratada sozinha, e na consultoria gratuita a gente indica a combinação certa.</p></div>
