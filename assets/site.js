@@ -224,7 +224,7 @@
       pr.querySelector('b').textContent = a; pr.querySelector('i').textContent = b ? ',' + b : ''; pr.querySelector('em').textContent = r.dataset.cond;
       const nome = ck.dataset.produto + ' (' + r.nextElementSibling.textContent + ')';
       const link = LINKS[ck.dataset.ck + '-' + r.value];
-      bt.href = link || 'https://wa.me/5513974177986?text=' + encodeURIComponent('Olá! Quero comprar: ' + nome + '.');
+      bt.href = link || 'https://wa.me/5511997546685?text=' + encodeURIComponent('Olá! Quero comprar: ' + nome + '.');
       bt.dataset.produto = nome;
     };
     ck.addEventListener('change', atualizar); atualizar();
@@ -256,7 +256,7 @@
     if (!ok) { msg.className = 'fmsg err'; msg.textContent = 'Preencha nome, empresa, segmento, um WhatsApp com DDD e o que você busca.'; fm.querySelector('[aria-invalid=true]').focus(); return; }
     const d = Object.fromEntries(new FormData(fm));
     const txt = `Olá! Vim pelo site da CProject Lab. Interesse: ${d.interesse || 'Consultoria gratuita'}.\n\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nSegmento: ${d.segmento}\nWhatsApp: ${d.whatsapp}\n\n${d.busca}`;
-    const wurl = 'https://wa.me/5513974177986?text=' + encodeURIComponent(txt);
+    const wurl = 'https://wa.me/5511997546685?text=' + encodeURIComponent(txt);
     bt.disabled = true; msg.textContent = 'Enviando...';
     try {
       const r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)});

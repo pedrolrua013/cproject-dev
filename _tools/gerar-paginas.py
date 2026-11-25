@@ -18,7 +18,7 @@ SITE = 'https://cproject.com.br'
 VERSAO = '25'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
-WHATS = '5513974177986'
+WHATS = '5511997546685'
 
 SYM = json.loads((RAIZ / '_tools' / 'simbolos.json').read_text())
 
@@ -80,7 +80,7 @@ def rodape():
         <p>Um laboratório que estuda o seu negócio e desenvolve as soluções que fazem ele crescer.</p><p class="f-loc">Baixada Santista, SP · atendimento em todo o Brasil</p></div>
       <div><h3 class="fh">Soluções</h3><ul><li><a href="/consultoria/">CProject Consulting</a></li>{sol}</ul></div>
       <div><h3 class="fh">Empresa</h3><ul><li><a href="/#portfolio">Portfólio</a></li><li><a href="/#quem-somos">Quem somos</a></li><li><a href="/sistemas-lab/#sorrirmos">Sorrirmos</a></li><li><a href="/sistemas-lab/#cortando">Cortando</a></li><li><a href="/politica-de-privacidade/">Política de privacidade</a></li></ul></div>
-      <div><h3 class="fh">Contato</h3><ul><li><a href="{wa('Olá! Vim pelo site da CProject Lab.')}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp +55 (13) 97417-7986</a></li><li><a href="mailto:contato@cproject.com.br">contato@cproject.com.br</a></li><li><a href="https://instagram.com/cproject.lab" target="_blank" rel="noopener">@cproject.lab</a></li></ul></div>
+      <div><h3 class="fh">Contato</h3><ul><li><a href="{wa('Olá! Vim pelo site da CProject Lab.')}" target="_blank" rel="noopener" data-origem="rodape">WhatsApp +55 (11) 99754-6685</a></li><li><a href="mailto:contato@cproject.com.br">contato@cproject.com.br</a></li><li><a href="https://instagram.com/cproject.lab" target="_blank" rel="noopener">@cproject.lab</a></li></ul></div>
     </div>
     <div class="cp"><span>© 2026 CProject Lab</span>{cnpj}<span>Testar. Desenvolver. Inovar.</span></div>
   </div>
@@ -118,7 +118,7 @@ def formulario(eb, titulo, texto, interesse, botao, nota=''):
     <div class="rv"><span class="eb">{eb}</span><h2 id="t-ct" style="font-size:var(--h2);margin-top:16px">{titulo}</h2>
       <p style="color:var(--tx-2);margin-top:16px">{texto}</p>{nota}
       <div class="ch">
-        <a href="{wa('Olá! Vim pelo site da CProject Lab e quero conversar sobre: ' + interesse + '.')}" target="_blank" rel="noopener" data-origem="contato">{WA_ICON}<span><small>WhatsApp</small>+55 (13) 97417-7986</span></a>
+        <a href="{wa('Olá! Vim pelo site da CProject Lab e quero conversar sobre: ' + interesse + '.')}" target="_blank" rel="noopener" data-origem="contato">{WA_ICON}<span><small>WhatsApp</small>+55 (11) 99754-6685</span></a>
         <a href="mailto:contato@cproject.com.br"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><span><small>E-mail</small>contato@cproject.com.br</span></a>
         <a href="https://instagram.com/cproject.lab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span><small>Instagram</small>@cproject.lab</span></a>
       </div></div>
