@@ -259,8 +259,15 @@
     const wurl = 'https://wa.me/5511997546685?text=' + encodeURIComponent(txt);
     bt.disabled = true; msg.textContent = 'Enviando...';
     try {
-      const r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)});
-      if (!r.ok) throw new Error(r.status);
+      let r = await fetch('/api/diagnostico', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d)}).catch(() => null);
+      if (!r || !r.ok) {
+        // sem SMTP no servidor: envia pelo FormSubmit direto para contato@cproject.com.br
+        const f = await fetch('https://formsubmit.co/ajax/contato@cproject.com.br', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+          body: JSON.stringify({_subject: `Site · ${d.interesse || 'Consultoria gratuita'} · ${d.empresa}`, _template: 'table', _captcha: 'false', _honey: d.site || '',
+            Interesse: d.interesse || 'Consultoria gratuita', Nome: d.nome, Empresa: d.empresa, Segmento: d.segmento, WhatsApp: d.whatsapp, 'O que busca': d.busca})});
+        const j = await f.json().catch(() => ({}));
+        if (!f.ok || String(j.success) !== 'true') throw new Error(j.message || f.status);
+      }
       dataLayer.push({event: 'generate_lead', interesse: d.interesse, segmento: d.segmento}); if (window.va) window.va('event', {name: 'lead', data: {interesse: d.interesse || ''}});
       fm.reset(); msg.className = 'fmsg ok';
       msg.textContent = 'Recebemos sua mensagem! Em breve entramos em contato pelo WhatsApp.';
