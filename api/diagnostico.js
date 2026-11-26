@@ -91,7 +91,7 @@ module.exports = async (req, res) => {
       const j = await r.json().catch(() => ({}));
       if (r.ok && String(j.success) === 'true') return res.status(200).json({ok: true});
       console.error('diagnostico: formsubmit', r.status, j.message || '');
-      return res.status(502).json({ok: false, erro: 'formsubmit', msg: j.message || ''});
+      return res.status(502).json({ok: false, erro: 'formsubmit', st: r.status, msg: j.message || ''});
     } catch (e) {
       console.error('diagnostico: formsubmit falhou', e.message);
       return res.status(502).json({ok: false});
