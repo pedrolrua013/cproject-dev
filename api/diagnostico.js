@@ -1,5 +1,7 @@
 // Recebe o formulário do site e envia por e-mail para contato@cproject.com.br.
 // Sem dependências: fala SMTP direto (o .vercelignore deixa o package.json fora da publicação).
+// Sem SMTP configurado, envia pelo FormSubmit (formsubmit.co) para o mesmo e-mail. Na primeira vez o
+// FormSubmit manda um e-mail de ativação para contato@cproject.com.br: é só clicar em "Activate Form".
 // Variáveis de ambiente (Vercel > Settings > Environment Variables):
 //   SMTP_USER (ex.: contato@cproject.com.br), SMTP_PASS,
 //   opcionais: SMTP_HOST (padrão smtp.hostinger.com), SMTP_PORT (padrão 465), CONTACT_TO (padrão contato@cproject.com.br)
@@ -72,9 +74,28 @@ module.exports = async (req, res) => {
     return res.status(422).json({ok: false, erro: 'campos'});
   }
   const user = process.env.SMTP_USER, pass = process.env.SMTP_PASS;
+  const para = process.env.CONTACT_TO || 'contato@cproject.com.br';
+  const assunto = `Site · ${d.interesse || 'Consultoria gratuita'} · ${d.empresa}`.replace(/[\r\n]/g, ' ');
   if (!user || !pass) {
-    console.error('diagnostico: SMTP_USER/SMTP_PASS não configurados');
-    return res.status(503).json({ok: false, erro: 'config'});
+    const wa0 = 'https://wa.me/55' + digitos.replace(/^55(?=\d{10,11}$)/, '');
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(para), {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json', Origin: 'https://cproject.com.br', Referer: 'https://cproject.com.br/'},
+        body: JSON.stringify({
+          _subject: assunto, _template: 'table', _captcha: 'false',
+          Interesse: d.interesse || 'Consultoria gratuita', Nome: d.nome, Empresa: d.empresa, Segmento: d.segmento,
+          WhatsApp: `${d.whatsapp} (${wa0})`, 'O que busca': d.busca,
+        }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && String(j.success) === 'true') return res.status(200).json({ok: true});
+      console.error('diagnostico: formsubmit', r.status, j.message || '');
+      return res.status(502).json({ok: false, erro: 'formsubmit', msg: j.message || ''});
+    } catch (e) {
+      console.error('diagnostico: formsubmit falhou', e.message);
+      return res.status(502).json({ok: false});
+    }
   }
 
   const port = Number(process.env.SMTP_PORT || 465);
@@ -90,8 +111,8 @@ module.exports = async (req, res) => {
     await smtpEnviar({
       host: process.env.SMTP_HOST || 'smtp.hostinger.com', port, secure: port === 465, user, pass,
       from: `"Site CProject Lab" <${user}>`,
-      to: process.env.CONTACT_TO || 'contato@cproject.com.br',
-      subject: `Site · ${d.interesse || 'Consultoria gratuita'} · ${d.empresa}`.replace(/[\r\n]/g, ' '),
+      to: para,
+      subject: assunto,
       text: texto,
     });
     return res.status(200).json({ok: true});

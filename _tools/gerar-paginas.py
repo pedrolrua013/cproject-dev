@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '25'
+VERSAO = '26'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5511997546685'
