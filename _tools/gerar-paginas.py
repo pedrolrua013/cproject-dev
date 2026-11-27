@@ -15,7 +15,7 @@ from urllib.parse import quote
 RAIZ = Path(__file__).resolve().parent.parent
 PARTES = RAIZ / '_tools' / 'partes'
 SITE = 'https://cproject.com.br'
-VERSAO = '27'
+VERSAO = '28'
 HOJE = '2026-11-22'
 CNPJ = ''  # preencher quando o CNPJ estiver ativo, ex.: '00.000.000/0001-00'
 WHATS = '5511997546685'
@@ -377,6 +377,7 @@ def pagina(path, titulo, desc, nome, corpo, og, faqs=None):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script src="/assets/loader.js?v={VERSAO}"></script>
 <title>{titulo}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{SITE}{path}">
@@ -390,6 +391,7 @@ def pagina(path, titulo, desc, nome, corpo, og, faqs=None):
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
+{parte('loader.html')}
 {cabecalho(path)}
 <main id="conteudo">
 {corpo}

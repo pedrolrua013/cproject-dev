@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script src="/assets/loader.js?v=28"></script>
 <title>CProject Data · Dashboards e BI · CProject Lab</title>
 <meta name="description" content="Templates de BI por segmento, integração de dados e dashboards sob medida para decidir com base em números.">
 <link rel="canonical" href="https://cproject.com.br/data/">
@@ -11,19 +12,80 @@
 <meta property="og:title" content="CProject Data · Dashboards e BI · CProject Lab"><meta property="og:description" content="Templates de BI por segmento, integração de dados e dashboards sob medida para decidir com base em números."><meta property="og:url" content="https://cproject.com.br/data/">
 <meta property="og:image" content="https://cproject.com.br/assets/og/data.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="CProject Data · CProject Lab">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="CProject Data · Dashboards e BI · CProject Lab"><meta name="twitter:description" content="Templates de BI por segmento, integração de dados e dashboards sob medida para decidir com base em números."><meta name="twitter:image" content="https://cproject.com.br/assets/og/data.png">
-<link rel="icon" href="/favicon.ico?v=27" sizes="48x48">
-<link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg?v=27">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png?v=27">
-<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png?v=27">
+<link rel="icon" href="/favicon.ico?v=28" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg?v=28">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png?v=28">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png?v=28">
 <link rel="preload" href="/assets/fonts/saira-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=27">
+<link rel="stylesheet" href="/assets/site.css?v=28">
 <link rel="preload" href="/assets/fonts/jbmono.woff2" as="font" type="font/woff2" crossorigin>
-<script src="/assets/xp.js?v=27" defer></script>
+<script src="/assets/xp.js?v=28" defer></script>
 <script src="/_vercel/insights/script.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://cproject.com.br/data/#pagina","url":"https://cproject.com.br/data/","name":"CProject Data","isPartOf":{"@id":"https://cproject.com.br/#site"},"about":{"@id":"https://cproject.com.br/#org"},"inLanguage":"pt-BR"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://cproject.com.br/"},{"@type":"ListItem","position":2,"name":"CProject Data","item":"https://cproject.com.br/data/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"De onde vêm os dados?","acceptedAnswer":{"@type":"Answer","text":"Da sua planilha, do seu sistema ou do seu banco de dados. Conectamos as fontes ao painel."}},{"@type":"Question","name":"Os templates de BI já estão à venda?","acceptedAnswer":{"@type":"Answer","text":"Ainda não. Os primeiros templates por segmento estão em produção. Deixe o seu contato para ser avisado no lançamento."}},{"@type":"Question","name":"Preciso esperar os templates?","acceptedAnswer":{"@type":"Answer","text":"Não. Montamos um dashboard sob medida, com os seus indicadores e fontes de dados."}}]}]}</script>
 </head>
 <body>
+<style>
+#ld{position:fixed;inset:0;z-index:9999;display:none;place-items:center;background:radial-gradient(700px 520px at 50% 42%,rgba(143,114,221,.28),transparent 70%),#1D131E;transition:opacity .6s cubic-bezier(.22,1,.36,1),visibility .6s}
+.ld-on #ld{display:grid;animation:ld-seguro .5s 4.5s forwards}
+.ld-off #ld{display:none}
+.ld-fim #ld{opacity:0;visibility:hidden;pointer-events:none}
+.ld-fim #ld .ld-c{transform:scale(1.06) translateY(-6px);transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.ld-on body{overflow:hidden}
+.ld-fim body{overflow:auto}
+@keyframes ld-seguro{to{opacity:0;visibility:hidden;pointer-events:none}}
+.ld-c{display:grid;justify-items:center;gap:22px}
+.ld-f{width:clamp(110px,22vw,150px);height:auto;overflow:visible;filter:drop-shadow(0 0 18px rgba(143,114,221,.55))}
+.ld-liq{animation:ld-enche 1.35s cubic-bezier(.65,0,.35,1) .1s both}
+.ld-onda{animation:ld-onda 1.1s linear infinite}
+.ld-onda2{animation:ld-onda 1.7s linear infinite reverse;opacity:.45}
+.ld-b{animation:ld-bolha 1.4s ease-in infinite;opacity:0}
+.ld-b:nth-of-type(2){animation-delay:.35s}.ld-b:nth-of-type(3){animation-delay:.7s}.ld-b:nth-of-type(4){animation-delay:1.05s}
+.ld-m{fill:rgba(233,243,228,.25);animation:ld-marca .3s forwards}
+.ld-m:nth-of-type(1){animation-delay:.45s}.ld-m:nth-of-type(2){animation-delay:.75s}.ld-m:nth-of-type(3){animation-delay:1.05s}
+.ld-logo{width:clamp(120px,26vw,150px);height:auto;opacity:0;animation:ld-sobe .6s cubic-bezier(.22,1,.36,1) .2s forwards}
+.ld-p{font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.22em;text-transform:uppercase;color:#C3B1D7;opacity:0;animation:ld-sobe .6s .35s forwards}
+@property --ld-n{syntax:"<integer>";inherits:false;initial-value:0}
+.ld-p b{font-weight:600;color:#E9F3E4;--ld-n:0;counter-reset:n var(--ld-n);animation:ld-conta 1.35s cubic-bezier(.65,0,.35,1) .1s forwards}
+.ld-p b::after{content:counter(n) "%"}
+@keyframes ld-enche{from{transform:translateY(0)}to{transform:translateY(-178px)}}
+@keyframes ld-onda{from{transform:translateX(0)}to{transform:translateX(-60px)}}
+@keyframes ld-bolha{0%{opacity:0;transform:translateY(0)}20%{opacity:.9}100%{opacity:0;transform:translateY(-70px)}}
+@keyframes ld-marca{to{fill:#E9F3E4}}
+@keyframes ld-sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ld-conta{to{--ld-n:100}}
+@media (prefers-reduced-motion:reduce){.ld-liq{animation-duration:.01s}.ld-onda,.ld-onda2,.ld-b{animation:none}.ld-p b{animation-duration:.01s}}
+</style>
+<div id="ld" role="status" aria-live="polite" aria-label="Carregando o site da CProject">
+  <div class="ld-c">
+    <svg class="ld-f" viewBox="-100 -110 200 220" aria-hidden="true">
+      <defs>
+        <clipPath id="ld-in"><path d="M-19.4,-88 L-19.4,-32.2 L-73,80 Q-78.8,91.4 -61.3,91.4 L61.3,91.4 Q78.8,91.4 73,80 L19.4,-32.2 L19.4,-88 Z"/></clipPath>
+        <linearGradient id="ld-lq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9F3E4"/><stop offset=".22" stop-color="#C3B1D7"/><stop offset=".6" stop-color="#8F72DD"/><stop offset="1" stop-color="#3B286F"/></linearGradient>
+        <linearGradient id="ld-pa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9F3E4"/><stop offset=".55" stop-color="#C3B1D7"/><stop offset="1" stop-color="#E9F3E4"/></linearGradient>
+      </defs>
+      <path d="M-19.4,-88 L-19.4,-32.2 L-73,80 Q-78.8,91.4 -61.3,91.4 L61.3,91.4 Q78.8,91.4 73,80 L19.4,-32.2 L19.4,-88 Z" fill="rgba(195,177,215,.06)"/>
+      <g clip-path="url(#ld-in)">
+        <g class="ld-liq" style="transform:translateY(0)">
+          <g transform="translate(0,96)">
+            <path class="ld-onda2" fill="#8F72DD" d="M-150,0 q15,-7 30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 V200 H-150 Z"/>
+            <path class="ld-onda" fill="url(#ld-lq)" d="M-150,2 q15,-6 30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 V200 H-150 Z"/>
+            <circle class="ld-b" cx="-30" cy="60" r="3.2" fill="none" stroke="#fff" stroke-width="1.4"/>
+            <circle class="ld-b" cx="12" cy="70" r="2.2" fill="none" stroke="#fff" stroke-width="1.2"/>
+            <circle class="ld-b" cx="34" cy="55" r="2.8" fill="none" stroke="#fff" stroke-width="1.3"/>
+            <circle class="ld-b" cx="-8" cy="80" r="1.8" fill="none" stroke="#fff" stroke-width="1"/>
+          </g>
+        </g>
+      </g>
+      <path d="M-14,-38 L-55,48" stroke="rgba(255,255,255,.18)" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+      <rect class="ld-m" x="6" y="40" width="15" height="4" rx="2"/><rect class="ld-m" x="6" y="12" width="15" height="4" rx="2"/><rect class="ld-m" x="6" y="-16" width="15" height="4" rx="2"/>
+      <path d="M-23,-88 L-23,-34 L-77,80 Q-84,95 -62,95 L62,95 Q84,95 77,80 L23,-34 L23,-88" fill="none" stroke="url(#ld-pa)" stroke-width="6.8" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="-34" y="-100" width="68" height="12" rx="4.4" fill="none" stroke="url(#ld-pa)" stroke-width="6.8"/>
+    </svg>
+    <img class="ld-logo" src="/assets/brand/logo.svg" width="134" height="47" alt="CProject">
+    <div class="ld-p">Carregando <b></b></div>
+  </div>
+</div>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="nav" id="topo">
   <div class="in">
     <a class="logo" href="/" aria-label="CProject Lab, página inicial"><img src="/assets/brand/logo.svg" width="134" height="47" alt="CProject Lab"></a>
@@ -85,7 +147,7 @@
   </div>
 </footer>
 <a class="wa" href="https://wa.me/5511997546685?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20CProject%20Lab%20e%20quero%20conversar." target="_blank" rel="noopener" aria-label="Conversar no WhatsApp" data-origem="flutuante"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.79 14.06c-.24.68-1.42 1.3-1.95 1.35-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.93-4.66-4.11-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
-<script src="/assets/checkout.js?v=27" defer></script>
-<script src="/assets/site.js?v=27" defer></script>
+<script src="/assets/checkout.js?v=28" defer></script>
+<script src="/assets/site.js?v=28" defer></script>
 </body>
 </html>
